@@ -1,0 +1,811 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BaseClass	CellLocatorBIH.h	/^    typedef CellLocator BaseClass;$/;"	t	class:kvs::CellLocatorBIH	access:public
+BoundingBox	BoundingBox.cpp	/^    BoundingBox::BoundingBox()$/;"	f	class:kvs::BoundingBox	signature:()
+BoundingBox	BoundingBox.cpp	/^    BoundingBox::BoundingBox(const kvs::UnstructuredVolumeObject* object, size_t cindex)$/;"	f	class:kvs::BoundingBox	signature:(const kvs::UnstructuredVolumeObject* object, size_t cindex)
+BoundingBox	BoundingBox.h	/^        BoundingBox();$/;"	p	class:kvs::BoundingBox	access:public	signature:()
+BoundingBox	BoundingBox.h	/^        BoundingBox(const kvs::UnstructuredVolumeObject* object, size_t cindex);		\/\/\/<	create a bounding box based on a specific object and cell index $/;"	p	class:kvs::BoundingBox	access:public	signature:(const kvs::UnstructuredVolumeObject* object, size_t cindex)
+BoundingBox	BoundingBox.h	/^    class BoundingBox$/;"	c	namespace:kvs
+CACHEFULL	CellLocator.h	/^        CACHEFULL = 2$/;"	e	enum:kvs::CellLocator::Mode
+CACHEHALF	CellLocator.h	/^        CACHEHALF  = 1,$/;"	e	enum:kvs::CellLocator::Mode
+CACHEOFF	CellLocator.h	/^        CACHEOFF = 0,$/;"	e	enum:kvs::CellLocator::Mode
+CC	Makefile	/^CC = g++$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -c -Wall -ggdb -DDEBUG -DKVS_SUPPORT_GLEW -DKVS_SUPPORT_GLUT$/;"	m
+CellLocator	CellLocator.cpp	/^CellLocator::CellLocator( const kvs::UnstructuredVolumeObject* volume ):$/;"	f	class:kvs::CellLocator	signature:( const kvs::UnstructuredVolumeObject* volume )
+CellLocator	CellLocator.cpp	/^CellLocator::CellLocator()$/;"	f	class:kvs::CellLocator	signature:()
+CellLocator	CellLocator.h	/^    CellLocator( const kvs::UnstructuredVolumeObject* volume );$/;"	p	class:kvs::CellLocator	access:public	signature:( const kvs::UnstructuredVolumeObject* volume )
+CellLocator	CellLocator.h	/^    CellLocator();$/;"	p	class:kvs::CellLocator	access:public	signature:()
+CellLocator	CellLocator.h	/^class CellLocator$/;"	c	namespace:kvs
+CellLocatorBIH	CellLocatorBIH.cpp	/^CellLocatorBIH::CellLocatorBIH( const kvs::UnstructuredVolumeObject* volume ):$/;"	f	class:kvs::CellLocatorBIH	signature:( const kvs::UnstructuredVolumeObject* volume )
+CellLocatorBIH	CellLocatorBIH.cpp	/^CellLocatorBIH::CellLocatorBIH()$/;"	f	class:kvs::CellLocatorBIH	signature:()
+CellLocatorBIH	CellLocatorBIH.h	/^    CellLocatorBIH( const kvs::UnstructuredVolumeObject* volume );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const kvs::UnstructuredVolumeObject* volume )
+CellLocatorBIH	CellLocatorBIH.h	/^    CellLocatorBIH();$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:()
+CellLocatorBIH	CellLocatorBIH.h	/^class CellLocatorBIH : public CellLocator$/;"	c	namespace:kvs	inherits:CellLocator
+CellTree	CellTree.h	/^	CellTree(){}$/;"	f	class:kvs::CellTree	access:public	signature:()
+CellTree	CellTree.h	/^class CellTree$/;"	c	namespace:kvs
+CellTreeBuilder	CellTree.cpp	/^CellTreeBuilder::CellTreeBuilder()$/;"	f	class:kvs::CellTreeBuilder	signature:()
+CellTreeBuilder	CellTree.h	/^	CellTreeBuilder();$/;"	p	class:kvs::CellTreeBuilder	access:public	signature:()
+CellTreeBuilder	CellTree.h	/^class CellTreeBuilder$/;"	c	namespace:kvs
+DLIB	Makefile	/^DLIB = lib$(EXECUTABLE).so$/;"	m
+DLIB_WIN	Makefile	/^DLIB_WIN = $(EXECUTABLE).lib$/;"	m
+EXECUTABLE	Makefile	/^EXECUTABLE = CellLocator$/;"	m
+INCLUDE	Makefile	/^INCLUDE = -I$(KVS_DIR)\/include$/;"	m
+KVS__BOUNDING_BOX_H_INCLUDE	BoundingBox.h	2;"	d
+KVS__CELL_LOCATOR_BIH_H_INCLUDE	CellLocatorBIH.h	2;"	d
+KVS__CELL_LOCATOR_H_INCLUDE	CellLocator.h	2;"	d
+KVS__CELL_TREE_H_INCLUDE	CellTree.h	2;"	d
+LDFLAGS	Makefile	/^LDFLAGS = -lkvsSupportGLUT -lkvsSupportGLEW -lGLEW -lm -lpthread -lkvsCore -lglut -lGLU -lGL $/;"	m
+LIB	Makefile	/^LIB = -L$(KVS_DIR)\/lib$/;"	m
+LINUX	main.cpp	7;"	d	file:
+Mode	CellLocator.h	/^    enum Mode$/;"	g	class:kvs::CellLocator	access:public
+OBJECTS	Makefile	/^OBJECTS := $(SOURCES:.cpp=.o)$/;"	m
+OBJECTS_WIN	Makefile	/^OBJECTS_WIN := $(SOURCES:.cpp=.obj)$/;"	m
+OUTDIR	Makefile	/^OUTDIR = .\/bin$/;"	m
+SLIB	Makefile	/^SLIB = lib$(EXECUTABLE).a$/;"	m
+SLIB_WIN	Makefile	/^SLIB_WIN = $(EXECUTABLE).dll$/;"	m
+SOURCES	Makefile	/^SOURCES := $(wildcard *.cpp) $/;"	m
+SplitThread	CellTree.h	/^	SplitThread(){}$/;"	f	class:kvs::SplitThread	access:public	signature:()
+SplitThread	CellTree.h	/^class SplitThread : public kvs::Thread$/;"	c	namespace:kvs	inherits:kvs::Thread
+__anon1::bucket	CellTree.h	/^	struct bucket \/\/ only stores current max\/min and time of add()$/;"	s	namespace:__anon1
+__anon1::bucket::add	CellTree.h	/^        void add( const float _min, const float _max )$/;"	f	struct:__anon1::bucket	access:public	signature:( const float _min, const float _max )
+__anon1::bucket::bucket	CellTree.h	/^        bucket()$/;"	f	struct:__anon1::bucket	access:public	signature:()
+__anon1::bucket::cnt	CellTree.h	/^        unsigned int cnt;	\/\/counter of add()$/;"	m	struct:__anon1::bucket	access:public
+__anon1::bucket::max	CellTree.h	/^        float        max;$/;"	m	struct:__anon1::bucket	access:public
+__anon1::bucket::min	CellTree.h	/^        float        min;$/;"	m	struct:__anon1::bucket	access:public
+__anon1::center_order	CellTree.h	/^    struct center_order$/;"	s	namespace:__anon1
+__anon1::center_order::center_order	CellTree.h	/^        center_order( unsigned int _d ) : $/;"	f	struct:__anon1::center_order	access:public	signature:( unsigned int _d )
+__anon1::center_order::d	CellTree.h	/^        unsigned int d;$/;"	m	struct:__anon1::center_order	access:public
+__anon1::center_order::operator ()	CellTree.h	/^        bool operator()( const per_cell& pc0, const per_cell& pc1 )$/;"	f	struct:__anon1::center_order	access:public	signature:( const per_cell& pc0, const per_cell& pc1 )
+__anon1::find_max_d	CellTree.h	/^    void find_max_d( const per_cell* begin, const per_cell* end, unsigned int d, float& max );$/;"	p	namespace:__anon1	signature:( const per_cell* begin, const per_cell* end, unsigned int d, float& max )
+__anon1::find_min_d	CellTree.h	/^    void find_min_d( const per_cell* begin, const per_cell* end, unsigned int d, float& min );$/;"	p	namespace:__anon1	signature:( const per_cell* begin, const per_cell* end, unsigned int d, float& min )
+__anon1::find_min_max	CellTree.h	/^	void find_min_max( const per_cell* begin, const per_cell* end, float* min, float* max );$/;"	p	namespace:__anon1	signature:( const per_cell* begin, const per_cell* end, float* min, float* max )
+__anon1::left_predicate	CellTree.h	/^    struct left_predicate$/;"	s	namespace:__anon1
+__anon1::left_predicate::d	CellTree.h	/^        unsigned int       d;$/;"	m	struct:__anon1::left_predicate	access:public
+__anon1::left_predicate::left_predicate	CellTree.h	/^        left_predicate( unsigned int _d, float _p ) : $/;"	f	struct:__anon1::left_predicate	access:public	signature:( unsigned int _d, float _p )
+__anon1::left_predicate::operator ()	CellTree.h	/^        bool operator()( const per_cell& pc )$/;"	f	struct:__anon1::left_predicate	access:public	signature:( const per_cell& pc )
+__anon1::left_predicate::p	CellTree.h	/^        float              p;$/;"	m	struct:__anon1::left_predicate	access:public
+__anon1::per_cell	CellTree.h	/^    struct per_cell $/;"	s	namespace:__anon1
+__anon1::per_cell::ind	CellTree.h	/^        unsigned int ind;$/;"	m	struct:__anon1::per_cell	access:public
+__anon1::per_cell::max	CellTree.h	/^        float        max[3];$/;"	m	struct:__anon1::per_cell	access:public
+__anon1::per_cell::min	CellTree.h	/^        float        min[3];$/;"	m	struct:__anon1::per_cell	access:public
+__anon5::find_max_d	CellTree.cpp	/^void find_max_d( const per_cell* begin, const per_cell* end, unsigned int d, float& max )$/;"	f	namespace:__anon5	signature:( const per_cell* begin, const per_cell* end, unsigned int d, float& max )
+__anon5::find_min_d	CellTree.cpp	/^void find_min_d( const per_cell* begin, const per_cell* end, unsigned int d, float& min )$/;"	f	namespace:__anon5	signature:( const per_cell* begin, const per_cell* end, unsigned int d, float& min )
+__anon5::find_min_max	CellTree.cpp	/^void find_min_max( const per_cell* begin, const per_cell* end, float* min, float* max )$/;"	f	namespace:__anon5	signature:( const per_cell* begin, const per_cell* end, float* min, float* max )
+add	CellTree.h	/^        void add( const float _min, const float _max )$/;"	f	struct:__anon1::bucket	access:public	signature:( const float _min, const float _max )
+allocate	CellTree.cpp	/^        mask.allocate( node_size );$/;"	p	file:	signature:( node_size )
+b	CellTree.cpp	/^        bucket b[3][nbuckets];     \/\/3 dimensions, 6 buckets each$/;"	l
+b	CellTree.cpp	/^    bucket b[3][nbuckets]; \/\/3 dimensions, 6 buckets each$/;"	l
+bd	CellLocator.cpp	/^    kvs::BoundingBox bd(m_dataset, cellid);$/;"	p	file:	signature:(m_dataset, cellid)
+bd	CellTree.cpp	/^        kvs::BoundingBox bd( ds, i );$/;"	p	file:	signature:( ds, i )
+begin	CellLocatorBIH.cpp	/^            const unsigned int* begin = &(this->m_celltree->leaves[n->start()]);$/;"	l
+begin	CellTree.cpp	/^        per_cell* begin = m_pc + start;$/;"	l
+bih	CellLocatorBIH.cpp	/^    const kvs::CellLocatorBIH* bih = static_cast<const kvs::CellLocatorBIH*>( locator );$/;"	l
+bindCell	CellLocator.cpp	/^    m_cell->bindCell( cellid );$/;"	p	file:	signature:( cellid )
+bounds	BoundingBox.cpp	/^    const float* BoundingBox::bounds() const$/;"	f	class:kvs::BoundingBox	signature:() const
+bounds	BoundingBox.h	/^        const float* bounds() const;$/;"	p	class:kvs::BoundingBox	access:public	signature:() const
+bounds	CellLocator.cpp	/^    const float* bounds = bd.bounds();$/;"	l
+bounds	CellTree.cpp	/^        const float* bounds = bd.bounds();$/;"	l
+bucket	CellTree.h	/^	struct bucket \/\/ only stores current max\/min and time of add()$/;"	s	namespace:__anon1
+bucket	CellTree.h	/^        bucket()$/;"	f	struct:__anon1::bucket	access:public	signature:()
+build	CellLocator.h	/^    virtual void build() = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:()
+build	CellLocatorBIH.cpp	/^void CellLocatorBIH::build()$/;"	f	class:kvs::CellLocatorBIH	signature:()
+build	CellLocatorBIH.h	/^    void build();$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:()
+build	CellTree.cpp	/^void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* ds )$/;"	f	class:kvs::CellTreeBuilder	signature:( CellTree& ct, const kvs::UnstructuredVolumeObject* ds )
+build	CellTree.h	/^	void build( CellTree& ct, const kvs::UnstructuredVolumeObject* ds );$/;"	p	class:kvs::CellTreeBuilder	access:public	signature:( CellTree& ct, const kvs::UnstructuredVolumeObject* ds )
+build	main.cpp	/^	locator_d->build();$/;"	p	file:	signature:()
+build	main.cpp	/^	locator_s->build();$/;"	p	file:	signature:()
+c	CellTree.cpp	/^                float c = lvol*sum + rvol*(size-sum);$/;"	l
+c	CellTree.cpp	/^            float c = lvol*sum + rvol*(size-sum);$/;"	l
+cell	CellLocator.h	/^    const kvs::CellBase<float>* cell() { return m_cell; }$/;"	f	class:kvs::CellLocator	access:public	signature:()
+cellTree	CellLocatorBIH.cpp	/^const CellTree* CellLocatorBIH::cellTree() const$/;"	f	class:kvs::CellLocatorBIH	signature:() const
+cellTree	CellLocatorBIH.h	/^    const kvs::CellTree* cellTree( void ) const;$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( void ) const
+cen	CellTree.cpp	/^                float cen = (pc->min[d] + pc->max[d])\/2.0f;	\/\/center of a certain dimension$/;"	l
+cen	CellTree.cpp	/^            float cen = (pc->min[d] + pc->max[d])\/2.0f;	\/\/center of a certain dimension$/;"	l
+center	CellLocator.cpp	/^    kvs::Vector3f center;$/;"	l
+center	CellLocator.cpp	/^kvs::Vector3f CellLocator::center( size_t cellid ) const$/;"	f	class:kvs::CellLocator	signature:( size_t cellid ) const
+center	CellLocator.h	/^    kvs::Vector3f center( size_t cellid ) const;$/;"	p	class:kvs::CellLocator	access:public	signature:( size_t cellid ) const
+center_order	CellTree.h	/^        center_order( unsigned int _d ) : $/;"	f	struct:__anon1::center_order	access:public	signature:( unsigned int _d )
+center_order	CellTree.h	/^    struct center_order$/;"	s	namespace:__anon1
+cerr	CellLocatorBIH.cpp	/^        std::cerr << "CellLocator Mode parameter error!\\n";$/;"	m	class:kvs::std	file:
+cerr	CellLocatorBIH.cpp	/^        std::cerr << "No dataset! \\n";$/;"	m	class:kvs::std	file:
+check	CellLocator.h	/^    virtual bool check( const kvs::CellLocator* locator ) = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:( const kvs::CellLocator* locator )
+check	CellLocatorBIH.cpp	/^bool CellLocatorBIH::check( const kvs::CellLocator* locator )$/;"	f	class:kvs::CellLocatorBIH	signature:( const kvs::CellLocator* locator )
+check	CellLocatorBIH.h	/^    bool check( const kvs::CellLocator* locator );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const kvs::CellLocator* locator )
+check	CellTree.cpp	/^const bool SplitThread::check()$/;"	f	class:kvs::SplitThread	signature:()
+check	CellTree.h	/^	const bool check();$/;"	p	class:kvs::SplitThread	access:public	signature:()
+child	CellTree.cpp	/^    kvs::CellTree::node child[2];$/;"	l
+clear	CellTree.cpp	/^	m_nodes.clear();$/;"	p	file:	signature:()
+clear	CellTree.cpp	/^	m_nodes1.clear();$/;"	p	file:	signature:()
+clear	CellTree.cpp	/^	m_nodes2.clear();$/;"	p	file:	signature:()
+clear	CellTree.h	/^		leaves.clear();$/;"	p	signature:()
+clear	CellTree.h	/^		nodes.clear();$/;"	p	signature:()
+clearCache	CellLocator.h	/^    virtual void clearCache() = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:()
+clearCache	CellLocatorBIH.cpp	/^void CellLocatorBIH::clearCache()$/;"	f	class:kvs::CellLocatorBIH	signature:()
+clearCache	CellLocatorBIH.h	/^    void clearCache();$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:()
+clip	CellTree.cpp	/^        float clip[2] = { lmax[dim], rmin[dim] };$/;"	l
+clip	CellTree.cpp	/^    float clip[2] = { lmax[dim], rmin[dim] };$/;"	l
+close	CellLocatorBIH.cpp	/^    outfile.close();$/;"	p	file:	signature:()
+cnt	CellTree.h	/^        unsigned int cnt;	\/\/counter of add()$/;"	m	struct:__anon1::bucket	access:public
+connections	BoundingBox.cpp	/^        const kvs::UnstructuredVolumeObject::Connections& connections = object->connections();$/;"	l
+coords	BoundingBox.cpp	/^        const kvs::UnstructuredVolumeObject::Coords& coords = object->coords();$/;"	l
+cost	CellTree.cpp	/^        float cost = std::numeric_limits<float>::max();$/;"	l
+cost	CellTree.cpp	/^    float cost = std::numeric_limits<float>::max();$/;"	l
+cout	CellLocatorBIH.cpp	/^    std::cout << "Cell Tree ..." ;$/;"	m	class:kvs::std	file:
+cout	CellTree.cpp	/^    std::cout << "leaves array: \\n";$/;"	m	class:kvs::std	file:
+cout	CellTree.cpp	/^    std::cout << "nodes array: \\n";$/;"	m	class:kvs::std	file:
+ct	CellLocatorBIH.cpp	/^    kvs::CellTree* ct = new kvs::CellTree();$/;"	l
+ct1	CellLocatorBIH.cpp	/^    const kvs::CellTree& ct1 = bih->cellTree();$/;"	l
+ct2	CellLocatorBIH.cpp	/^    const kvs::CellTree& ct2 = m_celltree;$/;"	l
+d	CellTree.h	/^        unsigned int       d;$/;"	m	struct:__anon1::left_predicate	access:public
+d	CellTree.h	/^        unsigned int d;$/;"	m	struct:__anon1::center_order	access:public
+dataset	CellLocator.h	/^    const kvs::UnstructuredVolumeObject* dataset() { return m_dataset; }$/;"	f	class:kvs::CellLocator	access:public	signature:()
+dim	CellTree.cpp	/^        unsigned int dim;$/;"	l
+dim	CellTree.cpp	/^    unsigned int dim;$/;"	l
+dim	CellTree.h	/^        unsigned int dim() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+end	CellLocatorBIH.cpp	/^            const unsigned int* end   = begin + n->size();$/;"	l
+end	CellTree.cpp	/^        per_cell* end   = m_pc + start + size;$/;"	l
+end	CellTree.cpp	/^    per_cell* end   = m_pc + start + size;$/;"	l
+endl	CellLocator.cpp	/^        std::cerr << "no dataset!" << std::endl;$/;"	m	class:kvs::std	file:
+endl	CellLocator.cpp	/^        std::cout << "v[" << i << "] = " << m_cell->vertices()[i] << std::endl;$/;"	m	class:kvs::std	file:
+endl	CellLocatorBIH.cpp	/^            std::cout << "tree1 and tree2 differs at " << i << "th node. " << std::endl;$/;"	m	class:kvs::std	file:
+endl	CellLocatorBIH.cpp	/^        std::cout << "can't open " << filename << " for reading. read failed" << std::endl;$/;"	m	class:kvs::std	file:
+endl	CellLocatorBIH.cpp	/^        std::cout << "can't open " << filename << " for writing. write failed" << std::endl;$/;"	m	class:kvs::std	file:
+endl	CellLocatorBIH.cpp	/^    std::cout << "\\t " << timer.sec() << " seconds " << std::endl;$/;"	m	class:kvs::std	file:
+endl	CellTree.cpp	/^		std::cout << "nnodes: " << m_nodes.size() << std::endl;$/;"	m	class:kvs::std	file:
+endl	CellTree.cpp	/^		std::cout << "nnodes: " << node_size << std::endl;$/;"	m	class:kvs::std	file:
+endl	CellTree.cpp	/^    std::cout << "max external coords found by kvs::BoundingBox:\\t" << max[0] << " " << max[1] << " "  << max[2] << " "  << std::endl;$/;"	m	class:kvs::std	file:
+endl	CellTree.cpp	/^    std::cout << "min external coords found by kvs::BoundingBox:\\t" << min[0] << " " << min[1] << " "  << min[2] << " "  << std::endl;$/;"	m	class:kvs::std	file:
+ext	CellTree.cpp	/^        const float ext[3] = { max[0]-min[0], max[1]-min[1], max[2]-min[2] }; $/;"	l
+ext	CellTree.cpp	/^    const float ext[3] = { max[0]-min[0], max[1]-min[1], max[2]-min[2] }; $/;"	l
+filename	main.cpp	/^	string filename = (argc == 2) ? argv[1] : $/;"	l
+findCell	CellLocator.h	/^    virtual int findCell( const float pos[3] ) = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:( const float pos[3] )
+findCell	CellLocatorBIH.cpp	/^int CellLocatorBIH::findCell( const float pos[3] )$/;"	f	class:kvs::CellLocatorBIH	signature:( const float pos[3] )
+findCell	CellLocatorBIH.h	/^    int findCell( const float pos[3] );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const float pos[3] )
+find_max_d	CellTree.cpp	/^void find_max_d( const per_cell* begin, const per_cell* end, unsigned int d, float& max )$/;"	f	namespace:__anon5	signature:( const per_cell* begin, const per_cell* end, unsigned int d, float& max )
+find_max_d	CellTree.h	/^    void find_max_d( const per_cell* begin, const per_cell* end, unsigned int d, float& max );$/;"	p	namespace:__anon1	signature:( const per_cell* begin, const per_cell* end, unsigned int d, float& max )
+find_min_d	CellTree.cpp	/^void find_min_d( const per_cell* begin, const per_cell* end, unsigned int d, float& min )$/;"	f	namespace:__anon5	signature:( const per_cell* begin, const per_cell* end, unsigned int d, float& min )
+find_min_d	CellTree.h	/^    void find_min_d( const per_cell* begin, const per_cell* end, unsigned int d, float& min );$/;"	p	namespace:__anon1	signature:( const per_cell* begin, const per_cell* end, unsigned int d, float& min )
+find_min_max	CellTree.cpp	/^void find_min_max( const per_cell* begin, const per_cell* end, float* min, float* max )$/;"	f	namespace:__anon5	signature:( const per_cell* begin, const per_cell* end, float* min, float* max )
+find_min_max	CellTree.h	/^	void find_min_max( const per_cell* begin, const per_cell* end, float* min, float* max );$/;"	p	namespace:__anon1	signature:( const per_cell* begin, const per_cell* end, float* min, float* max )
+flag	CellLocatorBIH.cpp	/^        bool flag = $/;"	l
+height	CellTree.h	/^    unsigned int height( node& node )$/;"	f	class:kvs::CellTree	access:public	signature:( node& node )
+iext	CellTree.cpp	/^        const float iext[3] = { nbuckets\/ext[0], nbuckets\/ext[1], nbuckets\/ext[2] };$/;"	l
+iext	CellTree.cpp	/^    const float iext[3] = { nbuckets\/ext[0], nbuckets\/ext[1], nbuckets\/ext[2] };$/;"	l
+in_traversal_cached	CellTree.h	/^        in_traversal_cached( const CellTree& ct, const float* pos, unsigned int hint_stack[32], unsigned int* hint_sp, unsigned int hint_lrstack[16], unsigned int* hint_lrsp ):$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:( const CellTree& ct, const float* pos, unsigned int hint_stack[32], unsigned int* hint_sp, unsigned int hint_lrstack[16], unsigned int* hint_lrsp )
+in_traversal_cached	CellTree.h	/^    struct in_traversal_cached$/;"	s	class:kvs::CellTree	access:public
+ind	CellTree.cpp	/^                int   ind = (int)( (cen-min[d])*iext[d] );  $/;"	l
+ind	CellTree.cpp	/^            int   ind = (int)( (cen-min[d])*iext[d] );  $/;"	l
+ind	CellTree.h	/^        unsigned int ind;$/;"	m	struct:__anon1::per_cell	access:public
+index	CellLocatorBIH.cpp	/^        unsigned int index;$/;"	l
+index	CellTree.h	/^        unsigned int index;$/;"	m	struct:kvs::CellTree::node	access:public
+infile	CellLocatorBIH.cpp	/^    std::ifstream infile( filename.c_str(), std::ios_base::in|std::ios_base::binary );$/;"	p	file:	signature:( filename.c_str(), std::ios_base::in|std::ios_base::binary )
+init	CellTree.cpp	/^	    m_thread[1].init( m_leafsize, &m_nodes2, m_pc2, 0, rmin, rmax );$/;"	p	file:	signature:( m_leafsize, &m_nodes2, m_pc2, 0, rmin, rmax )
+init	CellTree.cpp	/^        m_thread[0].init( m_leafsize, &m_nodes1, m_pc1, 0, lmin, lmax );$/;"	p	file:	signature:( m_leafsize, &m_nodes1, m_pc1, 0, lmin, lmax )
+init	CellTree.cpp	/^void SplitThread::init( $/;"	f	class:kvs::SplitThread	signature:( unsigned int leafsize, std::vector<CellTree::node>* p_nodes, per_cell* pc, unsigned int index, float min[3], float max[3] )
+init	CellTree.h	/^	void init($/;"	p	class:kvs::SplitThread	access:public	signature:( unsigned int leafsize, std::vector<CellTree::node>* p_nodes, per_cell* pc, unsigned int index, float min[3], float max[3] )
+initializeCell	CellLocator.cpp	/^void CellLocator::initializeCell()$/;"	f	class:kvs::CellLocator	signature:()
+initializeCell	CellLocator.h	/^    void initializeCell();$/;"	p	class:kvs::CellLocator	access:public	signature:()
+insert	CellTree.cpp	/^    m_nodes.insert( m_nodes.end(), child, child+2 );$/;"	p	file:	signature:( m_nodes.end(), child, child+2 )
+insert	CellTree.cpp	/^    nodes.insert( nodes.end(), child, child+2 );$/;"	p	file:	signature:( nodes.end(), child, child+2 )
+isDegenerate	CellLocator.h	/^    virtual bool isDegenerate() const = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:() const
+isDegenerate	CellLocatorBIH.cpp	/^bool CellLocatorBIH::isDegenerate() const$/;"	f	class:kvs::CellLocatorBIH	signature:() const
+isDegenerate	CellLocatorBIH.h	/^    bool isDegenerate() const;$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:() const
+is_leaf	CellTree.h	/^        bool is_leaf() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+is_node	CellTree.h	/^        bool is_node() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+kvs	BoundingBox.cpp	/^namespace kvs$/;"	n	file:
+kvs	BoundingBox.h	/^namespace kvs$/;"	n
+kvs	CellLocator.cpp	/^namespace kvs$/;"	n	file:
+kvs	CellLocator.h	/^namespace kvs{$/;"	n
+kvs	CellLocatorBIH.cpp	/^namespace kvs$/;"	n	file:
+kvs	CellLocatorBIH.h	/^namespace kvs$/;"	n
+kvs	CellTree.cpp	/^namespace kvs$/;"	n	file:
+kvs	CellTree.h	/^namespace kvs$/;"	n
+kvs::BoundingBox	BoundingBox.h	/^    class BoundingBox$/;"	c	namespace:kvs
+kvs::BoundingBox::BoundingBox	BoundingBox.cpp	/^    BoundingBox::BoundingBox()$/;"	f	class:kvs::BoundingBox	signature:()
+kvs::BoundingBox::BoundingBox	BoundingBox.cpp	/^    BoundingBox::BoundingBox(const kvs::UnstructuredVolumeObject* object, size_t cindex)$/;"	f	class:kvs::BoundingBox	signature:(const kvs::UnstructuredVolumeObject* object, size_t cindex)
+kvs::BoundingBox::BoundingBox	BoundingBox.h	/^        BoundingBox();$/;"	p	class:kvs::BoundingBox	access:public	signature:()
+kvs::BoundingBox::BoundingBox	BoundingBox.h	/^        BoundingBox(const kvs::UnstructuredVolumeObject* object, size_t cindex);		\/\/\/<	create a bounding box based on a specific object and cell index $/;"	p	class:kvs::BoundingBox	access:public	signature:(const kvs::UnstructuredVolumeObject* object, size_t cindex)
+kvs::BoundingBox::bounds	BoundingBox.cpp	/^    const float* BoundingBox::bounds() const$/;"	f	class:kvs::BoundingBox	signature:() const
+kvs::BoundingBox::bounds	BoundingBox.h	/^        const float* bounds() const;$/;"	p	class:kvs::BoundingBox	access:public	signature:() const
+kvs::BoundingBox::m_bounds	BoundingBox.h	/^        float m_bounds[6];$/;"	m	class:kvs::BoundingBox	access:private
+kvs::BoundingBox::~BoundingBox	BoundingBox.cpp	/^    BoundingBox::~BoundingBox()$/;"	f	class:kvs::BoundingBox	signature:()
+kvs::BoundingBox::~BoundingBox	BoundingBox.h	/^        ~BoundingBox();$/;"	p	class:kvs::BoundingBox	access:public	signature:()
+kvs::CellLocator	CellLocator.h	/^class CellLocator$/;"	c	namespace:kvs
+kvs::CellLocator::CACHEFULL	CellLocator.h	/^        CACHEFULL = 2$/;"	e	enum:kvs::CellLocator::Mode
+kvs::CellLocator::CACHEHALF	CellLocator.h	/^        CACHEHALF  = 1,$/;"	e	enum:kvs::CellLocator::Mode
+kvs::CellLocator::CACHEOFF	CellLocator.h	/^        CACHEOFF = 0,$/;"	e	enum:kvs::CellLocator::Mode
+kvs::CellLocator::CellLocator	CellLocator.cpp	/^CellLocator::CellLocator( const kvs::UnstructuredVolumeObject* volume ):$/;"	f	class:kvs::CellLocator	signature:( const kvs::UnstructuredVolumeObject* volume )
+kvs::CellLocator::CellLocator	CellLocator.cpp	/^CellLocator::CellLocator()$/;"	f	class:kvs::CellLocator	signature:()
+kvs::CellLocator::CellLocator	CellLocator.h	/^    CellLocator( const kvs::UnstructuredVolumeObject* volume );$/;"	p	class:kvs::CellLocator	access:public	signature:( const kvs::UnstructuredVolumeObject* volume )
+kvs::CellLocator::CellLocator	CellLocator.h	/^    CellLocator();$/;"	p	class:kvs::CellLocator	access:public	signature:()
+kvs::CellLocator::Mode	CellLocator.h	/^    enum Mode$/;"	g	class:kvs::CellLocator	access:public
+kvs::CellLocator::build	CellLocator.h	/^    virtual void build() = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:()
+kvs::CellLocator::cell	CellLocator.h	/^    const kvs::CellBase<float>* cell() { return m_cell; }$/;"	f	class:kvs::CellLocator	access:public	signature:()
+kvs::CellLocator::center	CellLocator.cpp	/^kvs::Vector3f CellLocator::center( size_t cellid ) const$/;"	f	class:kvs::CellLocator	signature:( size_t cellid ) const
+kvs::CellLocator::center	CellLocator.h	/^    kvs::Vector3f center( size_t cellid ) const;$/;"	p	class:kvs::CellLocator	access:public	signature:( size_t cellid ) const
+kvs::CellLocator::check	CellLocator.h	/^    virtual bool check( const kvs::CellLocator* locator ) = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:( const kvs::CellLocator* locator )
+kvs::CellLocator::clearCache	CellLocator.h	/^    virtual void clearCache() = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:()
+kvs::CellLocator::dataset	CellLocator.h	/^    const kvs::UnstructuredVolumeObject* dataset() { return m_dataset; }$/;"	f	class:kvs::CellLocator	access:public	signature:()
+kvs::CellLocator::findCell	CellLocator.h	/^    virtual int findCell( const float pos[3] ) = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:( const float pos[3] )
+kvs::CellLocator::initializeCell	CellLocator.cpp	/^void CellLocator::initializeCell()$/;"	f	class:kvs::CellLocator	signature:()
+kvs::CellLocator::initializeCell	CellLocator.h	/^    void initializeCell();$/;"	p	class:kvs::CellLocator	access:public	signature:()
+kvs::CellLocator::isDegenerate	CellLocator.h	/^    virtual bool isDegenerate() const = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:() const
+kvs::CellLocator::kvsClassName	CellLocator.h	/^    kvsClassName( kvs::CellLocator );$/;"	p	class:kvs::CellLocator	access:private	signature:( kvs::CellLocator )
+kvs::CellLocator::m_cell	CellLocator.h	/^    kvs::CellBase<float>*                   m_cell;$/;"	m	class:kvs::CellLocator	access:protected
+kvs::CellLocator::m_dataset	CellLocator.h	/^    const kvs::UnstructuredVolumeObject*    m_dataset;$/;"	m	class:kvs::CellLocator	access:protected
+kvs::CellLocator::m_mode	CellLocator.h	/^    Mode                                    m_mode;$/;"	m	class:kvs::CellLocator	access:protected
+kvs::CellLocator::mode	CellLocator.h	/^    const CellLocator::Mode mode() const { return m_mode; } $/;"	f	class:kvs::CellLocator	access:public	signature:() const
+kvs::CellLocator::printVertices	CellLocator.cpp	/^void CellLocator::printVertices() const$/;"	f	class:kvs::CellLocator	signature:() const
+kvs::CellLocator::printVertices	CellLocator.h	/^    void printVertices() const;$/;"	p	class:kvs::CellLocator	access:public	signature:() const
+kvs::CellLocator::randomCellindex	CellLocator.cpp	/^size_t CellLocator::randomCellindex() const$/;"	f	class:kvs::CellLocator	signature:() const
+kvs::CellLocator::randomCellindex	CellLocator.h	/^    size_t randomCellindex() const;$/;"	p	class:kvs::CellLocator	access:public	signature:() const
+kvs::CellLocator::read	CellLocator.h	/^    virtual bool read( const std::string filename ) = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:( const std::string filename )
+kvs::CellLocator::setDataSet	CellLocator.h	/^    void setDataSet( const kvs::UnstructuredVolumeObject* volume ){ m_dataset = volume; }$/;"	f	class:kvs::CellLocator	access:public	signature:( const kvs::UnstructuredVolumeObject* volume )
+kvs::CellLocator::setMode	CellLocator.h	/^    void setMode( const CellLocator::Mode mode ){ m_mode = mode; }$/;"	f	class:kvs::CellLocator	access:public	signature:( const CellLocator::Mode mode )
+kvs::CellLocator::testCell	CellLocator.cpp	/^bool CellLocator::testCell( size_t cellid, const float pos[3] ) const$/;"	f	class:kvs::CellLocator	signature:( size_t cellid, const float pos[3] ) const
+kvs::CellLocator::testCell	CellLocator.h	/^    bool testCell( size_t cellid, const float pos[3] ) const;$/;"	p	class:kvs::CellLocator	access:public	signature:( size_t cellid, const float pos[3] ) const
+kvs::CellLocator::write	CellLocator.h	/^    virtual bool write( const std::string filename ) = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:( const std::string filename )
+kvs::CellLocator::~CellLocator	CellLocator.cpp	/^CellLocator::~CellLocator()$/;"	f	class:kvs::CellLocator	signature:()
+kvs::CellLocator::~CellLocator	CellLocator.h	/^    virtual ~CellLocator();$/;"	p	class:kvs::CellLocator	access:public	signature:()
+kvs::CellLocatorBIH	CellLocatorBIH.h	/^class CellLocatorBIH : public CellLocator$/;"	c	namespace:kvs	inherits:CellLocator
+kvs::CellLocatorBIH::BaseClass	CellLocatorBIH.h	/^    typedef CellLocator BaseClass;$/;"	t	class:kvs::CellLocatorBIH	access:public
+kvs::CellLocatorBIH::CellLocatorBIH	CellLocatorBIH.cpp	/^CellLocatorBIH::CellLocatorBIH( const kvs::UnstructuredVolumeObject* volume ):$/;"	f	class:kvs::CellLocatorBIH	signature:( const kvs::UnstructuredVolumeObject* volume )
+kvs::CellLocatorBIH::CellLocatorBIH	CellLocatorBIH.cpp	/^CellLocatorBIH::CellLocatorBIH()$/;"	f	class:kvs::CellLocatorBIH	signature:()
+kvs::CellLocatorBIH::CellLocatorBIH	CellLocatorBIH.h	/^    CellLocatorBIH( const kvs::UnstructuredVolumeObject* volume );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const kvs::UnstructuredVolumeObject* volume )
+kvs::CellLocatorBIH::CellLocatorBIH	CellLocatorBIH.h	/^    CellLocatorBIH();$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:()
+kvs::CellLocatorBIH::build	CellLocatorBIH.cpp	/^void CellLocatorBIH::build()$/;"	f	class:kvs::CellLocatorBIH	signature:()
+kvs::CellLocatorBIH::build	CellLocatorBIH.h	/^    void build();$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:()
+kvs::CellLocatorBIH::cellTree	CellLocatorBIH.cpp	/^const CellTree* CellLocatorBIH::cellTree() const$/;"	f	class:kvs::CellLocatorBIH	signature:() const
+kvs::CellLocatorBIH::cellTree	CellLocatorBIH.h	/^    const kvs::CellTree* cellTree( void ) const;$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( void ) const
+kvs::CellLocatorBIH::check	CellLocatorBIH.cpp	/^bool CellLocatorBIH::check( const kvs::CellLocator* locator )$/;"	f	class:kvs::CellLocatorBIH	signature:( const kvs::CellLocator* locator )
+kvs::CellLocatorBIH::check	CellLocatorBIH.h	/^    bool check( const kvs::CellLocator* locator );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const kvs::CellLocator* locator )
+kvs::CellLocatorBIH::clearCache	CellLocatorBIH.cpp	/^void CellLocatorBIH::clearCache()$/;"	f	class:kvs::CellLocatorBIH	signature:()
+kvs::CellLocatorBIH::clearCache	CellLocatorBIH.h	/^    void clearCache();$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:()
+kvs::CellLocatorBIH::findCell	CellLocatorBIH.cpp	/^int CellLocatorBIH::findCell( const float pos[3] )$/;"	f	class:kvs::CellLocatorBIH	signature:( const float pos[3] )
+kvs::CellLocatorBIH::findCell	CellLocatorBIH.h	/^    int findCell( const float pos[3] );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const float pos[3] )
+kvs::CellLocatorBIH::isDegenerate	CellLocatorBIH.cpp	/^bool CellLocatorBIH::isDegenerate() const$/;"	f	class:kvs::CellLocatorBIH	signature:() const
+kvs::CellLocatorBIH::isDegenerate	CellLocatorBIH.h	/^    bool isDegenerate() const;$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:() const
+kvs::CellLocatorBIH::m_builder	CellLocatorBIH.h	/^    CellTreeBuilder*                       m_builder; $/;"	m	class:kvs::CellLocatorBIH	access:private
+kvs::CellLocatorBIH::m_cache1	CellLocatorBIH.h	/^    unsigned int                           m_cache1[32];$/;"	m	class:kvs::CellLocatorBIH	access:private
+kvs::CellLocatorBIH::m_cache2	CellLocatorBIH.h	/^    unsigned int                           m_cache2[16];$/;"	m	class:kvs::CellLocatorBIH	access:private
+kvs::CellLocatorBIH::m_celltree	CellLocatorBIH.h	/^    mutable CellTree*                      m_celltree;$/;"	m	class:kvs::CellLocatorBIH	access:private
+kvs::CellLocatorBIH::m_cp1	CellLocatorBIH.h	/^    unsigned int*                          m_cp1;$/;"	m	class:kvs::CellLocatorBIH	access:private
+kvs::CellLocatorBIH::m_cp2	CellLocatorBIH.h	/^    unsigned int*                          m_cp2;$/;"	m	class:kvs::CellLocatorBIH	access:private
+kvs::CellLocatorBIH::read	CellLocatorBIH.cpp	/^bool CellLocatorBIH::read( const std::string filename )$/;"	f	class:kvs::CellLocatorBIH	signature:( const std::string filename )
+kvs::CellLocatorBIH::read	CellLocatorBIH.h	/^    bool read( const std::string filename );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const std::string filename )
+kvs::CellLocatorBIH::setCellTree	CellLocatorBIH.cpp	/^void CellLocatorBIH::setCellTree( const kvs::CellTree* ct )$/;"	f	class:kvs::CellLocatorBIH	signature:( const kvs::CellTree* ct )
+kvs::CellLocatorBIH::setCellTree	CellLocatorBIH.h	/^    void setCellTree( const kvs::CellTree* ct );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const kvs::CellTree* ct )
+kvs::CellLocatorBIH::setParallel	CellLocatorBIH.cpp	/^void CellLocatorBIH::setParallel()$/;"	f	class:kvs::CellLocatorBIH	signature:()
+kvs::CellLocatorBIH::setParallel	CellLocatorBIH.h	/^	void setParallel();$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:()
+kvs::CellLocatorBIH::write	CellLocatorBIH.cpp	/^bool CellLocatorBIH::write( const std::string filename )$/;"	f	class:kvs::CellLocatorBIH	signature:( const std::string filename )
+kvs::CellLocatorBIH::write	CellLocatorBIH.h	/^    bool write( const std::string filename );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const std::string filename )
+kvs::CellLocatorBIH::~CellLocatorBIH	CellLocatorBIH.cpp	/^CellLocatorBIH::~CellLocatorBIH()$/;"	f	class:kvs::CellLocatorBIH	signature:()
+kvs::CellLocatorBIH::~CellLocatorBIH	CellLocatorBIH.h	/^    ~CellLocatorBIH();$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:()
+kvs::CellTree	CellTree.h	/^class CellTree$/;"	c	namespace:kvs
+kvs::CellTree::CellTree	CellTree.h	/^	CellTree(){}$/;"	f	class:kvs::CellTree	access:public	signature:()
+kvs::CellTree::clear	CellTree.h	/^		leaves.clear();$/;"	p	signature:()
+kvs::CellTree::clear	CellTree.h	/^		nodes.clear();$/;"	p	signature:()
+kvs::CellTree::height	CellTree.h	/^    unsigned int height( node& node )$/;"	f	class:kvs::CellTree	access:public	signature:( node& node )
+kvs::CellTree::in_traversal_cached	CellTree.h	/^    struct in_traversal_cached$/;"	s	class:kvs::CellTree	access:public
+kvs::CellTree::in_traversal_cached::in_traversal_cached	CellTree.h	/^        in_traversal_cached( const CellTree& ct, const float* pos, unsigned int hint_stack[32], unsigned int* hint_sp, unsigned int hint_lrstack[16], unsigned int* hint_lrsp ):$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:( const CellTree& ct, const float* pos, unsigned int hint_stack[32], unsigned int* hint_sp, unsigned int hint_lrstack[16], unsigned int* hint_lrsp )
+kvs::CellTree::in_traversal_cached::l	CellTree.h	/^                bool l = p <= n->lmax();$/;"	l
+kvs::CellTree::in_traversal_cached::left	CellTree.h	/^                const unsigned int left = n->left();    \/\/ get the VECTOR STORAGE index of the left child$/;"	l
+kvs::CellTree::in_traversal_cached::lr_sp	CellTree.h	/^        const unsigned int* lr_sp()$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:()
+kvs::CellTree::in_traversal_cached::lr_stack	CellTree.h	/^        const unsigned int* lr_stack()$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:()
+kvs::CellTree::in_traversal_cached::m_ct	CellTree.h	/^        const CellTree&		    m_ct;$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+kvs::CellTree::in_traversal_cached::m_lrsp	CellTree.h	/^        unsigned int*           m_lrsp;$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+kvs::CellTree::in_traversal_cached::m_lrstack	CellTree.h	/^        unsigned int            m_lrstack[16];$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+kvs::CellTree::in_traversal_cached::m_pos	CellTree.h	/^        const float*			m_pos;$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+kvs::CellTree::in_traversal_cached::m_sp	CellTree.h	/^        unsigned int*			m_sp;$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+kvs::CellTree::in_traversal_cached::m_stack	CellTree.h	/^        unsigned int			m_stack[32];$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+kvs::CellTree::in_traversal_cached::n	CellTree.h	/^                const CellTree::node* n = &m_ct.nodes.front() + *(--m_sp);$/;"	l
+kvs::CellTree::in_traversal_cached::n	CellTree.h	/^            int n = hint_sp - hint_stack;     \/\/ initialize stack pointer $/;"	l
+kvs::CellTree::in_traversal_cached::next	CellTree.h	/^        const CellTree::node* next()$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:()
+kvs::CellTree::in_traversal_cached::p	CellTree.h	/^                const float p = m_pos[n->dim()];        \/\/ the value corresponding to split dim of the node$/;"	l
+kvs::CellTree::in_traversal_cached::r	CellTree.h	/^                bool r = p > n->rmin();$/;"	l
+kvs::CellTree::in_traversal_cached::sp	CellTree.h	/^        const unsigned int* sp()$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:()
+kvs::CellTree::in_traversal_cached::stack	CellTree.h	/^        const unsigned int* stack()$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:()
+kvs::CellTree::leaves	CellTree.h	/^    std::vector<unsigned int> leaves;$/;"	m	class:kvs::CellTree	access:public
+kvs::CellTree::node	CellTree.h	/^    struct node$/;"	s	class:kvs::CellTree	access:public
+kvs::CellTree::node::__anon2::__anon3::lm	CellTree.h	/^                float lm;$/;"	m	struct:kvs::CellTree::node::__anon2::__anon3	access:public
+kvs::CellTree::node::__anon2::__anon3::rm	CellTree.h	/^                float rm;$/;"	m	struct:kvs::CellTree::node::__anon2::__anon3	access:public
+kvs::CellTree::node::__anon2::__anon4::st	CellTree.h	/^                unsigned int st;$/;"	m	struct:kvs::CellTree::node::__anon2::__anon4	access:public
+kvs::CellTree::node::__anon2::__anon4::sz	CellTree.h	/^                unsigned int sz;$/;"	m	struct:kvs::CellTree::node::__anon2::__anon4	access:public
+kvs::CellTree::node::dim	CellTree.h	/^        unsigned int dim() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+kvs::CellTree::node::index	CellTree.h	/^        unsigned int index;$/;"	m	struct:kvs::CellTree::node	access:public
+kvs::CellTree::node::is_leaf	CellTree.h	/^        bool is_leaf() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+kvs::CellTree::node::is_node	CellTree.h	/^        bool is_node() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+kvs::CellTree::node::left	CellTree.h	/^        unsigned int left() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+kvs::CellTree::node::lmax	CellTree.h	/^        const float& lmax() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+kvs::CellTree::node::make_leaf	CellTree.h	/^        void make_leaf( unsigned int start, unsigned int size )$/;"	f	struct:kvs::CellTree::node	access:public	signature:( unsigned int start, unsigned int size )
+kvs::CellTree::node::make_node	CellTree.h	/^        void make_node( unsigned int left, unsigned int d, float b[2] )$/;"	f	struct:kvs::CellTree::node	access:public	signature:( unsigned int left, unsigned int d, float b[2] )
+kvs::CellTree::node::right	CellTree.h	/^        unsigned int right() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+kvs::CellTree::node::rmin	CellTree.h	/^        const float& rmin() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+kvs::CellTree::node::set_children	CellTree.h	/^        void set_children( unsigned int left )$/;"	f	struct:kvs::CellTree::node	access:public	signature:( unsigned int left )
+kvs::CellTree::node::size	CellTree.h	/^        unsigned int size() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+kvs::CellTree::node::start	CellTree.h	/^        unsigned int start() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+kvs::CellTree::nodes	CellTree.h	/^    std::vector<node>         nodes;$/;"	m	class:kvs::CellTree	access:public
+kvs::CellTree::pre_traversal	CellTree.h	/^    struct pre_traversal$/;"	s	class:kvs::CellTree	access:public
+kvs::CellTree::pre_traversal::l	CellTree.h	/^                bool l = p <= n->lmax();$/;"	l
+kvs::CellTree::pre_traversal::left	CellTree.h	/^                const unsigned int left = n->left();    \/\/ get the VECTOR STORAGE index of the left child$/;"	l
+kvs::CellTree::pre_traversal::m_ct	CellTree.h	/^        const CellTree&		    m_ct;$/;"	m	struct:kvs::CellTree::pre_traversal	access:public
+kvs::CellTree::pre_traversal::m_pos	CellTree.h	/^        const float*			m_pos;$/;"	m	struct:kvs::CellTree::pre_traversal	access:public
+kvs::CellTree::pre_traversal::m_sp	CellTree.h	/^        unsigned int*			m_sp;$/;"	m	struct:kvs::CellTree::pre_traversal	access:public
+kvs::CellTree::pre_traversal::m_stack	CellTree.h	/^        unsigned int			m_stack[32];$/;"	m	struct:kvs::CellTree::pre_traversal	access:public
+kvs::CellTree::pre_traversal::n	CellTree.h	/^                const CellTree::node* n = &m_ct.nodes.front() + *(--m_sp);$/;"	l
+kvs::CellTree::pre_traversal::next	CellTree.h	/^        const CellTree::node* next()$/;"	f	struct:kvs::CellTree::pre_traversal	access:public	signature:()
+kvs::CellTree::pre_traversal::p	CellTree.h	/^                const float p = m_pos[n->dim()];        \/\/ the value corresponding to split dim of the node$/;"	l
+kvs::CellTree::pre_traversal::pre_traversal	CellTree.h	/^        pre_traversal( const CellTree& ct, const float* pos ) :$/;"	f	struct:kvs::CellTree::pre_traversal	access:public	signature:( const CellTree& ct, const float* pos )
+kvs::CellTree::pre_traversal::r	CellTree.h	/^                bool r = p > n->rmin();$/;"	l
+kvs::CellTree::pre_traversal_cached	CellTree.h	/^    struct pre_traversal_cached$/;"	s	class:kvs::CellTree	access:public
+kvs::CellTree::pre_traversal_cached::l	CellTree.h	/^                bool l = p <= n->lmax();$/;"	l
+kvs::CellTree::pre_traversal_cached::left	CellTree.h	/^                const unsigned int left = n->left();    \/\/ get the VECTOR STORAGE index of the left child$/;"	l
+kvs::CellTree::pre_traversal_cached::m_ct	CellTree.h	/^        const CellTree&		    m_ct;$/;"	m	struct:kvs::CellTree::pre_traversal_cached	access:public
+kvs::CellTree::pre_traversal_cached::m_pos	CellTree.h	/^        const float*			m_pos;$/;"	m	struct:kvs::CellTree::pre_traversal_cached	access:public
+kvs::CellTree::pre_traversal_cached::m_sp	CellTree.h	/^        unsigned int*			m_sp;$/;"	m	struct:kvs::CellTree::pre_traversal_cached	access:public
+kvs::CellTree::pre_traversal_cached::m_stack	CellTree.h	/^        unsigned int            m_stack[32];$/;"	m	struct:kvs::CellTree::pre_traversal_cached	access:public
+kvs::CellTree::pre_traversal_cached::n	CellTree.h	/^                const CellTree::node* n = &m_ct.nodes.front() + *(--m_sp);$/;"	l
+kvs::CellTree::pre_traversal_cached::next	CellTree.h	/^        const CellTree::node* next()$/;"	f	struct:kvs::CellTree::pre_traversal_cached	access:public	signature:()
+kvs::CellTree::pre_traversal_cached::p	CellTree.h	/^                const float p = m_pos[n->dim()];        \/\/ the value corresponding to split dim of the node$/;"	l
+kvs::CellTree::pre_traversal_cached::pre_traversal_cached	CellTree.h	/^        pre_traversal_cached( const CellTree& ct, const float* pos, const unsigned int previous_index ) :$/;"	f	struct:kvs::CellTree::pre_traversal_cached	access:public	signature:( const CellTree& ct, const float* pos, const unsigned int previous_index )
+kvs::CellTree::pre_traversal_cached::r	CellTree.h	/^                bool r = p > n->rmin();$/;"	l
+kvs::CellTree::pre_traversal_cached::sp	CellTree.h	/^        const unsigned int* sp()$/;"	f	struct:kvs::CellTree::pre_traversal_cached	access:public	signature:()
+kvs::CellTree::pre_traversal_cached::stack	CellTree.h	/^        const unsigned int* stack()$/;"	f	struct:kvs::CellTree::pre_traversal_cached	access:public	signature:()
+kvs::CellTree::~CellTree	CellTree.h	/^	~CellTree()$/;"	f	class:kvs::CellTree	access:public	signature:()
+kvs::CellTreeBuilder	CellTree.h	/^class CellTreeBuilder$/;"	c	namespace:kvs
+kvs::CellTreeBuilder::CellTreeBuilder	CellTree.cpp	/^CellTreeBuilder::CellTreeBuilder()$/;"	f	class:kvs::CellTreeBuilder	signature:()
+kvs::CellTreeBuilder::CellTreeBuilder	CellTree.h	/^	CellTreeBuilder();$/;"	p	class:kvs::CellTreeBuilder	access:public	signature:()
+kvs::CellTreeBuilder::build	CellTree.cpp	/^void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* ds )$/;"	f	class:kvs::CellTreeBuilder	signature:( CellTree& ct, const kvs::UnstructuredVolumeObject* ds )
+kvs::CellTreeBuilder::build	CellTree.h	/^	void build( CellTree& ct, const kvs::UnstructuredVolumeObject* ds );$/;"	p	class:kvs::CellTreeBuilder	access:public	signature:( CellTree& ct, const kvs::UnstructuredVolumeObject* ds )
+kvs::CellTreeBuilder::m_leafsize	CellTree.h	/^    unsigned int                        m_leafsize;$/;"	m	class:kvs::CellTreeBuilder	access:private
+kvs::CellTreeBuilder::m_nodes	CellTree.h	/^    std::vector<kvs::CellTree::node>    m_nodes;$/;"	m	class:kvs::CellTreeBuilder	access:private
+kvs::CellTreeBuilder::m_nodes1	CellTree.h	/^    std::vector<kvs::CellTree::node>    m_nodes1;$/;"	m	class:kvs::CellTreeBuilder	access:private
+kvs::CellTreeBuilder::m_nodes2	CellTree.h	/^    std::vector<kvs::CellTree::node>    m_nodes2;$/;"	m	class:kvs::CellTreeBuilder	access:private
+kvs::CellTreeBuilder::m_parallel	CellTree.h	/^    bool								m_parallel;$/;"	m	class:kvs::CellTreeBuilder	access:private
+kvs::CellTreeBuilder::m_pc	CellTree.h	/^    per_cell*                           m_pc;$/;"	m	class:kvs::CellTreeBuilder	access:private
+kvs::CellTreeBuilder::m_pc1	CellTree.h	/^    per_cell*                           m_pc1;$/;"	m	class:kvs::CellTreeBuilder	access:private
+kvs::CellTreeBuilder::m_pc2	CellTree.h	/^    per_cell*                           m_pc2;$/;"	m	class:kvs::CellTreeBuilder	access:private
+kvs::CellTreeBuilder::m_thread	CellTree.h	/^	kvs::SplitThread					m_thread[2];$/;"	m	class:kvs::CellTreeBuilder	access:private
+kvs::CellTreeBuilder::setParallel	CellTree.cpp	/^void CellTreeBuilder::setParallel()$/;"	f	class:kvs::CellTreeBuilder	signature:()
+kvs::CellTreeBuilder::setParallel	CellTree.h	/^	void setParallel();$/;"	p	class:kvs::CellTreeBuilder	access:public	signature:()
+kvs::CellTreeBuilder::split	CellTree.cpp	/^void CellTreeBuilder::split( unsigned int index, float min[3], float max[3] )$/;"	f	class:kvs::CellTreeBuilder	signature:( unsigned int index, float min[3], float max[3] )
+kvs::CellTreeBuilder::split	CellTree.h	/^	void split( unsigned int index, float min[3], float max[3] );$/;"	p	class:kvs::CellTreeBuilder	access:public	signature:( unsigned int index, float min[3], float max[3] )
+kvs::CellTreeBuilder::~CellTreeBuilder	CellTree.cpp	/^CellTreeBuilder::~CellTreeBuilder()$/;"	f	class:kvs::CellTreeBuilder	signature:()
+kvs::CellTreeBuilder::~CellTreeBuilder	CellTree.h	/^	~CellTreeBuilder();$/;"	p	class:kvs::CellTreeBuilder	access:public	signature:()
+kvs::SplitThread	CellTree.h	/^class SplitThread : public kvs::Thread$/;"	c	namespace:kvs	inherits:kvs::Thread
+kvs::SplitThread::SplitThread	CellTree.h	/^	SplitThread(){}$/;"	f	class:kvs::SplitThread	access:public	signature:()
+kvs::SplitThread::check	CellTree.cpp	/^const bool SplitThread::check()$/;"	f	class:kvs::SplitThread	signature:()
+kvs::SplitThread::check	CellTree.h	/^	const bool check();$/;"	p	class:kvs::SplitThread	access:public	signature:()
+kvs::SplitThread::init	CellTree.cpp	/^void SplitThread::init( $/;"	f	class:kvs::SplitThread	signature:( unsigned int leafsize, std::vector<CellTree::node>* p_nodes, per_cell* pc, unsigned int index, float min[3], float max[3] )
+kvs::SplitThread::init	CellTree.h	/^	void init($/;"	p	class:kvs::SplitThread	access:public	signature:( unsigned int leafsize, std::vector<CellTree::node>* p_nodes, per_cell* pc, unsigned int index, float min[3], float max[3] )
+kvs::SplitThread::m_index	CellTree.h	/^	unsigned int					m_index;$/;"	m	class:kvs::SplitThread	access:private
+kvs::SplitThread::m_leafsize	CellTree.h	/^    unsigned int                    m_leafsize;$/;"	m	class:kvs::SplitThread	access:private
+kvs::SplitThread::m_max	CellTree.h	/^	float							m_max[3];$/;"	m	class:kvs::SplitThread	access:private
+kvs::SplitThread::m_min	CellTree.h	/^	float							m_min[3];$/;"	m	class:kvs::SplitThread	access:private
+kvs::SplitThread::m_nodes	CellTree.h	/^	std::vector<CellTree::node>*	m_nodes;$/;"	m	class:kvs::SplitThread	access:private
+kvs::SplitThread::m_pc	CellTree.h	/^    per_cell*                       m_pc;$/;"	m	class:kvs::SplitThread	access:private
+kvs::SplitThread::run	CellTree.cpp	/^void SplitThread::run()$/;"	f	class:kvs::SplitThread	signature:()
+kvs::SplitThread::run	CellTree.h	/^	void run();$/;"	p	class:kvs::SplitThread	access:public	signature:()
+kvs::SplitThread::split	CellTree.cpp	/^void SplitThread::split( unsigned int index, float min[3], float max[3] )$/;"	f	class:kvs::SplitThread	signature:( unsigned int index, float min[3], float max[3] )
+kvs::SplitThread::split	CellTree.h	/^	void split( unsigned int index, float min[3], float max[3] );$/;"	p	class:kvs::SplitThread	access:public	signature:( unsigned int index, float min[3], float max[3] )
+kvs::SplitThread::~SplitThread	CellTree.h	/^	~SplitThread(){}$/;"	f	class:kvs::SplitThread	access:public	signature:()
+kvs::allocate	CellTree.cpp	/^        mask.allocate( node_size );$/;"	p	file:	signature:( node_size )
+kvs::b	CellTree.cpp	/^        bucket b[3][nbuckets];     \/\/3 dimensions, 6 buckets each$/;"	l
+kvs::b	CellTree.cpp	/^    bucket b[3][nbuckets]; \/\/3 dimensions, 6 buckets each$/;"	l
+kvs::bd	CellLocator.cpp	/^    kvs::BoundingBox bd(m_dataset, cellid);$/;"	p	file:	signature:(m_dataset, cellid)
+kvs::bd	CellTree.cpp	/^        kvs::BoundingBox bd( ds, i );$/;"	p	file:	signature:( ds, i )
+kvs::begin	CellLocatorBIH.cpp	/^            const unsigned int* begin = &(this->m_celltree->leaves[n->start()]);$/;"	l
+kvs::begin	CellTree.cpp	/^        per_cell* begin = m_pc + start;$/;"	l
+kvs::bih	CellLocatorBIH.cpp	/^    const kvs::CellLocatorBIH* bih = static_cast<const kvs::CellLocatorBIH*>( locator );$/;"	l
+kvs::bindCell	CellLocator.cpp	/^    m_cell->bindCell( cellid );$/;"	p	file:	signature:( cellid )
+kvs::bounds	CellLocator.cpp	/^    const float* bounds = bd.bounds();$/;"	l
+kvs::bounds	CellTree.cpp	/^        const float* bounds = bd.bounds();$/;"	l
+kvs::c	CellTree.cpp	/^                float c = lvol*sum + rvol*(size-sum);$/;"	l
+kvs::c	CellTree.cpp	/^            float c = lvol*sum + rvol*(size-sum);$/;"	l
+kvs::cen	CellTree.cpp	/^                float cen = (pc->min[d] + pc->max[d])\/2.0f;	\/\/center of a certain dimension$/;"	l
+kvs::cen	CellTree.cpp	/^            float cen = (pc->min[d] + pc->max[d])\/2.0f;	\/\/center of a certain dimension$/;"	l
+kvs::center	CellLocator.cpp	/^    kvs::Vector3f center;$/;"	l
+kvs::child	CellTree.cpp	/^    kvs::CellTree::node child[2];$/;"	l
+kvs::clear	CellTree.cpp	/^	m_nodes.clear();$/;"	p	file:	signature:()
+kvs::clear	CellTree.cpp	/^	m_nodes1.clear();$/;"	p	file:	signature:()
+kvs::clear	CellTree.cpp	/^	m_nodes2.clear();$/;"	p	file:	signature:()
+kvs::clip	CellTree.cpp	/^        float clip[2] = { lmax[dim], rmin[dim] };$/;"	l
+kvs::clip	CellTree.cpp	/^    float clip[2] = { lmax[dim], rmin[dim] };$/;"	l
+kvs::close	CellLocatorBIH.cpp	/^    outfile.close();$/;"	p	file:	signature:()
+kvs::connections	BoundingBox.cpp	/^        const kvs::UnstructuredVolumeObject::Connections& connections = object->connections();$/;"	l
+kvs::coords	BoundingBox.cpp	/^        const kvs::UnstructuredVolumeObject::Coords& coords = object->coords();$/;"	l
+kvs::cost	CellTree.cpp	/^        float cost = std::numeric_limits<float>::max();$/;"	l
+kvs::cost	CellTree.cpp	/^    float cost = std::numeric_limits<float>::max();$/;"	l
+kvs::ct	CellLocatorBIH.cpp	/^    kvs::CellTree* ct = new kvs::CellTree();$/;"	l
+kvs::ct1	CellLocatorBIH.cpp	/^    const kvs::CellTree& ct1 = bih->cellTree();$/;"	l
+kvs::ct2	CellLocatorBIH.cpp	/^    const kvs::CellTree& ct2 = m_celltree;$/;"	l
+kvs::dim	CellTree.cpp	/^        unsigned int dim;$/;"	l
+kvs::dim	CellTree.cpp	/^    unsigned int dim;$/;"	l
+kvs::end	CellLocatorBIH.cpp	/^            const unsigned int* end   = begin + n->size();$/;"	l
+kvs::end	CellTree.cpp	/^        per_cell* end   = m_pc + start + size;$/;"	l
+kvs::end	CellTree.cpp	/^    per_cell* end   = m_pc + start + size;$/;"	l
+kvs::ext	CellTree.cpp	/^        const float ext[3] = { max[0]-min[0], max[1]-min[1], max[2]-min[2] }; $/;"	l
+kvs::ext	CellTree.cpp	/^    const float ext[3] = { max[0]-min[0], max[1]-min[1], max[2]-min[2] }; $/;"	l
+kvs::flag	CellLocatorBIH.cpp	/^        bool flag = $/;"	l
+kvs::iext	CellTree.cpp	/^        const float iext[3] = { nbuckets\/ext[0], nbuckets\/ext[1], nbuckets\/ext[2] };$/;"	l
+kvs::iext	CellTree.cpp	/^    const float iext[3] = { nbuckets\/ext[0], nbuckets\/ext[1], nbuckets\/ext[2] };$/;"	l
+kvs::ind	CellTree.cpp	/^                int   ind = (int)( (cen-min[d])*iext[d] );  $/;"	l
+kvs::ind	CellTree.cpp	/^            int   ind = (int)( (cen-min[d])*iext[d] );  $/;"	l
+kvs::index	CellLocatorBIH.cpp	/^        unsigned int index;$/;"	l
+kvs::infile	CellLocatorBIH.cpp	/^    std::ifstream infile( filename.c_str(), std::ios_base::in|std::ios_base::binary );$/;"	p	file:	signature:( filename.c_str(), std::ios_base::in|std::ios_base::binary )
+kvs::init	CellTree.cpp	/^	    m_thread[1].init( m_leafsize, &m_nodes2, m_pc2, 0, rmin, rmax );$/;"	p	file:	signature:( m_leafsize, &m_nodes2, m_pc2, 0, rmin, rmax )
+kvs::init	CellTree.cpp	/^        m_thread[0].init( m_leafsize, &m_nodes1, m_pc1, 0, lmin, lmax );$/;"	p	file:	signature:( m_leafsize, &m_nodes1, m_pc1, 0, lmin, lmax )
+kvs::insert	CellTree.cpp	/^    m_nodes.insert( m_nodes.end(), child, child+2 );$/;"	p	file:	signature:( m_nodes.end(), child, child+2 )
+kvs::insert	CellTree.cpp	/^    nodes.insert( nodes.end(), child, child+2 );$/;"	p	file:	signature:( nodes.end(), child, child+2 )
+kvs::leaf_size1	CellLocatorBIH.cpp	/^    const unsigned int leaf_size1 = ct1->leaves.size();$/;"	l
+kvs::length	BoundingBox.cpp	/^        size_t length = object->cellType();$/;"	l
+kvs::lm	CellLocatorBIH.cpp	/^        float lm,rm;$/;"	l
+kvs::lmax	CellTree.cpp	/^                float lmax = -std::numeric_limits<float>::max();$/;"	l
+kvs::lmax	CellTree.cpp	/^            float lmax = -std::numeric_limits<float>::max();$/;"	l
+kvs::lmax	CellTree.cpp	/^        float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+kvs::lmax	CellTree.cpp	/^    float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+kvs::lmin	CellTree.cpp	/^        float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+kvs::lmin	CellTree.cpp	/^    float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+kvs::local	CellLocator.cpp	/^    kvs::Vector3f local = m_cell->localPoint();    $/;"	l
+kvs::lvol	CellTree.cpp	/^                float lvol = (lmax-min[d])\/ext[d];			\/\/left volume$/;"	l
+kvs::lvol	CellTree.cpp	/^            float lvol = (lmax-min[d])\/ext[d];			\/\/left volume$/;"	l
+kvs::make_leaf	CellTree.cpp	/^        root1.make_leaf( start1, size1 );	\/\/set index = 3 start = 0 size = ncells$/;"	p	file:	signature:( start1, size1 )
+kvs::make_leaf	CellTree.cpp	/^        root2.make_leaf( start2, size2 );	\/\/set index = 3 start = 0 size = ncells$/;"	p	file:	signature:( start2, size2 )
+kvs::make_node	CellTree.cpp	/^    m_nodes[index].make_node( m_nodes.size(), dim, clip );$/;"	p	file:	signature:( m_nodes.size(), dim, clip )
+kvs::make_node	CellTree.cpp	/^    nodes[index].make_node( nodes.size(), dim, clip );$/;"	p	file:	signature:( nodes.size(), dim, clip )
+kvs::mask	CellTree.cpp	/^        kvs::BitArray mask;$/;"	l
+kvs::max	BoundingBox.cpp	/^        float max = std::numeric_limits<float>::max();$/;"	l
+kvs::max	CellTree.cpp	/^    float max[3] = { $/;"	l
+kvs::mid	CellTree.cpp	/^        per_cell* mid   = begin;$/;"	l
+kvs::mid	CellTree.cpp	/^    per_cell* mid   = begin;$/;"	l
+kvs::min	BoundingBox.cpp	/^        float min = - std::numeric_limits<float>::max();$/;"	l
+kvs::min	CellTree.cpp	/^    float min[3] = { $/;"	l
+kvs::n	CellLocatorBIH.cpp	/^                    int n = sp1-stack1;$/;"	l
+kvs::nbuckets	CellTree.cpp	/^        const unsigned int nbuckets = 6;$/;"	l
+kvs::nbuckets	CellTree.cpp	/^    const unsigned int nbuckets  = 6;$/;"	l
+kvs::nbuckets	CellTree.cpp	/^    const unsigned int nbuckets = 6;$/;"	l
+kvs::ncells	CellTree.cpp	/^    const size_t ncells  = ds->ncells();$/;"	l
+kvs::ni	CellTree.cpp	/^        std::vector<CellTree::node>::iterator ni = ct.nodes.begin()+1;  $/;"	l
+kvs::ni	CellTree.cpp	/^        std::vector<CellTree::node>::iterator ni = ct.nodes.begin();$/;"	l
+kvs::nleaves	CellLocatorBIH.cpp	/^    const unsigned int nleaves = m_celltree->leaves.size();$/;"	l
+kvs::nleaves	CellLocatorBIH.cpp	/^    infile >> nleaves;$/;"	l
+kvs::nleaves	CellLocatorBIH.cpp	/^    outfile << nleaves;$/;"	l
+kvs::nleaves	CellLocatorBIH.cpp	/^    unsigned int nleaves;$/;"	l
+kvs::nn	CellTree.cpp	/^        std::vector<CellTree::node>::iterator nn = ct.nodes.begin()+1;$/;"	l
+kvs::nn	CellTree.cpp	/^        std::vector<CellTree::node>::iterator nn = ct.nodes.begin()+3;$/;"	l
+kvs::nnodes	CellLocator.cpp	/^    int nnodes = m_dataset->cellType();$/;"	l
+kvs::nnodes	CellLocatorBIH.cpp	/^    const unsigned int nnodes = m_celltree->nodes.size();$/;"	l
+kvs::nnodes	CellLocatorBIH.cpp	/^    infile >> nnodes;$/;"	l
+kvs::nnodes	CellLocatorBIH.cpp	/^    outfile << nnodes;$/;"	l
+kvs::nnodes	CellLocatorBIH.cpp	/^    unsigned int nnodes;$/;"	l
+kvs::node	CellLocatorBIH.cpp	/^        kvs::CellTree::node node;$/;"	l
+kvs::node_size	CellTree.cpp	/^        const unsigned int node_size = m_nodes1.size() + m_nodes2.size() + 1;$/;"	l
+kvs::node_size1	CellLocatorBIH.cpp	/^    const unsigned int node_size1 = ct1->nodes.size();$/;"	l
+kvs::node_size2	CellLocatorBIH.cpp	/^    const unsigned int node_size2 = ct2->nodes.size();$/;"	l
+kvs::nodes	CellTree.cpp	/^    std::vector<CellTree::node>& nodes = *m_nodes;$/;"	l
+kvs::outfile	CellLocatorBIH.cpp	/^    std::ofstream outfile( filename.c_str(), std::ios_base::out|std::ios_base::binary );$/;"	p	file:	signature:( filename.c_str(), std::ios_base::out|std::ios_base::binary )
+kvs::plane	CellTree.cpp	/^        float plane;$/;"	l
+kvs::plane	CellTree.cpp	/^    float plane;$/;"	l
+kvs::pos	BoundingBox.cpp	/^            size_t pos = connections[ length*cindex+i ];$/;"	l
+kvs::push_back	CellTree.cpp	/^        m_nodes.push_back( root );		$/;"	p	file:	signature:( root )
+kvs::push_back	CellTree.cpp	/^        m_nodes1.push_back( root1 );$/;"	p	file:	signature:( root1 )
+kvs::push_back	CellTree.cpp	/^        m_nodes2.push_back( root2 );$/;"	p	file:	signature:( root2 )
+kvs::resize	CellLocatorBIH.cpp	/^    ct->leaves.resize( nleaves );$/;"	p	file:	signature:( nleaves )
+kvs::resize	CellLocatorBIH.cpp	/^    ct->nodes.resize( nnodes );$/;"	p	file:	signature:( nnodes )
+kvs::resize	CellTree.cpp	/^        ct.leaves.resize( ncells );$/;"	p	file:	signature:( ncells )
+kvs::resize	CellTree.cpp	/^        ct.nodes.resize( m_nodes.size() );$/;"	p	file:	signature:( m_nodes.size() )
+kvs::resize	CellTree.cpp	/^        ct.nodes.resize( node_size );$/;"	p	file:	signature:( node_size )
+kvs::rm	CellLocatorBIH.cpp	/^        float lm,rm;$/;"	l
+kvs::rm	CellLocatorBIH.cpp	/^        infile >> index >> lm >> rm;$/;"	l
+kvs::rmax	CellTree.cpp	/^        float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+kvs::rmax	CellTree.cpp	/^    float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+kvs::rmin	CellTree.cpp	/^                float rmin =  std::numeric_limits<float>::max();$/;"	l
+kvs::rmin	CellTree.cpp	/^            float rmin =  std::numeric_limits<float>::max();$/;"	l
+kvs::rmin	CellTree.cpp	/^        float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+kvs::rmin	CellTree.cpp	/^    float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+kvs::root	CellTree.cpp	/^        CellTree::node root;$/;"	l
+kvs::root1	CellTree.cpp	/^        CellTree::node root1;$/;"	l
+kvs::root2	CellTree.cpp	/^        CellTree::node root2;$/;"	l
+kvs::rvol	CellTree.cpp	/^                float rvol = (max[d]-rmin)\/ext[d];			\/\/right volume$/;"	l
+kvs::rvol	CellTree.cpp	/^            float rvol = (max[d]-rmin)\/ext[d];			\/\/right volume$/;"	l
+kvs::setGlobalPoint	CellLocator.cpp	/^    m_cell->setGlobalPoint( gpos );$/;"	p	file:	signature:( gpos )
+kvs::setParallel	CellLocatorBIH.cpp	/^	m_builder->setParallel();$/;"	p	file:	signature:()
+kvs::size	CellTree.cpp	/^        unsigned int size  = ncells;$/;"	l
+kvs::size	CellTree.cpp	/^    unsigned int size  = m_nodes[index].size();$/;"	l
+kvs::size	CellTree.cpp	/^    unsigned int size  = nodes[index].size();$/;"	l
+kvs::size1	CellTree.cpp	/^        unsigned int size1 = mid - m_pc;$/;"	l
+kvs::size2	CellTree.cpp	/^        unsigned int size2 = end - mid;$/;"	l
+kvs::sp	CellLocatorBIH.cpp	/^                    const unsigned int* sp = pt.sp();$/;"	l
+kvs::sp1	CellLocatorBIH.cpp	/^                    const unsigned int* sp1 = pt.sp();$/;"	l
+kvs::sp2	CellLocatorBIH.cpp	/^                    const unsigned int* sp2 = pt.lr_sp();$/;"	l
+kvs::stack1	CellLocatorBIH.cpp	/^                    const unsigned int* stack1 = pt.stack();$/;"	l
+kvs::stack2	CellLocatorBIH.cpp	/^                    const unsigned int* stack2 = pt.lr_stack();$/;"	l
+kvs::start	CellLocatorBIH.cpp	/^    timer.start();$/;"	p	file:	signature:()
+kvs::start	CellTree.cpp	/^	    m_thread[0].start();$/;"	p	file:	signature:()
+kvs::start	CellTree.cpp	/^	    m_thread[1].start();$/;"	p	file:	signature:()
+kvs::start	CellTree.cpp	/^        unsigned int start = 0;$/;"	l
+kvs::start	CellTree.cpp	/^    unsigned int start = m_nodes[index].start();$/;"	l
+kvs::start	CellTree.cpp	/^    unsigned int start = nodes[index].start();$/;"	l
+kvs::start1	CellTree.cpp	/^        unsigned int start1 = 0;$/;"	l
+kvs::start2	CellTree.cpp	/^        unsigned int start2 = 0;$/;"	l
+kvs::std::cerr	CellLocatorBIH.cpp	/^        std::cerr << "CellLocator Mode parameter error!\\n";$/;"	m	class:kvs::std	file:
+kvs::std::cerr	CellLocatorBIH.cpp	/^        std::cerr << "No dataset! \\n";$/;"	m	class:kvs::std	file:
+kvs::std::cout	CellLocatorBIH.cpp	/^    std::cout << "Cell Tree ..." ;$/;"	m	class:kvs::std	file:
+kvs::std::cout	CellTree.cpp	/^    std::cout << "leaves array: \\n";$/;"	m	class:kvs::std	file:
+kvs::std::cout	CellTree.cpp	/^    std::cout << "nodes array: \\n";$/;"	m	class:kvs::std	file:
+kvs::std::endl	CellLocator.cpp	/^        std::cerr << "no dataset!" << std::endl;$/;"	m	class:kvs::std	file:
+kvs::std::endl	CellLocator.cpp	/^        std::cout << "v[" << i << "] = " << m_cell->vertices()[i] << std::endl;$/;"	m	class:kvs::std	file:
+kvs::std::endl	CellLocatorBIH.cpp	/^            std::cout << "tree1 and tree2 differs at " << i << "th node. " << std::endl;$/;"	m	class:kvs::std	file:
+kvs::std::endl	CellLocatorBIH.cpp	/^        std::cout << "can't open " << filename << " for reading. read failed" << std::endl;$/;"	m	class:kvs::std	file:
+kvs::std::endl	CellLocatorBIH.cpp	/^        std::cout << "can't open " << filename << " for writing. write failed" << std::endl;$/;"	m	class:kvs::std	file:
+kvs::std::endl	CellLocatorBIH.cpp	/^    std::cout << "\\t " << timer.sec() << " seconds " << std::endl;$/;"	m	class:kvs::std	file:
+kvs::std::endl	CellTree.cpp	/^		std::cout << "nnodes: " << m_nodes.size() << std::endl;$/;"	m	class:kvs::std	file:
+kvs::std::endl	CellTree.cpp	/^		std::cout << "nnodes: " << node_size << std::endl;$/;"	m	class:kvs::std	file:
+kvs::std::endl	CellTree.cpp	/^    std::cout << "max external coords found by kvs::BoundingBox:\\t" << max[0] << " " << max[1] << " "  << max[2] << " "  << std::endl;$/;"	m	class:kvs::std	file:
+kvs::std::endl	CellTree.cpp	/^    std::cout << "min external coords found by kvs::BoundingBox:\\t" << min[0] << " " << min[1] << " "  << min[2] << " "  << std::endl;$/;"	m	class:kvs::std	file:
+kvs::std::nth_element	CellTree.cpp	/^            std::nth_element( begin, mid, end, center_order( dim ) );$/;"	p	class:kvs::std	file:	signature:( begin, mid, end, center_order( dim ) )
+kvs::std::nth_element	CellTree.cpp	/^        std::nth_element( begin, mid, end, center_order( dim ) );$/;"	p	class:kvs::std	file:	signature:( begin, mid, end, center_order( dim ) )
+kvs::stop	CellLocatorBIH.cpp	/^    timer.stop();$/;"	p	file:	signature:()
+kvs::sum	CellTree.cpp	/^            unsigned int sum = 0;$/;"	l
+kvs::sum	CellTree.cpp	/^        unsigned int sum = 0;$/;"	l
+kvs::sz	CellLocatorBIH.cpp	/^        infile >> sz;$/;"	l
+kvs::sz	CellLocatorBIH.cpp	/^        unsigned int sz;$/;"	l
+kvs::timer	CellLocatorBIH.cpp	/^    kvs::Timer timer;$/;"	l
+kvs::wait	CellTree.cpp	/^	    m_thread[0].wait();$/;"	p	file:	signature:()
+kvs::wait	CellTree.cpp	/^	    m_thread[1].wait();$/;"	p	file:	signature:()
+kvs::x	CellLocator.cpp	/^        center.x() += m_cell->vertices()[i].x();$/;"	p	file:	signature:()
+kvs::x	CellLocator.cpp	/^    center.x() \/= nnodes; $/;"	p	file:	signature:()
+kvs::xmax	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(min)
+kvs::xmin	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(max)
+kvs::y	CellLocator.cpp	/^        center.y() += m_cell->vertices()[i].y();$/;"	p	file:	signature:()
+kvs::y	CellLocator.cpp	/^    center.y() \/= nnodes; $/;"	p	file:	signature:()
+kvs::ymax	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(min)
+kvs::ymin	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(max)
+kvs::z	CellLocator.cpp	/^        center.z() += m_cell->vertices()[i].z();$/;"	p	file:	signature:()
+kvs::z	CellLocator.cpp	/^    center.z() \/= nnodes; $/;"	p	file:	signature:()
+kvs::zmax	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(min)
+kvs::zmin	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(max)
+kvsClassName	CellLocator.h	/^    kvsClassName( kvs::CellLocator );$/;"	p	class:kvs::CellLocator	access:private	signature:( kvs::CellLocator )
+l	CellTree.h	/^                bool l = p <= n->lmax();$/;"	l
+leaf_size1	CellLocatorBIH.cpp	/^    const unsigned int leaf_size1 = ct1->leaves.size();$/;"	l
+leaves	CellTree.h	/^    std::vector<unsigned int> leaves;$/;"	m	class:kvs::CellTree	access:public
+left	CellTree.h	/^                const unsigned int left = n->left();    \/\/ get the VECTOR STORAGE index of the left child$/;"	l
+left	CellTree.h	/^        unsigned int left() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+left_predicate	CellTree.h	/^        left_predicate( unsigned int _d, float _p ) : $/;"	f	struct:__anon1::left_predicate	access:public	signature:( unsigned int _d, float _p )
+left_predicate	CellTree.h	/^    struct left_predicate$/;"	s	namespace:__anon1
+length	BoundingBox.cpp	/^        size_t length = object->cellType();$/;"	l
+lm	CellLocatorBIH.cpp	/^        float lm,rm;$/;"	l
+lm	CellTree.h	/^                float lm;$/;"	m	struct:kvs::CellTree::node::__anon2::__anon3	access:public
+lmax	CellTree.cpp	/^                float lmax = -std::numeric_limits<float>::max();$/;"	l
+lmax	CellTree.cpp	/^            float lmax = -std::numeric_limits<float>::max();$/;"	l
+lmax	CellTree.cpp	/^        float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+lmax	CellTree.cpp	/^    float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+lmax	CellTree.h	/^        const float& lmax() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+lmin	CellTree.cpp	/^        float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+lmin	CellTree.cpp	/^    float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+local	CellLocator.cpp	/^    kvs::Vector3f local = m_cell->localPoint();    $/;"	l
+locator_d	main.cpp	/^	kvs::CellLocatorBIH* locator_d = new kvs::CellLocatorBIH(volume);$/;"	l
+locator_s	main.cpp	/^	kvs::CellLocatorBIH* locator_s = new kvs::CellLocatorBIH(volume);$/;"	l
+lr_sp	CellTree.h	/^        const unsigned int* lr_sp()$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:()
+lr_stack	CellTree.h	/^        const unsigned int* lr_stack()$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:()
+lvol	CellTree.cpp	/^                float lvol = (lmax-min[d])\/ext[d];			\/\/left volume$/;"	l
+lvol	CellTree.cpp	/^            float lvol = (lmax-min[d])\/ext[d];			\/\/left volume$/;"	l
+m_bounds	BoundingBox.h	/^        float m_bounds[6];$/;"	m	class:kvs::BoundingBox	access:private
+m_builder	CellLocatorBIH.h	/^    CellTreeBuilder*                       m_builder; $/;"	m	class:kvs::CellLocatorBIH	access:private
+m_cache1	CellLocatorBIH.h	/^    unsigned int                           m_cache1[32];$/;"	m	class:kvs::CellLocatorBIH	access:private
+m_cache2	CellLocatorBIH.h	/^    unsigned int                           m_cache2[16];$/;"	m	class:kvs::CellLocatorBIH	access:private
+m_cell	CellLocator.h	/^    kvs::CellBase<float>*                   m_cell;$/;"	m	class:kvs::CellLocator	access:protected
+m_celltree	CellLocatorBIH.h	/^    mutable CellTree*                      m_celltree;$/;"	m	class:kvs::CellLocatorBIH	access:private
+m_cp1	CellLocatorBIH.h	/^    unsigned int*                          m_cp1;$/;"	m	class:kvs::CellLocatorBIH	access:private
+m_cp2	CellLocatorBIH.h	/^    unsigned int*                          m_cp2;$/;"	m	class:kvs::CellLocatorBIH	access:private
+m_ct	CellTree.h	/^        const CellTree&		    m_ct;$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+m_ct	CellTree.h	/^        const CellTree&		    m_ct;$/;"	m	struct:kvs::CellTree::pre_traversal	access:public
+m_ct	CellTree.h	/^        const CellTree&		    m_ct;$/;"	m	struct:kvs::CellTree::pre_traversal_cached	access:public
+m_dataset	CellLocator.h	/^    const kvs::UnstructuredVolumeObject*    m_dataset;$/;"	m	class:kvs::CellLocator	access:protected
+m_index	CellTree.h	/^	unsigned int					m_index;$/;"	m	class:kvs::SplitThread	access:private
+m_leafsize	CellTree.h	/^    unsigned int                        m_leafsize;$/;"	m	class:kvs::CellTreeBuilder	access:private
+m_leafsize	CellTree.h	/^    unsigned int                    m_leafsize;$/;"	m	class:kvs::SplitThread	access:private
+m_lrsp	CellTree.h	/^        unsigned int*           m_lrsp;$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+m_lrstack	CellTree.h	/^        unsigned int            m_lrstack[16];$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+m_max	CellTree.h	/^	float							m_max[3];$/;"	m	class:kvs::SplitThread	access:private
+m_min	CellTree.h	/^	float							m_min[3];$/;"	m	class:kvs::SplitThread	access:private
+m_mode	CellLocator.h	/^    Mode                                    m_mode;$/;"	m	class:kvs::CellLocator	access:protected
+m_nodes	CellTree.h	/^	std::vector<CellTree::node>*	m_nodes;$/;"	m	class:kvs::SplitThread	access:private
+m_nodes	CellTree.h	/^    std::vector<kvs::CellTree::node>    m_nodes;$/;"	m	class:kvs::CellTreeBuilder	access:private
+m_nodes1	CellTree.h	/^    std::vector<kvs::CellTree::node>    m_nodes1;$/;"	m	class:kvs::CellTreeBuilder	access:private
+m_nodes2	CellTree.h	/^    std::vector<kvs::CellTree::node>    m_nodes2;$/;"	m	class:kvs::CellTreeBuilder	access:private
+m_parallel	CellTree.h	/^    bool								m_parallel;$/;"	m	class:kvs::CellTreeBuilder	access:private
+m_pc	CellTree.h	/^    per_cell*                           m_pc;$/;"	m	class:kvs::CellTreeBuilder	access:private
+m_pc	CellTree.h	/^    per_cell*                       m_pc;$/;"	m	class:kvs::SplitThread	access:private
+m_pc1	CellTree.h	/^    per_cell*                           m_pc1;$/;"	m	class:kvs::CellTreeBuilder	access:private
+m_pc2	CellTree.h	/^    per_cell*                           m_pc2;$/;"	m	class:kvs::CellTreeBuilder	access:private
+m_pos	CellTree.h	/^        const float*			m_pos;$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+m_pos	CellTree.h	/^        const float*			m_pos;$/;"	m	struct:kvs::CellTree::pre_traversal	access:public
+m_pos	CellTree.h	/^        const float*			m_pos;$/;"	m	struct:kvs::CellTree::pre_traversal_cached	access:public
+m_sp	CellTree.h	/^        unsigned int*			m_sp;$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+m_sp	CellTree.h	/^        unsigned int*			m_sp;$/;"	m	struct:kvs::CellTree::pre_traversal	access:public
+m_sp	CellTree.h	/^        unsigned int*			m_sp;$/;"	m	struct:kvs::CellTree::pre_traversal_cached	access:public
+m_stack	CellTree.h	/^        unsigned int			m_stack[32];$/;"	m	struct:kvs::CellTree::in_traversal_cached	access:public
+m_stack	CellTree.h	/^        unsigned int			m_stack[32];$/;"	m	struct:kvs::CellTree::pre_traversal	access:public
+m_stack	CellTree.h	/^        unsigned int            m_stack[32];$/;"	m	struct:kvs::CellTree::pre_traversal_cached	access:public
+m_thread	CellTree.h	/^	kvs::SplitThread					m_thread[2];$/;"	m	class:kvs::CellTreeBuilder	access:private
+main	main.cpp	/^int main(int argc, char** argv)$/;"	f	signature:(int argc, char** argv)
+make_leaf	CellTree.cpp	/^        root1.make_leaf( start1, size1 );	\/\/set index = 3 start = 0 size = ncells$/;"	p	file:	signature:( start1, size1 )
+make_leaf	CellTree.cpp	/^        root2.make_leaf( start2, size2 );	\/\/set index = 3 start = 0 size = ncells$/;"	p	file:	signature:( start2, size2 )
+make_leaf	CellTree.h	/^        void make_leaf( unsigned int start, unsigned int size )$/;"	f	struct:kvs::CellTree::node	access:public	signature:( unsigned int start, unsigned int size )
+make_node	CellTree.cpp	/^    m_nodes[index].make_node( m_nodes.size(), dim, clip );$/;"	p	file:	signature:( m_nodes.size(), dim, clip )
+make_node	CellTree.cpp	/^    nodes[index].make_node( nodes.size(), dim, clip );$/;"	p	file:	signature:( nodes.size(), dim, clip )
+make_node	CellTree.h	/^        void make_node( unsigned int left, unsigned int d, float b[2] )$/;"	f	struct:kvs::CellTree::node	access:public	signature:( unsigned int left, unsigned int d, float b[2] )
+mask	CellTree.cpp	/^        kvs::BitArray mask;$/;"	l
+max	BoundingBox.cpp	/^        float max = std::numeric_limits<float>::max();$/;"	l
+max	CellTree.cpp	/^    float max[3] = { $/;"	l
+max	CellTree.h	/^        float        max;$/;"	m	struct:__anon1::bucket	access:public
+max	CellTree.h	/^        float        max[3];$/;"	m	struct:__anon1::per_cell	access:public
+mid	CellTree.cpp	/^        per_cell* mid   = begin;$/;"	l
+mid	CellTree.cpp	/^    per_cell* mid   = begin;$/;"	l
+min	BoundingBox.cpp	/^        float min = - std::numeric_limits<float>::max();$/;"	l
+min	CellTree.cpp	/^    float min[3] = { $/;"	l
+min	CellTree.h	/^        float        min;$/;"	m	struct:__anon1::bucket	access:public
+min	CellTree.h	/^        float        min[3];$/;"	m	struct:__anon1::per_cell	access:public
+mode	CellLocator.h	/^    const CellLocator::Mode mode() const { return m_mode; } $/;"	f	class:kvs::CellLocator	access:public	signature:() const
+n	CellLocatorBIH.cpp	/^                    int n = sp1-stack1;$/;"	l
+n	CellTree.h	/^                const CellTree::node* n = &m_ct.nodes.front() + *(--m_sp);$/;"	l
+n	CellTree.h	/^            int n = hint_sp - hint_stack;     \/\/ initialize stack pointer $/;"	l
+nbuckets	CellTree.cpp	/^        const unsigned int nbuckets = 6;$/;"	l
+nbuckets	CellTree.cpp	/^    const unsigned int nbuckets  = 6;$/;"	l
+nbuckets	CellTree.cpp	/^    const unsigned int nbuckets = 6;$/;"	l
+ncells	CellTree.cpp	/^    const size_t ncells  = ds->ncells();$/;"	l
+next	CellTree.h	/^        const CellTree::node* next()$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:()
+next	CellTree.h	/^        const CellTree::node* next()$/;"	f	struct:kvs::CellTree::pre_traversal	access:public	signature:()
+next	CellTree.h	/^        const CellTree::node* next()$/;"	f	struct:kvs::CellTree::pre_traversal_cached	access:public	signature:()
+ni	CellTree.cpp	/^        std::vector<CellTree::node>::iterator ni = ct.nodes.begin()+1;  $/;"	l
+ni	CellTree.cpp	/^        std::vector<CellTree::node>::iterator ni = ct.nodes.begin();$/;"	l
+nleaves	CellLocatorBIH.cpp	/^    const unsigned int nleaves = m_celltree->leaves.size();$/;"	l
+nleaves	CellLocatorBIH.cpp	/^    infile >> nleaves;$/;"	l
+nleaves	CellLocatorBIH.cpp	/^    outfile << nleaves;$/;"	l
+nleaves	CellLocatorBIH.cpp	/^    unsigned int nleaves;$/;"	l
+nn	CellTree.cpp	/^        std::vector<CellTree::node>::iterator nn = ct.nodes.begin()+1;$/;"	l
+nn	CellTree.cpp	/^        std::vector<CellTree::node>::iterator nn = ct.nodes.begin()+3;$/;"	l
+nnodes	CellLocator.cpp	/^    int nnodes = m_dataset->cellType();$/;"	l
+nnodes	CellLocatorBIH.cpp	/^    const unsigned int nnodes = m_celltree->nodes.size();$/;"	l
+nnodes	CellLocatorBIH.cpp	/^    infile >> nnodes;$/;"	l
+nnodes	CellLocatorBIH.cpp	/^    outfile << nnodes;$/;"	l
+nnodes	CellLocatorBIH.cpp	/^    unsigned int nnodes;$/;"	l
+node	CellLocatorBIH.cpp	/^        kvs::CellTree::node node;$/;"	l
+node	CellTree.h	/^    struct node$/;"	s	class:kvs::CellTree	access:public
+node_size	CellTree.cpp	/^        const unsigned int node_size = m_nodes1.size() + m_nodes2.size() + 1;$/;"	l
+node_size1	CellLocatorBIH.cpp	/^    const unsigned int node_size1 = ct1->nodes.size();$/;"	l
+node_size2	CellLocatorBIH.cpp	/^    const unsigned int node_size2 = ct2->nodes.size();$/;"	l
+nodes	CellTree.cpp	/^    std::vector<CellTree::node>& nodes = *m_nodes;$/;"	l
+nodes	CellTree.h	/^    std::vector<node>         nodes;$/;"	m	class:kvs::CellTree	access:public
+nth_element	CellTree.cpp	/^            std::nth_element( begin, mid, end, center_order( dim ) );$/;"	p	class:kvs::std	file:	signature:( begin, mid, end, center_order( dim ) )
+nth_element	CellTree.cpp	/^        std::nth_element( begin, mid, end, center_order( dim ) );$/;"	p	class:kvs::std	file:	signature:( begin, mid, end, center_order( dim ) )
+operator ()	CellTree.h	/^        bool operator()( const per_cell& pc )$/;"	f	struct:__anon1::left_predicate	access:public	signature:( const per_cell& pc )
+operator ()	CellTree.h	/^        bool operator()( const per_cell& pc0, const per_cell& pc1 )$/;"	f	struct:__anon1::center_order	access:public	signature:( const per_cell& pc0, const per_cell& pc1 )
+outfile	CellLocatorBIH.cpp	/^    std::ofstream outfile( filename.c_str(), std::ios_base::out|std::ios_base::binary );$/;"	p	file:	signature:( filename.c_str(), std::ios_base::out|std::ios_base::binary )
+p	CellTree.h	/^                const float p = m_pos[n->dim()];        \/\/ the value corresponding to split dim of the node$/;"	l
+p	CellTree.h	/^        float              p;$/;"	m	struct:__anon1::left_predicate	access:public
+per_cell	CellTree.h	/^    struct per_cell $/;"	s	namespace:__anon1
+plane	CellTree.cpp	/^        float plane;$/;"	l
+plane	CellTree.cpp	/^    float plane;$/;"	l
+pos	BoundingBox.cpp	/^            size_t pos = connections[ length*cindex+i ];$/;"	l
+pre_traversal	CellTree.h	/^        pre_traversal( const CellTree& ct, const float* pos ) :$/;"	f	struct:kvs::CellTree::pre_traversal	access:public	signature:( const CellTree& ct, const float* pos )
+pre_traversal	CellTree.h	/^    struct pre_traversal$/;"	s	class:kvs::CellTree	access:public
+pre_traversal_cached	CellTree.h	/^        pre_traversal_cached( const CellTree& ct, const float* pos, const unsigned int previous_index ) :$/;"	f	struct:kvs::CellTree::pre_traversal_cached	access:public	signature:( const CellTree& ct, const float* pos, const unsigned int previous_index )
+pre_traversal_cached	CellTree.h	/^    struct pre_traversal_cached$/;"	s	class:kvs::CellTree	access:public
+printVertices	CellLocator.cpp	/^void CellLocator::printVertices() const$/;"	f	class:kvs::CellLocator	signature:() const
+printVertices	CellLocator.h	/^    void printVertices() const;$/;"	p	class:kvs::CellLocator	access:public	signature:() const
+push_back	CellTree.cpp	/^        m_nodes.push_back( root );		$/;"	p	file:	signature:( root )
+push_back	CellTree.cpp	/^        m_nodes1.push_back( root1 );$/;"	p	file:	signature:( root1 )
+push_back	CellTree.cpp	/^        m_nodes2.push_back( root2 );$/;"	p	file:	signature:( root2 )
+r	CellTree.h	/^                bool r = p > n->rmin();$/;"	l
+randomCellindex	CellLocator.cpp	/^size_t CellLocator::randomCellindex() const$/;"	f	class:kvs::CellLocator	signature:() const
+randomCellindex	CellLocator.h	/^    size_t randomCellindex() const;$/;"	p	class:kvs::CellLocator	access:public	signature:() const
+read	CellLocator.h	/^    virtual bool read( const std::string filename ) = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:( const std::string filename )
+read	CellLocatorBIH.cpp	/^bool CellLocatorBIH::read( const std::string filename )$/;"	f	class:kvs::CellLocatorBIH	signature:( const std::string filename )
+read	CellLocatorBIH.h	/^    bool read( const std::string filename );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const std::string filename )
+resize	CellLocatorBIH.cpp	/^    ct->leaves.resize( nleaves );$/;"	p	file:	signature:( nleaves )
+resize	CellLocatorBIH.cpp	/^    ct->nodes.resize( nnodes );$/;"	p	file:	signature:( nnodes )
+resize	CellTree.cpp	/^        ct.leaves.resize( ncells );$/;"	p	file:	signature:( ncells )
+resize	CellTree.cpp	/^        ct.nodes.resize( m_nodes.size() );$/;"	p	file:	signature:( m_nodes.size() )
+resize	CellTree.cpp	/^        ct.nodes.resize( node_size );$/;"	p	file:	signature:( node_size )
+right	CellTree.h	/^        unsigned int right() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+rm	CellLocatorBIH.cpp	/^        float lm,rm;$/;"	l
+rm	CellLocatorBIH.cpp	/^        infile >> index >> lm >> rm;$/;"	l
+rm	CellTree.h	/^                float rm;$/;"	m	struct:kvs::CellTree::node::__anon2::__anon3	access:public
+rmax	CellTree.cpp	/^        float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+rmax	CellTree.cpp	/^    float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+rmin	CellTree.cpp	/^                float rmin =  std::numeric_limits<float>::max();$/;"	l
+rmin	CellTree.cpp	/^            float rmin =  std::numeric_limits<float>::max();$/;"	l
+rmin	CellTree.cpp	/^        float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+rmin	CellTree.cpp	/^    float lmin[3], lmax[3], rmin[3], rmax[3];$/;"	l
+rmin	CellTree.h	/^        const float& rmin() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+root	CellTree.cpp	/^        CellTree::node root;$/;"	l
+root1	CellTree.cpp	/^        CellTree::node root1;$/;"	l
+root2	CellTree.cpp	/^        CellTree::node root2;$/;"	l
+run	CellTree.cpp	/^void SplitThread::run()$/;"	f	class:kvs::SplitThread	signature:()
+run	CellTree.h	/^	void run();$/;"	p	class:kvs::SplitThread	access:public	signature:()
+rvol	CellTree.cpp	/^                float rvol = (max[d]-rmin)\/ext[d];			\/\/right volume$/;"	l
+rvol	CellTree.cpp	/^            float rvol = (max[d]-rmin)\/ext[d];			\/\/right volume$/;"	l
+setCellTree	CellLocatorBIH.cpp	/^void CellLocatorBIH::setCellTree( const kvs::CellTree* ct )$/;"	f	class:kvs::CellLocatorBIH	signature:( const kvs::CellTree* ct )
+setCellTree	CellLocatorBIH.h	/^    void setCellTree( const kvs::CellTree* ct );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const kvs::CellTree* ct )
+setDataSet	CellLocator.h	/^    void setDataSet( const kvs::UnstructuredVolumeObject* volume ){ m_dataset = volume; }$/;"	f	class:kvs::CellLocator	access:public	signature:( const kvs::UnstructuredVolumeObject* volume )
+setGlobalPoint	CellLocator.cpp	/^    m_cell->setGlobalPoint( gpos );$/;"	p	file:	signature:( gpos )
+setMode	CellLocator.h	/^    void setMode( const CellLocator::Mode mode ){ m_mode = mode; }$/;"	f	class:kvs::CellLocator	access:public	signature:( const CellLocator::Mode mode )
+setParallel	CellLocatorBIH.cpp	/^	m_builder->setParallel();$/;"	p	file:	signature:()
+setParallel	CellLocatorBIH.cpp	/^void CellLocatorBIH::setParallel()$/;"	f	class:kvs::CellLocatorBIH	signature:()
+setParallel	CellLocatorBIH.h	/^	void setParallel();$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:()
+setParallel	CellTree.cpp	/^void CellTreeBuilder::setParallel()$/;"	f	class:kvs::CellTreeBuilder	signature:()
+setParallel	CellTree.h	/^	void setParallel();$/;"	p	class:kvs::CellTreeBuilder	access:public	signature:()
+setParallel	main.cpp	/^	locator_d->setParallel();$/;"	p	file:	signature:()
+set_children	CellTree.h	/^        void set_children( unsigned int left )$/;"	f	struct:kvs::CellTree::node	access:public	signature:( unsigned int left )
+size	CellTree.cpp	/^        unsigned int size  = ncells;$/;"	l
+size	CellTree.cpp	/^    unsigned int size  = m_nodes[index].size();$/;"	l
+size	CellTree.cpp	/^    unsigned int size  = nodes[index].size();$/;"	l
+size	CellTree.h	/^        unsigned int size() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+size1	CellTree.cpp	/^        unsigned int size1 = mid - m_pc;$/;"	l
+size2	CellTree.cpp	/^        unsigned int size2 = end - mid;$/;"	l
+sp	CellLocatorBIH.cpp	/^                    const unsigned int* sp = pt.sp();$/;"	l
+sp	CellTree.h	/^        const unsigned int* sp()$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:()
+sp	CellTree.h	/^        const unsigned int* sp()$/;"	f	struct:kvs::CellTree::pre_traversal_cached	access:public	signature:()
+sp1	CellLocatorBIH.cpp	/^                    const unsigned int* sp1 = pt.sp();$/;"	l
+sp2	CellLocatorBIH.cpp	/^                    const unsigned int* sp2 = pt.lr_sp();$/;"	l
+split	CellTree.cpp	/^void CellTreeBuilder::split( unsigned int index, float min[3], float max[3] )$/;"	f	class:kvs::CellTreeBuilder	signature:( unsigned int index, float min[3], float max[3] )
+split	CellTree.cpp	/^void SplitThread::split( unsigned int index, float min[3], float max[3] )$/;"	f	class:kvs::SplitThread	signature:( unsigned int index, float min[3], float max[3] )
+split	CellTree.h	/^	void split( unsigned int index, float min[3], float max[3] );$/;"	p	class:kvs::CellTreeBuilder	access:public	signature:( unsigned int index, float min[3], float max[3] )
+split	CellTree.h	/^	void split( unsigned int index, float min[3], float max[3] );$/;"	p	class:kvs::SplitThread	access:public	signature:( unsigned int index, float min[3], float max[3] )
+st	CellTree.h	/^                unsigned int st;$/;"	m	struct:kvs::CellTree::node::__anon2::__anon4	access:public
+stack	CellTree.h	/^        const unsigned int* stack()$/;"	f	struct:kvs::CellTree::in_traversal_cached	access:public	signature:()
+stack	CellTree.h	/^        const unsigned int* stack()$/;"	f	struct:kvs::CellTree::pre_traversal_cached	access:public	signature:()
+stack1	CellLocatorBIH.cpp	/^                    const unsigned int* stack1 = pt.stack();$/;"	l
+stack2	CellLocatorBIH.cpp	/^                    const unsigned int* stack2 = pt.lr_stack();$/;"	l
+start	CellLocatorBIH.cpp	/^    timer.start();$/;"	p	file:	signature:()
+start	CellTree.cpp	/^	    m_thread[0].start();$/;"	p	file:	signature:()
+start	CellTree.cpp	/^	    m_thread[1].start();$/;"	p	file:	signature:()
+start	CellTree.cpp	/^        unsigned int start = 0;$/;"	l
+start	CellTree.cpp	/^    unsigned int start = m_nodes[index].start();$/;"	l
+start	CellTree.cpp	/^    unsigned int start = nodes[index].start();$/;"	l
+start	CellTree.h	/^        unsigned int start() const$/;"	f	struct:kvs::CellTree::node	access:public	signature:() const
+start1	CellTree.cpp	/^        unsigned int start1 = 0;$/;"	l
+start2	CellTree.cpp	/^        unsigned int start2 = 0;$/;"	l
+stop	CellLocatorBIH.cpp	/^    timer.stop();$/;"	p	file:	signature:()
+sum	CellTree.cpp	/^            unsigned int sum = 0;$/;"	l
+sum	CellTree.cpp	/^        unsigned int sum = 0;$/;"	l
+sz	CellLocatorBIH.cpp	/^        infile >> sz;$/;"	l
+sz	CellLocatorBIH.cpp	/^        unsigned int sz;$/;"	l
+sz	CellTree.h	/^                unsigned int sz;$/;"	m	struct:kvs::CellTree::node::__anon2::__anon4	access:public
+testCell	CellLocator.cpp	/^bool CellLocator::testCell( size_t cellid, const float pos[3] ) const$/;"	f	class:kvs::CellLocator	signature:( size_t cellid, const float pos[3] ) const
+testCell	CellLocator.h	/^    bool testCell( size_t cellid, const float pos[3] ) const;$/;"	p	class:kvs::CellLocator	access:public	signature:( size_t cellid, const float pos[3] ) const
+timer	CellLocatorBIH.cpp	/^    kvs::Timer timer;$/;"	l
+volume	main.cpp	/^	kvs::UnstructuredVolumeObject* volume = new kvs::UnstructuredVolumeImporter(filename);$/;"	l
+wait	CellTree.cpp	/^	    m_thread[0].wait();$/;"	p	file:	signature:()
+wait	CellTree.cpp	/^	    m_thread[1].wait();$/;"	p	file:	signature:()
+write	CellLocator.h	/^    virtual bool write( const std::string filename ) = 0;$/;"	p	class:kvs::CellLocator	access:public	signature:( const std::string filename )
+write	CellLocatorBIH.cpp	/^bool CellLocatorBIH::write( const std::string filename )$/;"	f	class:kvs::CellLocatorBIH	signature:( const std::string filename )
+write	CellLocatorBIH.h	/^    bool write( const std::string filename );$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:( const std::string filename )
+x	CellLocator.cpp	/^        center.x() += m_cell->vertices()[i].x();$/;"	p	file:	signature:()
+x	CellLocator.cpp	/^    center.x() \/= nnodes; $/;"	p	file:	signature:()
+xmax	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(min)
+xmin	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(max)
+y	CellLocator.cpp	/^        center.y() += m_cell->vertices()[i].y();$/;"	p	file:	signature:()
+y	CellLocator.cpp	/^    center.y() \/= nnodes; $/;"	p	file:	signature:()
+ymax	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(min)
+ymin	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(max)
+z	CellLocator.cpp	/^        center.z() += m_cell->vertices()[i].z();$/;"	p	file:	signature:()
+z	CellLocator.cpp	/^    center.z() \/= nnodes; $/;"	p	file:	signature:()
+zmax	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(min)
+zmin	BoundingBox.cpp	/^        float xmax(min), xmin(max), ymax(min), ymin(max), zmax(min), zmin(max);$/;"	p	file:	signature:(max)
+~BoundingBox	BoundingBox.cpp	/^    BoundingBox::~BoundingBox()$/;"	f	class:kvs::BoundingBox	signature:()
+~BoundingBox	BoundingBox.h	/^        ~BoundingBox();$/;"	p	class:kvs::BoundingBox	access:public	signature:()
+~CellLocator	CellLocator.cpp	/^CellLocator::~CellLocator()$/;"	f	class:kvs::CellLocator	signature:()
+~CellLocator	CellLocator.h	/^    virtual ~CellLocator();$/;"	p	class:kvs::CellLocator	access:public	signature:()
+~CellLocatorBIH	CellLocatorBIH.cpp	/^CellLocatorBIH::~CellLocatorBIH()$/;"	f	class:kvs::CellLocatorBIH	signature:()
+~CellLocatorBIH	CellLocatorBIH.h	/^    ~CellLocatorBIH();$/;"	p	class:kvs::CellLocatorBIH	access:public	signature:()
+~CellTree	CellTree.h	/^	~CellTree()$/;"	f	class:kvs::CellTree	access:public	signature:()
+~CellTreeBuilder	CellTree.cpp	/^CellTreeBuilder::~CellTreeBuilder()$/;"	f	class:kvs::CellTreeBuilder	signature:()
+~CellTreeBuilder	CellTree.h	/^	~CellTreeBuilder();$/;"	p	class:kvs::CellTreeBuilder	access:public	signature:()
+~SplitThread	CellTree.h	/^	~SplitThread(){}$/;"	f	class:kvs::SplitThread	access:public	signature:()
