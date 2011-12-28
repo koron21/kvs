@@ -3,6 +3,8 @@
  *  
  *
  *  Created by njun on 11/10/11.
+ *  Modified by Koron on 11/12/01.
+ *
  *  Copyright 2011 Jun Nishimura. All rights reserved.
  *
  */
@@ -130,7 +132,7 @@ void MainScreen::initialize( kvs::glut::Application* app )
         exit( EXIT_FAILURE );
     }
 
-#ifdef WRITE
+#ifdef WRITE_POLYGON
     kvs::KVSMLObjectPolygon* kvsml_polygon = new kvs::PolygonExporter<kvs::KVSMLObjectPolygon>( m_polygon );
     kvsml_polygon->setWritingDataType( kvs::KVSMLObjectPolygon::ExternalBinary );
     kvsml_polygon->write( "pump_external.kvsml" );
@@ -227,7 +229,7 @@ void MainScreen::initialize( kvs::glut::Application* app )
     }
     m_streamline->setName( "Streamline" );
 
-#ifdef WRITE
+#ifdef WRITE_LINE
     kvs::KVSMLObjectLine* kvsml_line = new kvs::LineExporter<kvs::KVSMLObjectLine>( m_streamline );
     kvsml_line->setWritingDataType( kvs::KVSMLObjectLine::ExternalBinary );
     kvsml_line->write( "pump_line.kvsml" );

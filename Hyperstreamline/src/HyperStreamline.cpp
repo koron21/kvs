@@ -15,6 +15,7 @@
 #include "HyperStreamline.h"
 
 #define EIGEN_VALUE_COLOR
+//#define MISES_COLOR
 
 namespace kvs
 {
@@ -26,7 +27,7 @@ HyperStreamline::HyperStreamline( void ):
     m_integration_direction( HyperStreamline::BothDirections ),
     m_integration_interval( 0.35f ),
     m_vector_length_threshold( 0.000001f ),
-    m_integration_times_threshold( 256 ),
+    m_integration_times_threshold( 1024 ),
     m_enable_boundary_condition( true ),
     m_enable_vector_length_condition( true ),
     m_enable_integration_times_condition( true ),
@@ -41,7 +42,7 @@ HyperStreamline::HyperStreamline(
     const kvs::TransferFunction& transfer_function ):
     m_integration_interval( 0.35f ),
     m_vector_length_threshold( 0.000001f ),
-    m_integration_times_threshold( 256 ),
+    m_integration_times_threshold( 1024 ),
     m_enable_boundary_condition( true ),
     m_enable_vector_length_condition( true ),
     m_enable_integration_times_condition( true ),
@@ -151,8 +152,6 @@ void HyperStreamline::extract_lines(
         coords.push_back( 0.0 );
         connections.push_back( 0 );
         connections.push_back( 0 );
-        connections.push_back( 0 );
-        connections.push_back( 0 );
         colors.push_back( 0 );
         colors.push_back( 0 );
         colors.push_back( 0 );
@@ -247,7 +246,8 @@ void HyperStreamline::extract_lines(
 #endif
 
 	coords.reserve( coords_size * 3 );
-	colors.reserve( coords.size() * 3 );
+	colors.reserve( coords_size * 3 );
+    connections.clear();
 	connections.reserve( m_nthreads * 2 );
 		
 	for ( size_t i = 0; i < m_nthreads; i ++ )
@@ -282,7 +282,6 @@ void HyperStreamline::extract_lines(
         for ( size_t j = 0; j < m_p_threads[i].line().nvertices(); j++ )
         {
             const std::vector<float>& egv = m_p_threads[i].eigenValue();
-
             if ( egv[j] > max_eigenvalue )
                 max_eigenvalue = egv[j];
             if ( egv[j] < min_eigenvalue )
@@ -439,16 +438,15 @@ void HyperStreamline::setGoWithNthEigenVector( const int nth )
 
 
 
-
-
-
 HyperStreamlineThread::HyperStreamlineThread() : kvs::Thread()
 {
 	m_nth_egvector = 0;
+    m_eigenvalues.reserve( 500 );
 }
 
 HyperStreamlineThread::~HyperStreamlineThread()
 {
+    m_eigenvalues.clear();
 }
 
 void HyperStreamlineThread::init()
@@ -535,6 +533,7 @@ void HyperStreamlineThread::run()
                     m_seed_point,
                     -seed_vector ); 
 
+#ifdef MISES_COLOR
             const size_t nvertices1 = tmp_coords1.size() / 3;
             for( size_t i = 0; i < nvertices1; i++ )
             {
@@ -561,6 +560,35 @@ void HyperStreamlineThread::run()
                 colors.push_back( tmp_colors2[id3+1] );
                 colors.push_back( tmp_colors2[id3+2] );
             }
+#else
+            const size_t nvertices1 = tmp_coords1.size() / 3;
+            for( size_t i = 0; i < nvertices1; i++ )
+            {
+                const size_t id  = nvertices1 - i - 1;
+                const size_t id3 = 3 * id;
+
+                coords.push_back( tmp_coords1[id3  ] );
+                coords.push_back( tmp_coords1[id3+1] );
+                coords.push_back( tmp_coords1[id3+2] );
+
+                if ( i < nvertices1 / 2 )
+                {
+                    float temp = m_eigenvalues[i];
+                    m_eigenvalues[i] = m_eigenvalues[id];
+                    m_eigenvalues[id] = temp;
+                }
+            }
+
+            const size_t nvertices2 = tmp_coords2.size() / 3;
+            for( size_t i = 1; i < nvertices2; i++ )
+            {
+                const size_t id3 = 3 * i;
+
+                coords.push_back( tmp_coords2[id3  ] );
+                coords.push_back( tmp_coords2[id3+1] );
+                coords.push_back( tmp_coords2[id3+2] );
+            }
+#endif
             break;
         }
     default:
@@ -847,17 +875,20 @@ const bool HyperStreamlineThread::check_for_termination(
 
     if ( m_enable_boundary_condition )
     {
-        if ( !check_for_inside_volume( next_vertex ) ) return( true );
+        if ( !check_for_inside_volume( next_vertex ) ) 
+            return( true );
     }
 
     if ( m_enable_vector_length_condition )
     {
-        return( check_for_vector_length( direction ) );
+        if ( !check_for_vector_length( direction ) )
+            return true;
     }
 
     if ( m_enable_integration_times_condition )
     {
-        return( check_for_integration_times( integration_times ) );
+        if ( !check_for_integration_times( integration_times ) )
+            return true;
     }
 
     if ( m_degenerate )
@@ -872,7 +903,9 @@ const kvs::Vector3f HyperStreamlineThread::calculate_vector( const kvs::Vector3f
 {
     const kvs::Vector3f origin( 0.0f, 0.0f, 0.0f );
     float egv = 0.0f;
-    return( this->interpolate_vector( point, origin, egv ) );
+    const kvs::Vector3f seed_vector = this->interpolate_vector( point, origin, egv );
+    m_eigenvalues.push_back( egv );
+    return( seed_vector );
 }
 
 
@@ -997,7 +1030,10 @@ const kvs::Vector3f HyperStreamlineThread::interpolate_vector(
             else if ( cos < -0.1 )
                 return -current_vector;
             else
+            {
                 m_degenerate = true;
+                return current_vector;
+            }
         }
         else // the seed vector case
         {
@@ -1008,7 +1044,10 @@ const kvs::Vector3f HyperStreamlineThread::interpolate_vector(
             else if ( cos < -0.1 )
                 return -current_vector;
             else
+            {
                 m_degenerate = true;
+                return current_vector;
+            }
         }
     }
     else
@@ -1037,7 +1076,7 @@ void HyperStreamlineThread::setLocator( const kvs::CellTree* ct, const kvs::Unst
 	m_locator = new kvs::CellLocatorBIH();
     m_locator->setCellTree( const_cast<kvs::CellTree*>(ct) );
     m_locator->setDataSet( volume );
-    m_locator->setMode( kvs::CellLocator::CACHEOFF );
+    m_locator->setMode( kvs::CellLocator::CACHEHALF );
     m_locator->initializeCell();
 }
 
