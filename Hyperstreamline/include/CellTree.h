@@ -6,9 +6,75 @@
 #include <kvs/Thread>
 #include <kvs/BitArray>
 
-
-namespace
+namespace kvs
 {
+    struct stack
+    {
+        unsigned int	m_stack[32];
+        unsigned int*   m_p_stack;
+
+        stack()
+        {
+            m_p_stack = m_stack;
+        }
+
+        ~stack()
+        {
+        }
+
+        unsigned int size()
+        {
+            return ( m_p_stack - m_stack );
+        }
+
+        void push( const unsigned int num )
+        {
+            if ( size() > 31 )
+            {
+                std::cout << "celltree.h: supportive stack overflow!" << std::endl;
+                exit(1);
+            }
+
+            *(m_p_stack++) = num;
+        }
+
+        const unsigned int pop()
+        {
+            if ( m_p_stack == m_stack )
+            {
+                std::cout << "celltree.h: supportvie stack bottom reached!" << std::endl;
+                exit(0);
+            }
+
+            return *(--m_p_stack);
+        }
+
+        const unsigned int top()
+        {
+            if ( m_p_stack == m_stack )
+            {
+                std::cout << "celltree.h: supportvie stack bottom reached!" << std::endl;
+                exit(0);
+            }
+
+            return *m_p_stack;
+        }
+
+        bool has( const unsigned int num ) const
+        {
+            unsigned int* p_stack = m_p_stack;
+
+            while ( p_stack-- != m_stack )
+            {
+                if (*p_stack == num)
+                    return true;
+            }
+
+            return false;
+        }
+
+    };
+
 	struct bucket // only stores current max/min and time of add()
     {
         float        min;
@@ -60,6 +126,12 @@ namespace
     {
         unsigned int       d;
         float              p;
+
+        left_predicate()
+        {
+            d = 0;
+            p = 0;
+        }
     
         left_predicate( unsigned int _d, float _p ) : 
             d(_d), p(2.0f*_p)
@@ -77,10 +149,7 @@ namespace
     void find_min_d( const per_cell* begin, const per_cell* end, unsigned int d, float& min );
 
     void find_max_d( const per_cell* begin, const per_cell* end, unsigned int d, float& max );
-}
 
-namespace kvs
-{
 class CellTree
 {
 public:
@@ -316,22 +385,17 @@ public:
         const CellTree&		    m_ct;
         unsigned int			m_stack[32];
         unsigned int*			m_sp;
-        unsigned int            m_lrstack[16];
-        unsigned int*           m_lrsp;
         const float*			m_pos;
+        stack                   m_lrstack;
   
-        in_traversal_cached( const CellTree& ct, const float* pos, unsigned int hint_stack[32], unsigned int* hint_sp, unsigned int hint_lrstack[16], unsigned int* hint_lrsp ):
+        in_traversal_cached( const CellTree& ct, const float* pos, unsigned int hint_stack[32], 
+			unsigned int* hint_sp ):
             m_ct( ct ), m_pos( pos )
         {
             memcpy( m_stack, hint_stack, 128 );
-              
+
             int n = hint_sp - hint_stack;     // initialize stack pointer 
             m_sp = m_stack + n;
-
-            //memcpy( m_lrstack, hint_lrstack, 64 );
-            //n = hint_lrsp - hint_lrstack;
-            //m_lrsp = m_lrstack + n;
-            m_lrsp = m_lrstack + 1 ;
          }
 
         const CellTree::node* next()
@@ -359,82 +423,50 @@ public:
 
                 if( l && r )
                 {
-                    if ( *(m_lrsp-1) != *m_sp )
+                    if ( !m_lrstack.has( *m_sp ) )
                     {
-                        *(m_lrsp++) = *m_sp;
+                        m_lrstack.push( *m_sp );
                     }
-                    else
+                    else // if already registered in lr_stack
                     {
-                        m_lrsp--;
-                        *(m_sp+1) = 0;
-                        *(m_sp+2) = 0;
                         continue;
                     }
 
                     if( n->lmax()-p < p-n->rmin() )
                     {
-
                         m_sp++;
                         *(m_sp++) = left;
                         *(m_sp++) = left+1;
-   
                     }
                     else
                     {
                         m_sp++;
                         *(m_sp++) = left+1;
                         *(m_sp++) = left;
-   
                     }
                 }
                 else if( l )
                 {
                     if ( *(m_sp+1) == left )
                     {
-                        *(m_sp+1) = 0;      
-                        if ( *(m_lrsp-1) == *m_sp )
-                            m_lrsp--;                           
+                        //*(m_sp+1) = -1;
                         continue;
                     }
                     m_sp++;
                     *(m_sp++) = left;
-                 
                 }
                 else if( r )
                 {
                     if ( *(m_sp+1) == left+1 )
                     {
-                        *(m_sp+1) = 0;
-                        if ( *(m_lrsp-1) == *m_sp )
-                            m_lrsp--;
+                        //*(m_sp+1) = -1;
                         continue;      
                     }
                     m_sp++;
                     *(m_sp++) = left+1;
-                    
                 }
             }
  
-        }
-
-        const unsigned int* stack()
-        {
-            return m_stack;
-        }
-
-        const unsigned int* sp()
-        {
-            return m_sp;
-        }
-
-        const unsigned int* lr_stack()
-        {
-            return m_lrstack;
-        }
-
-        const unsigned int* lr_sp()
-        {
-            return m_lrsp;
         }
     };
 

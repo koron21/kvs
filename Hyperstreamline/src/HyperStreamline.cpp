@@ -29,10 +29,11 @@ HyperStreamline::HyperStreamline( void ):
     m_vector_length_threshold( 0.000001f ),
     m_integration_times_threshold( 1024 ),
     m_enable_boundary_condition( true ),
-    m_enable_vector_length_condition( true ),
+    m_enable_vector_length_condition( false ),
     m_enable_integration_times_condition( true ),
     m_degenerate( false ),
-	m_nthreads( 0 )
+	m_nthreads( 0 ),
+    m_enable_cache( true )
 {
 }
 
@@ -44,10 +45,11 @@ HyperStreamline::HyperStreamline(
     m_vector_length_threshold( 0.000001f ),
     m_integration_times_threshold( 1024 ),
     m_enable_boundary_condition( true ),
-    m_enable_vector_length_condition( true ),
+    m_enable_vector_length_condition( false ),
     m_enable_integration_times_condition( true ),
     m_degenerate( false ),
-	m_nthreads( 0 )
+	m_nthreads( 0 ),
+    m_enable_cache( true )
 {
     BaseClass::setTransferFunction( transfer_function );
     setSeedPoints( seed_points );
@@ -56,6 +58,7 @@ HyperStreamline::HyperStreamline(
 
 HyperStreamline::~HyperStreamline( void )
 {
+    m_eigenvalues.clear();
 }
 
 HyperStreamline::SuperClass* HyperStreamline::exec( const kvs::ObjectBase* object )
@@ -192,6 +195,8 @@ void HyperStreamline::extract_lines(
                     break;
 				m_p_threads[i].setSeedPoint( m_seed_points->coord( j ) );
 				m_p_threads[i].setLocator( m_locator->cellTree(), uvolume );	
+                if ( !m_enable_cache )
+                    m_p_threads[i].setDisableCache();
 #ifdef DEBUG
                 std::cout << j << "th seed point passed to " << i << "th thread" << std::endl;
 #endif
@@ -275,42 +280,102 @@ void HyperStreamline::extract_lines(
 	}
 	
 #ifdef EIGEN_VALUE_COLOR
-    float max_eigenvalue = 0.0;
-    float min_eigenvalue = 1000.0;
 	for ( size_t i = 0; i < m_nthreads; i ++ )
     {
-        for ( size_t j = 0; j < m_p_threads[i].line().nvertices(); j++ )
-        {
-            const std::vector<float>& egv = m_p_threads[i].eigenValue();
-            if ( egv[j] > max_eigenvalue )
-                max_eigenvalue = egv[j];
-            if ( egv[j] < min_eigenvalue )
-                min_eigenvalue = egv[j];
-        }
+        m_eigenvalues.insert( m_eigenvalues.end(), m_p_threads[i].eigenValue().begin(), m_p_threads[i].eigenValue().end() );
     }
-    kvs::TransferFunction tfunc;
-    tfunc.setRange( min_eigenvalue, max_eigenvalue );
-
-	for ( size_t i = 0; i < m_nthreads; i ++ )
-    {
-        for ( size_t j = 0; j < m_p_threads[i].line().nvertices(); j++ )
-        {
-            colors.push_back( tfunc.colorMap().at( m_p_threads[i].eigenValue()[j] ).r() );
-            colors.push_back( tfunc.colorMap().at( m_p_threads[i].eigenValue()[j] ).g() );
-            colors.push_back( tfunc.colorMap().at( m_p_threads[i].eigenValue()[j] ).b() );
-        } 
-    }
+    //this->calculate_color( min_eigenvalue, max_eigenvalue );
 #endif
 
     SuperClass::setLineType( kvs::LineObject::Polyline );
     SuperClass::setColorType( kvs::LineObject::VertexColor );
     SuperClass::setCoords( kvs::ValueArray<kvs::Real32>( coords ) );
     SuperClass::setConnections( kvs::ValueArray<kvs::UInt32>( connections ) );
+#ifndef EIGEN_VALUE_COLOR
     SuperClass::setColors( kvs::ValueArray<kvs::UInt8>( colors ) );
+#endif
     SuperClass::setSize( 1.0f );
 
 	delete [] m_p_threads;
 
+}
+
+void HyperStreamline::calculate_color()
+{
+    float max_eigenvalue = -std::numeric_limits<float>::max();
+    float min_eigenvalue = std::numeric_limits<float>::max();
+
+    max_eigenvalue = *std::max_element( m_eigenvalues.begin(), m_eigenvalues.end() );
+    min_eigenvalue = *std::min_element( m_eigenvalues.begin(), m_eigenvalues.end() );
+
+    this->calculate_color( min_eigenvalue, max_eigenvalue );
+}
+
+void HyperStreamline::calculate_color( const float min_eigenvalue, const float max_eigenvalue )
+{
+    kvs::ColorMap cmap;
+    //cmap.addPoint( 0.0f, kvs::RGBColor( 0 , 155 , 0 ) ); // green
+    //if ( max_eigenvalue < 0 )
+    //{
+    //    cmap.setRange( min_eigenvalue, 0 );
+    //    cmap.addPoint( min_eigenvalue, kvs::RGBColor( 0, 0, 155 ) ); // blue 
+    //    cmap.addPoint( min_eigenvalue * 7 / 8, kvs::RGBColor( 0, 0, 255 ) );  
+    //    cmap.addPoint( min_eigenvalue / 8, kvs::RGBColor( 0, 255, 255 ) );  
+    //}
+    //if ( min_eigenvalue > 0 )
+    //{
+    //    cmap.setRange( 0, max_eigenvalue );
+    //    cmap.addPoint( max_eigenvalue / 8, kvs::RGBColor( 55 , 155 , 0 ) ); 
+    //    cmap.addPoint( max_eigenvalue * 6 / 8, kvs::RGBColor( 255 , 255 , 0 ) ); // yellow
+    //    cmap.addPoint( max_eigenvalue, kvs::RGBColor( 155, 0, 0 ) ); // red
+    //}
+    //else
+    //{
+    //    cmap.setRange( min_eigenvalue, max_eigenvalue );
+    //    cmap.addPoint( min_eigenvalue, kvs::RGBColor( 0 , 0 , 155 ) ); // blue
+    //    cmap.addPoint( min_eigenvalue * 7 / 8, kvs::RGBColor( 0, 0, 255 ) );  
+    //    cmap.addPoint( min_eigenvalue / 8, kvs::RGBColor( 0 , 255 , 255 ) ); 
+    //    cmap.addPoint( max_eigenvalue / 8, kvs::RGBColor( 55 , 155 , 0 ) ); 
+    //    cmap.addPoint( max_eigenvalue * 6 / 8, kvs::RGBColor( 255 , 255 , 50 ) ); // yellow
+    //    cmap.addPoint( max_eigenvalue, kvs::RGBColor( 155, 0, 0 ) ); // red
+    //}
+    cmap.create();
+
+    float interval;
+
+    if ( max_eigenvalue < 0 )
+    {
+        interval = - min_eigenvalue;
+    }
+    else if ( min_eigenvalue < 0 )
+    {
+        interval = max_eigenvalue - min_eigenvalue;
+    }
+    else
+    {
+        interval = max_eigenvalue;
+    }
+
+    std::vector<kvs::UInt8>  colors;
+	colors.reserve( m_eigenvalues.size()*3 );
+
+	for ( size_t i = 0; i < m_eigenvalues.size(); i ++ )
+    {
+        kvs::UInt8 level;
+        if ( m_eigenvalues[i] > 0 )
+        {
+            level = 127.0 + 128.0 * m_eigenvalues[i] / interval; // level 127.0 is zero
+        }
+        else
+        {
+            level = - 128.0 * m_eigenvalues[i] / interval; // m_eigenvalues[i] < 0
+        }
+        colors.push_back( cmap[level].r() );
+        colors.push_back( cmap[level].g() );
+        colors.push_back( cmap[level].b() );
+    }
+
+    SuperClass::setColors( kvs::ValueArray<kvs::UInt8>( colors ) );
 }
 
 const bool HyperStreamline::check_for_inside_volume( const kvs::Vector3f& point )
@@ -350,6 +415,15 @@ const bool HyperStreamline::check_for_inside_volume( const kvs::Vector3f& point 
 
 }
 
+const std::vector<float>& HyperStreamline::eigenValues() const
+{
+    return m_eigenvalues;
+}
+
+void HyperStreamline::setEigenValues( const std::vector<float>& eigen_values )
+{
+    m_eigenvalues = eigen_values;
+}
 
 void HyperStreamline::setSeedPoints( const kvs::PointObject* seed_points )
 {
@@ -435,6 +509,10 @@ void HyperStreamline::setGoWithNthEigenVector( const int nth )
     m_nth_egvector = nth;
 }
 
+void HyperStreamline::setDisableCache()
+{
+    m_enable_cache = false;
+}
 
 
 
@@ -454,9 +532,9 @@ void HyperStreamlineThread::init()
 
     m_integration_interval = 0.35f;
     m_vector_length_threshold = 0.0001f;
-    m_integration_times_threshold = 256;
+    m_integration_times_threshold = 1024;
     m_enable_boundary_condition = true;
-    m_enable_vector_length_condition = true;
+    m_enable_vector_length_condition = false;
     m_enable_integration_times_condition = true;
     m_degenerate = false;
 
@@ -855,7 +933,7 @@ const bool HyperStreamlineThread::check_for_vector_length( const kvs::Vector3f& 
 
 const bool HyperStreamlineThread::check_for_integration_times( const size_t times )
 {
-    return( times >= m_integration_times_threshold );
+    return( times <= m_integration_times_threshold );
 }
 
 
@@ -891,10 +969,10 @@ const bool HyperStreamlineThread::check_for_termination(
             return true;
     }
 
-    if ( m_degenerate )
-    {
-        return true;
-    }
+    //if ( m_degenerate )
+    //{
+    //    return true;
+    //}
 
     return( false );
 }
@@ -924,7 +1002,7 @@ const kvs::Vector3f HyperStreamlineThread::interpolate_vector(
     const kvs::Vector3f& previous_vector,
     float& eigenvalue )
 {
-    //tensor field interpolation for structured grid
+    //tensor field interpolation for unstructured grid
     if ( m_volume->volumeType() == kvs::VolumeObjectBase::Unstructured )   
     {
         const kvs::UnstructuredVolumeObject* volume = static_cast<const kvs::UnstructuredVolumeObject*>( m_volume );
@@ -936,7 +1014,9 @@ const kvs::Vector3f HyperStreamlineThread::interpolate_vector(
 
 #ifdef DEBUG
 		if ( cellid < 0 || cellid > volume->connections().size() )
+        {
 			std::cerr << "Wrong, cellid is not right!!" << std::endl;
+        }
 #endif
 
 		// interpolate the tensor matrix 
@@ -1019,7 +1099,7 @@ const kvs::Vector3f HyperStreamlineThread::interpolate_vector(
         }
         kvs::Vector3f current_vector( ed.eigenVector( max_index )[0], ed.eigenVector( max_index )[1], ed.eigenVector( max_index )[2] );
         */
-        eigenvalue = ed.eigenValue(0);
+        eigenvalue = ed.eigenValue(m_nth_egvector);
         kvs::Vector3f current_vector( ed.eigenVector(m_nth_egvector)[0], ed.eigenVector(m_nth_egvector)[1], ed.eigenVector(m_nth_egvector)[2] );
         
         if ( previous_vector != kvs::Vector3f( 0, 0, 0 ) )
@@ -1076,7 +1156,7 @@ void HyperStreamlineThread::setLocator( const kvs::CellTree* ct, const kvs::Unst
 	m_locator = new kvs::CellLocatorBIH();
     m_locator->setCellTree( const_cast<kvs::CellTree*>(ct) );
     m_locator->setDataSet( volume );
-    m_locator->setMode( kvs::CellLocator::CACHEHALF );
+    m_locator->setMode( kvs::CellLocator::CACHEFULL );
     m_locator->initializeCell();
 }
 
@@ -1109,6 +1189,11 @@ void HyperStreamlineThread::setGoWithNthEigenVector( const int nth )
         return;
     }
     m_nth_egvector = nth;
+}
+
+void HyperStreamlineThread::setDisableCache()
+{
+    m_locator->setMode( kvs::CellLocator::CACHEOFF );
 }
 
 } // end of namespace kvs

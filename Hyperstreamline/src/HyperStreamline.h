@@ -1,6 +1,8 @@
 #ifndef KVS__HYPER_STREAMLINE_H_INCLUDE
 #define KVS__HYPER_STREAMLINE_H_INCLUDE
 
+#include<algorithm>
+
 #include <kvs/ClassName>
 #include <kvs/Module>
 #include <kvs/MapperBase>
@@ -11,8 +13,6 @@
 #include <kvs/Thread>
 
 #include "CellLocatorBIH.h"
-
-
 
 namespace kvs
 {
@@ -71,6 +71,9 @@ public:
 
 public:
 
+    const std::vector<float>& eigenValues() const;
+
+    void setEigenValues( const std::vector<float>& eigen_values );
     void setSeedPoints( const kvs::PointObject* seed_points );
     void setIntegrationMethod( const HyperStreamline::IntegrationMethod method );
     void setIntegrationDirection( const HyperStreamline::IntegrationDirection direction );
@@ -82,9 +85,13 @@ public:
     void setEnableIntegrationTimesCondition( const bool enabled );
     void setLocationMethod( const HyperStreamline::LocationMethod method, kvs::CellTree* ct = 0, kvs::UnstructuredVolumeObject* volume = 0 );
     void setLocator( const kvs::CellTree* ct = 0, const kvs::UnstructuredVolumeObject* volume = 0 );
+    void setDisableCache();
 	void setLocatorToInitialized();
     void setGoWithNthEigenVector( const int nth );
 
+    //only use for update
+    void calculate_color( const float min_egvalue, const float max_egvalue );
+    void calculate_color();
 
 protected:
 
@@ -96,7 +103,6 @@ protected:
         std::vector<kvs::Real32>* vertices,
         std::vector<kvs::UInt8>* colors,
         const size_t index );
-
 
 protected:
 
@@ -116,6 +122,7 @@ protected:
     size_t						m_nthreads;
     HyperStreamlineThread*		m_p_threads;
 	bool						m_locator_initialized;
+    bool                        m_enable_cache;
 	int							m_nth_egvector;
 
 };
@@ -152,6 +159,7 @@ public:
     void setDirection( const kvs::HyperStreamline::IntegrationDirection Direction);
     void setMethod( const kvs::HyperStreamline::IntegrationMethod Method );
     void setGoWithNthEigenVector( const int nth );
+    void setDisableCache();
 
 public:
 

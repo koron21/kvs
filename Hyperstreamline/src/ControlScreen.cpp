@@ -28,63 +28,84 @@ ControlScreen::~ControlScreen( void )
 void ControlScreen::initialize( void )
 {
     BaseClass::setTitle( "kvs::ControlScreen" );
-    BaseClass::setGeometry( 512, 0, 512, 512 );
+    BaseClass::setGeometry( 512, 0, 600, 560 );
 
     m_screen = NULL;
     m_point = NULL;
+    m_renderer = NULL;
+    m_point_renderer = NULL;
 }
 
-void ControlScreen::attachMainScreen( kvs::MainScreen* screen )
+void ControlScreen::attachMainScreen( 
+        kvs::glut::Screen* screen, 
+        kvs::CubicPointObject* point,
+        kvs::glew::StochasticRenderer* renderer,
+        kvs::glew::StochasticPointRenderer* point_renderer)
 {
     m_screen = screen;
-    m_point = screen->seedPoint();
+    m_point  = point;
+    m_renderer = renderer;
+    m_point_renderer = point_renderer;
 }
 
-void ControlScreen::mousePressEvent( kvs::MouseEvent* event )
-{
-    m_mouse->setMode( kvs::Mouse::Translation );
-    m_mouse->press( event->x(), event->y() );
-}
 
 void ControlScreen::mouseMoveEvent( kvs::MouseEvent* event )
 {
-    m_mouse->move( event->x(), event->y() );
-
-    const kvs::Xform x = m_screen->objectManager()->xform();
-    const kvs::Vector3f coord( m_point->coords().pointer() );
-    kvs::Vector3f translation = m_mouse->translation();
-
-    if ( event->button() == kvs::MouseButton::Right ||
-         event->modifiers() == kvs::Key::ShiftModifier )
+    if ( event->x() > 20 && event->x() < 330 && event->y() > 20 && event->y() < 400 )
     {
-        translation.z() = - translation.y();
-        translation.x() = 0.0f;
-        translation.y() = 0.0f;
+        const kvs::Xform x = m_screen->objectManager()->xform();
+
+        const float* pcoord = m_point->coords().pointer();
+        const unsigned int nvertices = m_point->nvertices();
+        kvs::ValueArray<float> coords( nvertices * 3 );
+
+        if ( event->button() == kvs::MouseButton::Right )
+        {
+            m_mouse->setMode( kvs::Mouse::Translation );
+            m_mouse->move( event->x(), event->y() );
+            kvs::Vector3f translation = m_mouse->translation();
+            const kvs::Vector3f normalize = m_screen->objectManager()->normalize();
+
+            translation.x() /= normalize.x() * x.scaling().x();
+            translation.y() /= normalize.y() * x.scaling().y();
+            translation.z() /= normalize.z() * x.scaling().z();
+
+            for ( unsigned int i = 0; i < nvertices; i ++ )
+            {
+                kvs::Vector3f coord( pcoord );
+                const kvs::Vector3f new_coord = coord + translation * x.rotation();
+                coords[ 3 * i] = new_coord.x();
+                coords[ 3 * i + 1] = new_coord.y();
+                coords[ 3 * i + 2] = new_coord.z();
+                pcoord += 3;
+            }
+            m_point->setCoords( coords );
+        }
+
+        if ( event->button() == kvs::MouseButton::Left )
+        {
+            m_mouse->setMode( kvs::Mouse::Rotation );
+            m_mouse->move( event->x(), event->y() );
+            kvs::Matrix33f rotation = m_mouse->rotation().toMatrix();
+
+            for ( unsigned int i = 0; i < nvertices; i ++ )
+            {
+                kvs::Vector3f coord( pcoord );
+                const kvs::Vector3f new_coord = coord * rotation;
+                coords[ 3 * i] = new_coord.x();
+                coords[ 3 * i + 1] = new_coord.y();
+                coords[ 3 * i + 2] = new_coord.z();
+                pcoord += 3;
+            }
+            m_point->setCoords( coords );
+        }
+        m_renderer->changeObject( m_point, m_point_renderer, false );
     }
 
-    const kvs::Vector3f normalize = m_screen->objectManager()->normalize();
-    translation.x() /= normalize.x() * x.scaling().x();
-    translation.y() /= normalize.y() * x.scaling().y();
-    translation.z() /= normalize.z() * x.scaling().z();
-
-    const kvs::Vector3f new_coord = coord + translation * x.rotation();
-    kvs::ValueArray<float> coords( 3 );
-    coords[0] = new_coord.x();
-    coords[1] = new_coord.y();
-    coords[2] = new_coord.z();
-
-    m_point->setCoords( coords );
-    m_screen->updateStreamLine();
-
+    BaseClass::eventHandler()->notify( event );
     BaseClass::redraw();
-    m_screen->redraw();
 }
 
-void ControlScreen::mouseReleaseEvent( kvs::MouseEvent* event )
-{
-    m_mouse->release( event->x(), event->y() );
-    BaseClass::redraw();
-    m_screen->redraw();
-}
+
 
 }

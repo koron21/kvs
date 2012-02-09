@@ -13,7 +13,9 @@
 #include <kvs/glut/Application>
 #include <kvs/glut/Screen>
 
-#include "MainScreen.h"
+#include "CubicPointObject.h"
+#include "StochasticRenderer.h"
+#include "StochasticPointRenderer.h"
 
 namespace kvs
 {
@@ -30,8 +32,10 @@ class ControlScreen : public kvs::glut::Screen
 protected:
 
     // Reference only.
-    kvs::MainScreen*    m_screen;
-    kvs::PointObject*   m_point;
+    kvs::glut::Screen*                  m_screen;
+    kvs::CubicPointObject*              m_point;
+    kvs::glew::StochasticRenderer*      m_renderer;
+    kvs::glew::StochasticPointRenderer* m_point_renderer;
 
 public:
 
@@ -43,15 +47,15 @@ public:
 
     void initialize( void );
 
-    void attachMainScreen( kvs::MainScreen* screen );
+    void attachMainScreen( 
+            kvs::glut::Screen* screen, 
+            kvs::CubicPointObject* point, 
+            kvs::glew::StochasticRenderer* renderer,
+            kvs::glew::StochasticPointRenderer* point_renderer );
 
 public:
 
-    void mousePressEvent( kvs::MouseEvent* event );
-
     void mouseMoveEvent( kvs::MouseEvent* event );
-
-    void mouseReleaseEvent( kvs::MouseEvent* event );
 
 };
 
