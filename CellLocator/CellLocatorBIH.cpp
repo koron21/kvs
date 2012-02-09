@@ -6,9 +6,8 @@ CellLocatorBIH::CellLocatorBIH()
 {
     m_builder = new CellTreeBuilder();
     m_celltree = new CellTree();
-    m_cache1[0] = 0;
-    m_cp1 = m_cache1 + 1;
- 
+
+    this->clearCache();
  }
 
 CellLocatorBIH::CellLocatorBIH( const kvs::UnstructuredVolumeObject* volume ):
@@ -16,9 +15,8 @@ CellLocatorBIH::CellLocatorBIH( const kvs::UnstructuredVolumeObject* volume ):
 {
     m_builder = new CellTreeBuilder();
     m_celltree = new CellTree();
-    m_cache1[0] = 0;
-    m_cp1 = m_cache1 + 1;
   
+    this->clearCache();
  }
 
 CellLocatorBIH::~CellLocatorBIH()
@@ -301,7 +299,7 @@ int CellLocatorBIH::findCell( const float pos[3] )
     }
     case BaseClass::CACHEFULL:  // use both cache stack
     {
-        CellTree::in_traversal_cached pt( *(this->m_celltree), pos, m_cache1, m_cp1, m_cache2, m_cp2 );
+        CellTree::in_traversal_cached pt( *(this->m_celltree), pos, m_cache1, m_cp1 );
         //pt.next() brings us to a series of leaves that may contain pos[3]
         while ( const CellTree::node* n = pt.next() )  
         {
@@ -312,21 +310,12 @@ int CellLocatorBIH::findCell( const float pos[3] )
             {
                 if ( BaseClass::testCell( *begin, pos ) )
                 {
-                    const unsigned int* stack1 = pt.stack();
-                    const unsigned int* sp1 = pt.sp();
+                    const unsigned int* stack1 = pt.m_stack;
+                    const unsigned int* sp1 = pt.m_sp;
                     int n = sp1-stack1;
 
                     memcpy( m_cache1+1, stack1+1, 124 );
                     m_cp1 = m_cache1 + n + 1;                   //+1 is important!!
-
-                    const unsigned int* stack2 = pt.lr_stack();
-                    const unsigned int* sp2 = pt.lr_sp();
-                    n = sp2-stack2;
-
-                    memcpy( m_cache2, stack2, 64 );
-                    if ( n > 1 )
-                        n --;
-                    m_cp2 = m_cache2 + n;                       //-1 is important!!
 
                     return *begin;
                 }
@@ -354,13 +343,16 @@ void CellLocatorBIH::clearCache()
 
     for( int i = 0; i < 32; i++ )
     {
-        m_cache1[ i ] = 0;
+        m_cache1[ i ] = -1;
     }
 
     for( int i = 0; i < 16; i++ )
     {
-        m_cache2[ i ] = 0;
+        m_cache2[ i ] = -1;
     }
+
+    m_cache1[0] = 0;
+    m_cache2[0] = 0;
 
     m_cp1 = m_cache1+1;
     m_cp2 = m_cache2;

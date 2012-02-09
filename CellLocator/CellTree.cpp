@@ -7,8 +7,7 @@
 #include <limits>
 #include <algorithm>
 
-
-namespace
+namespace kvs
 {
 // of all those cells which pointed by begin and end
 // find the overall min max of each dimension, ie, 
@@ -56,11 +55,6 @@ void find_max_d( const per_cell* begin, const per_cell* end, unsigned int d, flo
         if( begin->max[d] > max )    
             max = begin->max[d];
 }
-}
-
-
-namespace kvs
-{
 
 CellTreeBuilder::CellTreeBuilder()
 {

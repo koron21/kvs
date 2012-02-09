@@ -3,8 +3,8 @@
 #include <kvs/UnstructuredVolumeImporter>
 
 //#define WIN_4131
-#define WIN_HOME
-//#define LINUX
+//#define WIN_HOME
+#define LINUX
 
 using namespace std;
 
