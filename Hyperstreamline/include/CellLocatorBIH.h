@@ -31,7 +31,7 @@ public:
 
     const kvs::CellTree* cellTree( void ) const;
     void setCellTree( const kvs::CellTree* ct );
-	void setParallel();
+    void setParallel();
 
 public:
 

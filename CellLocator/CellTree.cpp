@@ -58,21 +58,21 @@ void find_max_d( const per_cell* begin, const per_cell* end, unsigned int d, flo
 
 CellTreeBuilder::CellTreeBuilder()
 {
-	m_parallel = false;
+    m_parallel = false;
     m_leafsize = 8;
 }
 
 CellTreeBuilder::~CellTreeBuilder()
 {
-	m_nodes.clear();
-	m_nodes1.clear();
-	m_nodes2.clear();
-	delete[] m_pc;
+    m_nodes.clear();
+    m_nodes1.clear();
+    m_nodes2.clear();
+    delete[] m_pc;
 }
 
 void CellTreeBuilder::setParallel()
 {
-	m_parallel = true;
+    m_parallel = true;
 }
 
 void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* ds )
@@ -134,10 +134,10 @@ void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* 
     if ( !m_parallel )
     {
         CellTree::node root;
-        root.make_leaf( 0, ncells );	//set index = 3 start = 0 size = ncells
-        m_nodes.push_back( root );		
+        root.make_leaf( 0, ncells );    //set index = 3 start = 0 size = ncells
+        m_nodes.push_back( root );        
 
-        split( 0, min, max );			//do the split for all the nodes
+        split( 0, min, max );            //do the split for all the nodes
     
         // rearrange the node's order and copy it to cell tree
         // since the split algorithm do in a pre-order way, a tree such as
@@ -155,7 +155,7 @@ void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* 
         // i.e, in a beautiful up-to-down order
         // and of course, reset their (the node's) indices so they always point to the correct left child
         ct.nodes.resize( m_nodes.size() );
-		std::cout << "nnodes: " << m_nodes.size() << std::endl;
+        std::cout << "nnodes: " << m_nodes.size() << std::endl;
         ct.nodes[0] = m_nodes[0];
 
         std::vector<CellTree::node>::iterator ni = ct.nodes.begin();
@@ -182,7 +182,7 @@ void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* 
     else
     {
         CellTree::node root;
-        root.make_leaf( 0, ncells );	//set index = 3 start = 0 size = ncells
+        root.make_leaf( 0, ncells );    //set index = 3 start = 0 size = ncells
 
         // seperate m_pc into 2 branches
         unsigned int start = 0;
@@ -208,11 +208,11 @@ void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* 
         {
             for( unsigned int d=0; d<3; ++d )
             {
-                float cen = (pc->min[d] + pc->max[d])/2.0f;	//center of a certain dimension
+                float cen = (pc->min[d] + pc->max[d])/2.0f;    //center of a certain dimension
                 // (distance from center to min) / (distance from max to min) * nbuckets, of a certain dimension
                 int   ind = (int)( (cen-min[d])*iext[d] );  
 
-                if( ind<0 )	// how can ind < 0 ??? 
+                if( ind<0 )    // how can ind < 0 ??? 
                     ind = 0;
 
                 if( ind>=nbuckets ) // how can ind > nbuckets??
@@ -254,8 +254,8 @@ void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* 
             
                 sum += b[d][n].cnt;
             
-                float lvol = (lmax-min[d])/ext[d];			//left volume
-                float rvol = (max[d]-rmin)/ext[d];			//right volume
+                float lvol = (lmax-min[d])/ext[d];            //left volume
+                float rvol = (max[d]-rmin)/ext[d];            //right volume
             
                 float c = lvol*sum + rvol*(size-sum);
             
@@ -273,7 +273,7 @@ void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* 
         // all the cell( containing bounding box, cell id)  is divided to left and right,
         // according to the seperating plane and dimension
 
-        if( cost != std::numeric_limits<float>::max() )		// how can that be ...
+        if( cost != std::numeric_limits<float>::max() )        // how can that be ...
             mid = std::partition( begin, end, left_predicate( dim, plane ) );
 
         // fallback
@@ -305,30 +305,30 @@ void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* 
         unsigned int start2 = 0;
          
         CellTree::node root1;
-        root1.make_leaf( start1, size1 );	//set index = 3 start = 0 size = ncells
+        root1.make_leaf( start1, size1 );    //set index = 3 start = 0 size = ncells
         m_nodes1.push_back( root1 );
 
         CellTree::node root2;
-        root2.make_leaf( start2, size2 );	//set index = 3 start = 0 size = ncells
+        root2.make_leaf( start2, size2 );    //set index = 3 start = 0 size = ncells
         m_nodes2.push_back( root2 );
 
         m_pc1 = m_pc;
         m_pc2 = mid;
 
         m_thread[0].init( m_leafsize, &m_nodes1, m_pc1, 0, lmin, lmax );
-	    m_thread[1].init( m_leafsize, &m_nodes2, m_pc2, 0, rmin, rmax );
-	
-	    m_thread[0].start();
-	    m_thread[1].start();
+        m_thread[1].init( m_leafsize, &m_nodes2, m_pc2, 0, rmin, rmax );
+    
+        m_thread[0].start();
+        m_thread[1].start();
 
-	    m_thread[0].wait();
-	    m_thread[1].wait();
+        m_thread[0].wait();
+        m_thread[1].wait();
 
         // merge data into celltree
-		// size = size_of_tree1 + size_of_tree2 + root
+        // size = size_of_tree1 + size_of_tree2 + root
         const unsigned int node_size = m_nodes1.size() + m_nodes2.size() + 1;
         ct.nodes.resize( node_size );
-		std::cout << "nnodes: " << node_size << std::endl;
+        std::cout << "nnodes: " << node_size << std::endl;
 
         ct.nodes[0] = root;
         ct.nodes[0].make_node( 1, dim, clip );
@@ -361,14 +361,14 @@ void CellTreeBuilder::build( CellTree& ct, const kvs::UnstructuredVolumeObject* 
             else
             {
                 mask.set( nn-ct.nodes.begin() );
-				unsigned int left = ni->left();
-				if ( m_nodes2[left].is_leaf() )
-					m_nodes2[left].st += size1;
+                unsigned int left = ni->left();
+                if ( m_nodes2[left].is_leaf() )
+                    m_nodes2[left].st += size1;
                 *(nn++) = m_nodes2[left];
 
                 mask.set( nn-ct.nodes.begin() );
-				if ( m_nodes2[left+1].is_leaf() )
-					m_nodes2[left+1].st += size1;
+                if ( m_nodes2[left+1].is_leaf() )
+                    m_nodes2[left+1].st += size1;
                 *(nn++) = m_nodes2[left+1];
             }
             ni->set_children( nn-ct.nodes.begin()-2 );
@@ -407,7 +407,7 @@ void CellTreeBuilder::split( unsigned int index, float min[3], float max[3] )
     unsigned int start = m_nodes[index].start();
     unsigned int size  = m_nodes[index].size();
     
-    if( size < m_leafsize )		//if size is less than the maxium bucket size, don't do spliting any more
+    if( size < m_leafsize )        //if size is less than the maxium bucket size, don't do spliting any more
         return;
 
     per_cell* begin = m_pc + start;
@@ -431,11 +431,11 @@ void CellTreeBuilder::split( unsigned int index, float min[3], float max[3] )
     {
         for( unsigned int d=0; d<3; ++d )
         {
-            float cen = (pc->min[d] + pc->max[d])/2.0f;	//center of a certain dimension
+            float cen = (pc->min[d] + pc->max[d])/2.0f;    //center of a certain dimension
             // (distance from center to min) / (distance from max to min) * nbuckets, of a certain dimension
             int   ind = (int)( (cen-min[d])*iext[d] );  
 
-            if( ind<0 )	// how can ind < 0 ??? 
+            if( ind<0 )    // how can ind < 0 ??? 
                 ind = 0;
 
             if( ind>=nbuckets ) // how can ind > nbuckets??
@@ -477,8 +477,8 @@ void CellTreeBuilder::split( unsigned int index, float min[3], float max[3] )
             
             sum += b[d][n].cnt;
             
-            float lvol = (lmax-min[d])/ext[d];			//left volume
-            float rvol = (max[d]-rmin)/ext[d];			//right volume
+            float lvol = (lmax-min[d])/ext[d];            //left volume
+            float rvol = (max[d]-rmin)/ext[d];            //right volume
             
             float c = lvol*sum + rvol*(size-sum);
             
@@ -496,7 +496,7 @@ void CellTreeBuilder::split( unsigned int index, float min[3], float max[3] )
     // all the cell( containing bounding box, cell id)  is divided to left and right,
     // according to the seperating plane and dimension
 
-    if( cost != std::numeric_limits<float>::max() )		// how can that be ...
+    if( cost != std::numeric_limits<float>::max() )        // how can that be ...
         mid = std::partition( begin, end, left_predicate( dim, plane ) );
 
     // fallback
@@ -532,42 +532,42 @@ void CellTreeBuilder::split( unsigned int index, float min[3], float max[3] )
     m_nodes[index].make_node( m_nodes.size(), dim, clip );
     m_nodes.insert( m_nodes.end(), child, child+2 );
 
-	// traverse to the left brunch
-	split( m_nodes[index].left(), lmin, lmax );
-	// traverse to the right brunch
-	split( m_nodes[index].right(), rmin, rmax );
+    // traverse to the left brunch
+    split( m_nodes[index].left(), lmin, lmax );
+    // traverse to the right brunch
+    split( m_nodes[index].right(), rmin, rmax );
 
-	
+    
 }
 
 void SplitThread::init( 
         unsigned int leafsize,
-		std::vector<CellTree::node>* p_nodes,
+        std::vector<CellTree::node>* p_nodes,
         per_cell* pc,
-		unsigned int index,
-		float min[3],
-		float max[3] )
+        unsigned int index,
+        float min[3],
+        float max[3] )
 {
     m_leafsize = leafsize;
-	m_index    = index;
-	for ( unsigned int i = 0; i < 3; i ++ )
-	{
-		m_min[i] = min[i];
-		m_max[i] = max[i];
-	}
-	m_nodes = p_nodes;
+    m_index    = index;
+    for ( unsigned int i = 0; i < 3; i ++ )
+    {
+        m_min[i] = min[i];
+        m_max[i] = max[i];
+    }
+    m_nodes = p_nodes;
     m_pc = pc;
 }
 
 const bool SplitThread::check()
 {
-	return ( &m_nodes != NULL );
+    return ( &m_nodes != NULL );
 }
 
 void SplitThread::run()
 {
 
-	split( m_index, m_min, m_max );
+    split( m_index, m_min, m_max );
 }
 
 void SplitThread::split( unsigned int index, float min[3], float max[3] )
@@ -576,7 +576,7 @@ void SplitThread::split( unsigned int index, float min[3], float max[3] )
     unsigned int start = nodes[index].start();
     unsigned int size  = nodes[index].size();
     
-    if( size < m_leafsize )		//if size is less than the maxium bucket size, don't do spliting any more
+    if( size < m_leafsize )        //if size is less than the maxium bucket size, don't do spliting any more
         return;
 
     per_cell* begin = m_pc + start;
@@ -599,11 +599,11 @@ void SplitThread::split( unsigned int index, float min[3], float max[3] )
     {
         for( unsigned int d=0; d<3; ++d )
         {
-            float cen = (pc->min[d] + pc->max[d])/2.0f;	//center of a certain dimension
+            float cen = (pc->min[d] + pc->max[d])/2.0f;    //center of a certain dimension
             // (distance from center to min) / (distance from max to min) * nbuckets, of a certain dimension
             int   ind = (int)( (cen-min[d])*iext[d] );  
 
-            if( ind<0 )	// how can ind < 0 ??? 
+            if( ind<0 )    // how can ind < 0 ??? 
                 ind = 0;
 
             if( ind>=nbuckets ) // how can ind > nbuckets??
@@ -645,8 +645,8 @@ void SplitThread::split( unsigned int index, float min[3], float max[3] )
             
             sum += b[d][n].cnt;
             
-            float lvol = (lmax-min[d])/ext[d];			//left volume
-            float rvol = (max[d]-rmin)/ext[d];			//right volume
+            float lvol = (lmax-min[d])/ext[d];            //left volume
+            float rvol = (max[d]-rmin)/ext[d];            //right volume
             
             float c = lvol*sum + rvol*(size-sum);
             
@@ -664,7 +664,7 @@ void SplitThread::split( unsigned int index, float min[3], float max[3] )
     // all the cell( containing bounding box, cell id)  is divided to left and right,
     // according to the seperating plane and dimension
 
-    if( cost != std::numeric_limits<float>::max() )		// how can that be ...
+    if( cost != std::numeric_limits<float>::max() )        // how can that be ...
         mid = std::partition( begin, end, left_predicate( dim, plane ) );
 
     // fallback
@@ -700,10 +700,10 @@ void SplitThread::split( unsigned int index, float min[3], float max[3] )
     nodes[index].make_node( nodes.size(), dim, clip );
     nodes.insert( nodes.end(), child, child+2 );
 
-	// traverse to the left brunch
-	split( nodes[index].left(), lmin, lmax );
-	// traverse to the right brunch
-	split( nodes[index].right(), rmin, rmax );
+    // traverse to the left brunch
+    split( nodes[index].left(), lmin, lmax );
+    // traverse to the right brunch
+    split( nodes[index].right(), rmin, rmax );
 }
 }
 

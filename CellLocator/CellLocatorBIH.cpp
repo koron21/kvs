@@ -38,14 +38,14 @@ void CellLocatorBIH::setCellTree( const kvs::CellTree* ct )
 
 void CellLocatorBIH::setParallel()
 {
-	m_builder->setParallel();
+    m_builder->setParallel();
 }
 
 
 bool CellLocatorBIH::write( const std::string filename )
 {
     //std::ofstream outfile( filename.c_str(), std::ios_base::out|std::ios_base::binary );
-	std::ofstream outfile( filename.c_str() );
+    std::ofstream outfile( filename.c_str() );
     
     if (!outfile.is_open())
     {
@@ -60,17 +60,17 @@ bool CellLocatorBIH::write( const std::string filename )
     for ( unsigned int i = 0; i < nnodes; i ++ )
     {
         unsigned int index = m_celltree->nodes[i].index;
-		outfile << index << " ";
-		if ( index ==3 )
-		{
-			outfile << m_celltree->nodes[i].st << " "
-			        << m_celltree->nodes[i].sz << std::endl;
-		}
-		else
-		{
-			outfile << m_celltree->nodes[i].lm << " "
+        outfile << index << " ";
+        if ( index ==3 )
+        {
+            outfile << m_celltree->nodes[i].st << " "
+                    << m_celltree->nodes[i].sz << std::endl;
+        }
+        else
+        {
+            outfile << m_celltree->nodes[i].lm << " "
                     << m_celltree->nodes[i].rm << std::endl;
-		}
+        }
 
     }
    
@@ -89,7 +89,7 @@ bool CellLocatorBIH::write( const std::string filename )
 bool CellLocatorBIH::read( const std::string filename )
 {
     //std::ifstream infile( filename.c_str(), std::ios_base::in|std::ios_base::binary );
-	std::ifstream infile( filename.c_str() );
+    std::ifstream infile( filename.c_str() );
 
     if( !infile.is_open() )
     {
@@ -106,24 +106,24 @@ bool CellLocatorBIH::read( const std::string filename )
     {
         unsigned int index;
         float lm,rm;
-		unsigned int st,sz;
+        unsigned int st,sz;
         infile >> index;
-		
+        
         kvs::CellTree::node node;
         node.index = index;
 
-		if ( index == 3 )
-		{
-			infile >> st >> sz;
-			node.st = st;
-			node.sz = sz;
-		}
-		else
-		{
-			infile >> lm >> rm;
-	        node.lm = lm;
-		    node.rm = rm;
-		}
+        if ( index == 3 )
+        {
+            infile >> st >> sz;
+            node.st = st;
+            node.sz = sz;
+        }
+        else
+        {
+            infile >> lm >> rm;
+            node.lm = lm;
+            node.rm = rm;
+        }
 
         ct->nodes[i] = node;
     }
@@ -139,12 +139,12 @@ bool CellLocatorBIH::read( const std::string filename )
         ct->leaves[i] = sz;
     }
 
-	if ( m_celltree!= NULL )
-	{
-		delete m_celltree;
-		m_celltree = NULL;
-	}
-	m_celltree = ct;
+    if ( m_celltree!= NULL )
+    {
+        delete m_celltree;
+        m_celltree = NULL;
+    }
+    m_celltree = ct;
     return true;
 }
 bool CellLocatorBIH::check( const kvs::CellLocator* locator )
@@ -168,46 +168,46 @@ bool CellLocatorBIH::check( const kvs::CellLocator* locator )
             std::cout << "\ntree1 and tree2 differs at " << i << "th node's index. " << std::endl;
             return false;
         }
-		
-		bool flag2 = false;
-		if ( ct1->nodes[i].index == 3 ) // if it is a leaf
-		{
-			flag2 = ( ct1->nodes[i].st == ct2->nodes[i].st    ) &&
-					( ct1->nodes[i].sz == ct2->nodes[i].sz    );
-		}
-		else
-		{
-			flag2 = ( std::abs( ct1->nodes[i].lm - ct2->nodes[i].lm ) < 0.001    ) &&
-					( std::abs( ct1->nodes[i].rm - ct2->nodes[i].rm ) < 0.001   );
-		}
+        
+        bool flag2 = false;
+        if ( ct1->nodes[i].index == 3 ) // if it is a leaf
+        {
+            flag2 = ( ct1->nodes[i].st == ct2->nodes[i].st    ) &&
+                    ( ct1->nodes[i].sz == ct2->nodes[i].sz    );
+        }
+        else
+        {
+            flag2 = ( std::abs( ct1->nodes[i].lm - ct2->nodes[i].lm ) < 0.001    ) &&
+                    ( std::abs( ct1->nodes[i].rm - ct2->nodes[i].rm ) < 0.001   );
+        }
 
         if ( !flag2 )
         {
             std::cout << "\ntree1 and tree2 differs at " << i << "th node. " << std::endl;
-			std::cout << "Tree1, node" << i << std::endl;
-			std::cout << "Index      :" << ct1->nodes[i].index << std::endl;
-			if ( ct1->nodes[i].index != 3 )
-			{
-				std::cout << "lmax       :" << ct1->nodes[i].lm << std::endl;
-				std::cout << "Rmin       :" << ct1->nodes[i].rm << std::endl;
-			}
-			else
-			{
-				std::cout << "Start      :" << ct1->nodes[i].st << std::endl;
-				std::cout << "Size       :" << ct1->nodes[i].sz << std::endl;
-			}
-			std::cout << "Tree2, node" << i << std::endl;
-			std::cout << "Index      :" << ct2->nodes[i].index << std::endl;
-			if ( ct2->nodes[i].index != 3 )
-			{
-				std::cout << "lmax       :" << ct2->nodes[i].lm << std::endl;
-				std::cout << "Rmin       :" << ct2->nodes[i].rm << std::endl;
-			}
-			else
-			{
-				std::cout << "Start      :" << ct2->nodes[i].st << std::endl;
-				std::cout << "Size       :" << ct2->nodes[i].sz << std::endl;
-			}
+            std::cout << "Tree1, node" << i << std::endl;
+            std::cout << "Index      :" << ct1->nodes[i].index << std::endl;
+            if ( ct1->nodes[i].index != 3 )
+            {
+                std::cout << "lmax       :" << ct1->nodes[i].lm << std::endl;
+                std::cout << "Rmin       :" << ct1->nodes[i].rm << std::endl;
+            }
+            else
+            {
+                std::cout << "Start      :" << ct1->nodes[i].st << std::endl;
+                std::cout << "Size       :" << ct1->nodes[i].sz << std::endl;
+            }
+            std::cout << "Tree2, node" << i << std::endl;
+            std::cout << "Index      :" << ct2->nodes[i].index << std::endl;
+            if ( ct2->nodes[i].index != 3 )
+            {
+                std::cout << "lmax       :" << ct2->nodes[i].lm << std::endl;
+                std::cout << "Rmin       :" << ct2->nodes[i].rm << std::endl;
+            }
+            else
+            {
+                std::cout << "Start      :" << ct2->nodes[i].st << std::endl;
+                std::cout << "Size       :" << ct2->nodes[i].sz << std::endl;
+            }
             return false;
         }
     }
@@ -223,11 +223,11 @@ bool CellLocatorBIH::check( const kvs::CellLocator* locator )
     {
         bool flag = ( ct1->leaves[i] == ct2->leaves[i] );
 
-		if (!flag)
-		{
+        if (!flag)
+        {
             std::cout << "tree1 and tree2 differs at " << i << "th leaf. " << std::endl;
-			return false;
-		}
+            return false;
+        }
     }
 
     return true;

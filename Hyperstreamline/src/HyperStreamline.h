@@ -18,7 +18,7 @@ namespace kvs
 {
 
 class HyperStreamlineThread;
-	
+    
 class HyperStreamline : public kvs::MapperBase, public kvs::LineObject
 {
     // Class name.
@@ -41,7 +41,7 @@ public:
 
 public:
 
-	    enum IntegrationMethod
+        enum IntegrationMethod
         {
             Euler = 0,
             RungeKutta2nd = 1,
@@ -67,7 +67,7 @@ public:
     SuperClass* exec( const kvs::ObjectBase* object );
 
 public:
-	const bool check_for_inside_volume( const kvs::Vector3f& seed );
+    const bool check_for_inside_volume( const kvs::Vector3f& seed );
 
 public:
 
@@ -86,7 +86,7 @@ public:
     void setLocationMethod( const HyperStreamline::LocationMethod method, kvs::CellTree* ct = 0, kvs::UnstructuredVolumeObject* volume = 0 );
     void setLocator( const kvs::CellTree* ct = 0, const kvs::UnstructuredVolumeObject* volume = 0 );
     void setDisableCache();
-	void setLocatorToInitialized();
+    void setLocatorToInitialized();
     void setGoWithNthEigenVector( const int nth );
 
     //only use for update
@@ -106,24 +106,24 @@ protected:
 
 protected:
 
-    kvs::PointObject*			m_seed_points;
+    kvs::PointObject*           m_seed_points;
     std::vector<float>          m_eigenvalues;
-    IntegrationMethod			m_integration_method;
-    IntegrationDirection		m_integration_direction;
-    float						m_integration_interval;
-    float						m_vector_length_threshold;
-    size_t						m_integration_times_threshold;
-    bool						m_enable_boundary_condition;
-    bool						m_enable_vector_length_condition;
-    bool						m_enable_integration_times_condition;
-    bool						m_degenerate;
+    IntegrationMethod           m_integration_method;
+    IntegrationDirection        m_integration_direction;
+    float                       m_integration_interval;
+    float                       m_vector_length_threshold;
+    size_t                      m_integration_times_threshold;
+    bool                        m_enable_boundary_condition;
+    bool                        m_enable_vector_length_condition;
+    bool                        m_enable_integration_times_condition;
+    bool                        m_degenerate;
     kvs::CellLocatorBIH*        m_locator;
-    LocationMethod				m_location_method;
-    size_t						m_nthreads;
-    HyperStreamlineThread*		m_p_threads;
-	bool						m_locator_initialized;
+    LocationMethod              m_location_method;
+    size_t                      m_nthreads;
+    HyperStreamlineThread*      m_p_threads;
+    bool                        m_locator_initialized;
     bool                        m_enable_cache;
-	int							m_nth_egvector;
+    int                         m_nth_egvector;
 
 };
 
@@ -138,14 +138,14 @@ class HyperStreamlineThread : public kvs::Thread
 
 public:
 
-	HyperStreamlineThread();
-	~HyperStreamlineThread();
+    HyperStreamlineThread();
+    ~HyperStreamlineThread();
 
 public:
 
-	void init();
-	const bool check();
-	void run();
+    void init();
+    const bool check();
+    void run();
 
 public:
 
@@ -153,7 +153,7 @@ public:
     const std::vector<float>& eigenValue() const;
 
     void setVolume( const kvs::VolumeObjectBase* volume );
-	void setTransferFunction( const kvs::TransferFunction& transfer_function );
+    void setTransferFunction( const kvs::TransferFunction& transfer_function );
     void setSeedPoint( const kvs::Vector3f seed );
     void setLocator( const kvs::CellTree* ct, const kvs::UnstructuredVolumeObject* volume );
     void setDirection( const kvs::HyperStreamline::IntegrationDirection Direction);
@@ -195,7 +195,7 @@ protected:
     const bool check_for_vector_length( const kvs::Vector3f& direction );
     const bool check_for_integration_times( const size_t times );
 
-	const bool check_for_acceptance( const std::vector<kvs::Real32>& vertices );
+    const bool check_for_acceptance( const std::vector<kvs::Real32>& vertices );
     const bool check_for_termination(
         const kvs::Vector3f& current_vertex,
         const kvs::Vector3f& direction,
@@ -209,23 +209,23 @@ protected:
 
     std::vector<float>                              m_eigenvalues;
     float                                           m_mises;
-    const kvs::VolumeObjectBase*					m_volume;
-	kvs::TransferFunction							m_transfer_function;
-    kvs::Vector3f					                m_seed_point;
-    kvs::LineObject					                m_line;
-    mutable kvs::CellLocatorBIH*			        m_locator;
+    const kvs::VolumeObjectBase*                    m_volume;
+    kvs::TransferFunction                           m_transfer_function;
+    kvs::Vector3f                                   m_seed_point;
+    kvs::LineObject                                 m_line;
+    mutable kvs::CellLocatorBIH*                    m_locator;
     kvs::HyperStreamline::IntegrationDirection      m_direction;
     kvs::HyperStreamline::IntegrationMethod         m_method;
 
-    float					                        m_integration_interval;
-    float					                        m_vector_length_threshold;
-    size_t					                        m_integration_times_threshold;
+    float                                           m_integration_interval;
+    float                                           m_vector_length_threshold;
+    size_t                                          m_integration_times_threshold;
     bool                                            m_initialized;
-    bool					                        m_enable_boundary_condition;
-    bool					                        m_enable_vector_length_condition;
-    bool					                        m_enable_integration_times_condition;
+    bool                                            m_enable_boundary_condition;
+    bool                                            m_enable_vector_length_condition;
+    bool                                            m_enable_integration_times_condition;
     bool                                            m_degenerate;
-	int												m_nth_egvector;
+    int                                             m_nth_egvector;
 };
 
 

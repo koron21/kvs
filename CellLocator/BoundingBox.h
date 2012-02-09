@@ -10,7 +10,7 @@ namespace kvs
     public:
         BoundingBox();
         ~BoundingBox();
-        BoundingBox(const kvs::UnstructuredVolumeObject* object, size_t cindex);		///<	create a bounding box based on a specific object and cell index 
+        BoundingBox(const kvs::UnstructuredVolumeObject* object, size_t cindex); ///<create a bounding box based on a specific object and cell index 
     public:
         const float* bounds() const;
     private:

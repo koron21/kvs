@@ -10,7 +10,7 @@ namespace kvs
 {
     struct stack
     {
-        unsigned int	m_stack[32];
+        unsigned int    m_stack[32];
         unsigned int*   m_p_stack;
 
         stack()
@@ -75,11 +75,11 @@ namespace kvs
 
     };
 
-	struct bucket // only stores current max/min and time of add()
+    struct bucket // only stores current max/min and time of add()
     {
         float        min;
         float        max;
-        unsigned int cnt;	//counter of add()
+        unsigned int cnt;    //counter of add()
     
         bucket()
         {
@@ -144,7 +144,7 @@ namespace kvs
         }
     };
 
-	void find_min_max( const per_cell* begin, const per_cell* end, float* min, float* max );
+    void find_min_max( const per_cell* begin, const per_cell* end, float* min, float* max );
     
     void find_min_d( const per_cell* begin, const per_cell* end, unsigned int d, float& min );
 
@@ -153,12 +153,12 @@ namespace kvs
 class CellTree
 {
 public:
-	CellTree(){}
-	~CellTree()
-	{
-		nodes.clear();
-		leaves.clear();
-	}
+    CellTree(){}
+    ~CellTree()
+    {
+        nodes.clear();
+        leaves.clear();
+    }
 
 public:
     struct node
@@ -250,10 +250,10 @@ public:
 
     struct pre_traversal
     {
-        const CellTree&		    m_ct;
-        unsigned int			m_stack[32];
-        unsigned int*			m_sp;
-        const float*			m_pos;
+        const CellTree&        m_ct;
+        unsigned int           m_stack[32];
+        unsigned int*          m_sp;
+        const float*           m_pos;
 
         pre_traversal( const CellTree& ct, const float* pos ) :
             m_ct(ct), m_pos(pos)
@@ -305,10 +305,10 @@ public:
 
     struct pre_traversal_cached
     {
-        const CellTree&		    m_ct;
+        const CellTree&         m_ct;
         unsigned int            m_stack[32];
-        unsigned int*			m_sp;
-        const float*			m_pos;
+        unsigned int*           m_sp;
+        const float*            m_pos;
 
         // dangerous, be sure hint_stack and hint_sp are well initialized
         pre_traversal_cached( const CellTree& ct, const float* pos, const unsigned int previous_index ) :
@@ -382,14 +382,14 @@ public:
 
     struct in_traversal_cached
     {
-        const CellTree&		    m_ct;
-        unsigned int			m_stack[32];
-        unsigned int*			m_sp;
-        const float*			m_pos;
+        const CellTree&         m_ct;
+        unsigned int            m_stack[32];
+        unsigned int*           m_sp;
+        const float*            m_pos;
         stack                   m_lrstack;
   
         in_traversal_cached( const CellTree& ct, const float* pos, unsigned int hint_stack[32], 
-			unsigned int* hint_sp ):
+            unsigned int* hint_sp ):
             m_ct( ct ), m_pos( pos )
         {
             memcpy( m_stack, hint_stack, 128 );
@@ -484,28 +484,28 @@ public:
 class SplitThread : public kvs::Thread
 {
 public:
-	SplitThread(){}
-	~SplitThread(){}
+    SplitThread(){}
+    ~SplitThread(){}
 
 public:
-	void init(
+    void init(
         unsigned int leafsize,
-		std::vector<CellTree::node>* p_nodes,
+        std::vector<CellTree::node>* p_nodes,
         per_cell* pc,
-		unsigned int index,
-		float min[3],
-		float max[3] );
+        unsigned int index,
+        float min[3],
+        float max[3] );
 
-	const bool check();
-	void run();
-	void split( unsigned int index, float min[3], float max[3] );
+    const bool check();
+    void run();
+    void split( unsigned int index, float min[3], float max[3] );
 
 private:
     unsigned int                    m_leafsize;
-	std::vector<CellTree::node>*	m_nodes;
-	unsigned int					m_index;
-	float							m_min[3];
-	float							m_max[3];
+    std::vector<CellTree::node>*    m_nodes;
+    unsigned int                    m_index;
+    float                           m_min[3];
+    float                           m_max[3];
     per_cell*                       m_pc;
 };
 
@@ -513,20 +513,20 @@ class CellTreeBuilder
 {
 
 public:  
-	CellTreeBuilder();
-	~CellTreeBuilder();
+    CellTreeBuilder();
+    ~CellTreeBuilder();
 
-	void setParallel();
-	void build( CellTree& ct, const kvs::UnstructuredVolumeObject* ds );
-	void split( unsigned int index, float min[3], float max[3] );
+    void setParallel();
+    void build( CellTree& ct, const kvs::UnstructuredVolumeObject* ds );
+    void split( unsigned int index, float min[3], float max[3] );
 
 private:
-    bool								m_parallel;
+    bool                                m_parallel;
     unsigned int                        m_leafsize;
     std::vector<kvs::CellTree::node>    m_nodes;
     std::vector<kvs::CellTree::node>    m_nodes1;
     std::vector<kvs::CellTree::node>    m_nodes2;
-	kvs::SplitThread					m_thread[2];
+    kvs::SplitThread                    m_thread[2];
     per_cell*                           m_pc;
     per_cell*                           m_pc1;
     per_cell*                           m_pc2;

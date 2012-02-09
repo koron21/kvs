@@ -32,7 +32,7 @@ HyperStreamline::HyperStreamline( void ):
     m_enable_vector_length_condition( false ),
     m_enable_integration_times_condition( true ),
     m_degenerate( false ),
-	m_nthreads( 0 ),
+    m_nthreads( 0 ),
     m_enable_cache( true )
 {
 }
@@ -48,7 +48,7 @@ HyperStreamline::HyperStreamline(
     m_enable_vector_length_condition( false ),
     m_enable_integration_times_condition( true ),
     m_degenerate( false ),
-	m_nthreads( 0 ),
+    m_nthreads( 0 ),
     m_enable_cache( true )
 {
     BaseClass::setTransferFunction( transfer_function );
@@ -78,18 +78,18 @@ HyperStreamline::SuperClass* HyperStreamline::exec( const kvs::ObjectBase* objec
         return( NULL );
     }
 
-	if ( !volume->hasMinMaxValues() )
-		volume->updateMinMaxValues();
-	
-	BaseClass::attach_volume( volume );
-	mapping(volume);
+    if ( !volume->hasMinMaxValues() )
+        volume->updateMinMaxValues();
     
-	return (this);
+    BaseClass::attach_volume( volume );
+    mapping(volume);
+    
+    return (this);
 }
 
 void HyperStreamline::mapping( const kvs::VolumeObjectBase* volume )
 {
-	
+    
     kvs::Timer timer;
     timer.start();
     std::cout << "Extracting Hyper Streamline";
@@ -110,17 +110,17 @@ void HyperStreamline::extract_lines(
 
     //for each seed point, initiates a thread to calculate streamline
     const size_t npoints = m_seed_points->nvertices();
-	kvs::BitArray mask( npoints );
-	mask.reset();
+    kvs::BitArray mask( npoints );
+    mask.reset();
     for ( size_t index = 0; index < npoints; index++ )
     {
-	    const kvs::Vector3f seed_point = m_seed_points->coord( index );
-		if ( this->check_for_inside_volume( seed_point ) )
-		{
-			m_nthreads ++;
-			mask.set(index);
-		}
-	}
+        const kvs::Vector3f seed_point = m_seed_points->coord( index );
+        if ( this->check_for_inside_volume( seed_point ) )
+        {
+            m_nthreads ++;
+            mask.set(index);
+        }
+    }
 
 #ifdef DEBUG
     const size_t nseeds = m_seed_points->nvertices();
@@ -167,52 +167,52 @@ void HyperStreamline::extract_lines(
         SuperClass::setSize( 1.0f );
         return;
     }
-	m_p_threads = new HyperStreamlineThread[m_nthreads];
+    m_p_threads = new HyperStreamlineThread[m_nthreads];
 
-	// need locator or not
-	switch ( volume->volumeType() )
-	{
-	case kvs::VolumeObjectBase::Unstructured:
-		{
-			// initialize locator and set seed point
-			const kvs::UnstructuredVolumeObject* uvolume = 
-				static_cast<const kvs::UnstructuredVolumeObject* >(volume);
+    // need locator or not
+    switch ( volume->volumeType() )
+    {
+    case kvs::VolumeObjectBase::Unstructured:
+        {
+            // initialize locator and set seed point
+            const kvs::UnstructuredVolumeObject* uvolume = 
+                static_cast<const kvs::UnstructuredVolumeObject* >(volume);
 
-			if ( !m_locator_initialized )
-			{
-				m_locator = new CellLocatorBIH();
-				m_locator->setDataSet( uvolume );
-				m_locator->initializeCell();
-				m_locator->setMode( kvs::CellLocator::CACHEOFF );
-				m_locator->build();
-			}
-			
-			for ( size_t i = 0, j = 0; (i < m_nthreads && j < npoints) ; i ++, j++ )
-			{
-				while ( !mask[j] )
-					j++;
+            if ( !m_locator_initialized )
+            {
+                m_locator = new CellLocatorBIH();
+                m_locator->setDataSet( uvolume );
+                m_locator->initializeCell();
+                m_locator->setMode( kvs::CellLocator::CACHEOFF );
+                m_locator->build();
+            }
+            
+            for ( size_t i = 0, j = 0; (i < m_nthreads && j < npoints) ; i ++, j++ )
+            {
+                while ( !mask[j] )
+                    j++;
                 if ( j > npoints )
                     break;
-				m_p_threads[i].setSeedPoint( m_seed_points->coord( j ) );
-				m_p_threads[i].setLocator( m_locator->cellTree(), uvolume );	
+                m_p_threads[i].setSeedPoint( m_seed_points->coord( j ) );
+                m_p_threads[i].setLocator( m_locator->cellTree(), uvolume );    
                 if ( !m_enable_cache )
                     m_p_threads[i].setDisableCache();
 #ifdef DEBUG
                 std::cout << j << "th seed point passed to " << i << "th thread" << std::endl;
 #endif
-			}
+            }
 
             break;
-		}
-	case kvs::VolumeObjectBase::Structured:
-		{
+        }
+    case kvs::VolumeObjectBase::Structured:
+        {
             break;
-		}
-	default:
-		{
+        }
+    default:
+        {
             break;
-		}
-	}
+        }
+    }
 
 #ifdef DEBUG
     std::cout << std::endl;
@@ -222,65 +222,65 @@ void HyperStreamline::extract_lines(
 #endif
 
     //pass parameters to HyperStreamlineThread class
-   	for ( size_t i = 0; i < m_nthreads; i ++ )
+       for ( size_t i = 0; i < m_nthreads; i ++ )
     {
-		m_p_threads[i].setGoWithNthEigenVector( m_nth_egvector );
-		m_p_threads[i].setTransferFunction( BaseClass::transferFunction() );
+        m_p_threads[i].setGoWithNthEigenVector( m_nth_egvector );
+        m_p_threads[i].setTransferFunction( BaseClass::transferFunction() );
         m_p_threads[i].setVolume( volume );
         m_p_threads[i].setDirection( this->m_integration_direction );
         m_p_threads[i].setMethod( this->m_integration_method );
         m_p_threads[i].init();
     }
 
-	for ( size_t i = 0; i < m_nthreads; i ++ )
-		m_p_threads[i].start();
+    for ( size_t i = 0; i < m_nthreads; i ++ )
+        m_p_threads[i].start();
 
-	for ( size_t i = 0; i < m_nthreads; i ++ )
-		m_p_threads[i].wait();
+    for ( size_t i = 0; i < m_nthreads; i ++ )
+        m_p_threads[i].wait();
 
-	// gather data from every thread
-	size_t coords_size = 0;
+    // gather data from every thread
+    size_t coords_size = 0;
 
-	for ( size_t i = 0; i < m_nthreads; i ++ )
-	{
-		coords_size += m_p_threads[i].line().nvertices();
-	}
+    for ( size_t i = 0; i < m_nthreads; i ++ )
+    {
+        coords_size += m_p_threads[i].line().nvertices();
+    }
 
 #ifdef DEBUG
     std::cout << "\nnumber of vertice       " << coords_size << std::endl;
 #endif
 
-	coords.reserve( coords_size * 3 );
-	colors.reserve( coords_size * 3 );
+    coords.reserve( coords_size * 3 );
+    colors.reserve( coords_size * 3 );
     connections.clear();
-	connections.reserve( m_nthreads * 2 );
-		
-	for ( size_t i = 0; i < m_nthreads; i ++ )
-	{
-		const kvs::Real32* p_coords = m_p_threads[i].line().coords().pointer();
+    connections.reserve( m_nthreads * 2 );
+        
+    for ( size_t i = 0; i < m_nthreads; i ++ )
+    {
+        const kvs::Real32* p_coords = m_p_threads[i].line().coords().pointer();
 #ifdef MISES_COLOR
-		const kvs::UInt8*  p_colors = m_p_threads[i].line().colors().pointer();
+        const kvs::UInt8*  p_colors = m_p_threads[i].line().colors().pointer();
 #endif
 
-		connections.push_back( coords.size() / 3 );			//start
+        connections.push_back( coords.size() / 3 );         //start
 
-		for ( size_t j = 0; j < m_p_threads[i].line().nvertices(); j ++ ) 
-		{
-			coords.push_back( *( p_coords + 3*j ) );		//x
-			coords.push_back( *( p_coords + 3*j + 1 ) );	//y
-			coords.push_back( *( p_coords + 3*j + 2 ) );	//z
-		
+        for ( size_t j = 0; j < m_p_threads[i].line().nvertices(); j ++ ) 
+        {
+            coords.push_back( *( p_coords + 3*j ) );        //x
+            coords.push_back( *( p_coords + 3*j + 1 ) );    //y
+            coords.push_back( *( p_coords + 3*j + 2 ) );    //z
+        
 #ifdef MISES_COLOR
-			colors.push_back( *( p_colors + 3*j ) );		//R
-			colors.push_back( *( p_colors + 3*j + 1) );		//G
-			colors.push_back( *( p_colors + 3*j + 2) );		//B
+            colors.push_back( *( p_colors + 3*j ) );        //R
+            colors.push_back( *( p_colors + 3*j + 1) );     //G
+            colors.push_back( *( p_colors + 3*j + 2) );     //B
 #endif
-		}
-		connections.push_back( coords.size() / 3 - 1 );		//end
-	}
-	
+        }
+        connections.push_back( coords.size() / 3 - 1 );     //end
+    }
+    
 #ifdef EIGEN_VALUE_COLOR
-	for ( size_t i = 0; i < m_nthreads; i ++ )
+    for ( size_t i = 0; i < m_nthreads; i ++ )
     {
         m_eigenvalues.insert( m_eigenvalues.end(), m_p_threads[i].eigenValue().begin(), m_p_threads[i].eigenValue().end() );
     }
@@ -296,7 +296,7 @@ void HyperStreamline::extract_lines(
 #endif
     SuperClass::setSize( 1.0f );
 
-	delete [] m_p_threads;
+    delete [] m_p_threads;
 
 }
 
@@ -357,9 +357,9 @@ void HyperStreamline::calculate_color( const float min_eigenvalue, const float m
     }
 
     std::vector<kvs::UInt8>  colors;
-	colors.reserve( m_eigenvalues.size()*3 );
+    colors.reserve( m_eigenvalues.size()*3 );
 
-	for ( size_t i = 0; i < m_eigenvalues.size(); i ++ )
+    for ( size_t i = 0; i < m_eigenvalues.size(); i ++ )
     {
         kvs::UInt8 level;
         if ( m_eigenvalues[i] > 0 )
@@ -411,7 +411,7 @@ const bool HyperStreamline::check_for_inside_volume( const kvs::Vector3f& point 
         }
     }
 
-	return false;
+    return false;
 
 }
 
@@ -483,7 +483,7 @@ void HyperStreamline::setLocator( const kvs::CellTree* ct, const kvs::Unstructur
     m_locator->setDataSet( volume );
     m_locator->setMode( kvs::CellLocator::CACHEOFF );
     m_locator->initializeCell();
-	m_locator_initialized = true;
+    m_locator_initialized = true;
 
 }
 
@@ -518,7 +518,7 @@ void HyperStreamline::setDisableCache()
 
 HyperStreamlineThread::HyperStreamlineThread() : kvs::Thread()
 {
-	m_nth_egvector = 0;
+    m_nth_egvector = 0;
     m_eigenvalues.reserve( 500 );
 }
 
@@ -568,7 +568,7 @@ void HyperStreamlineThread::run()
     std::vector<float> coords;
     std::vector<unsigned char> colors;
 
-	//calculate the line from the seed point
+    //calculate the line from the seed point
     const kvs::Vector3f seed_vector = this->calculate_vector( m_seed_point );
     
     switch ( m_direction )
@@ -737,9 +737,9 @@ const bool HyperStreamlineThread::calculate_one_side(
         coords.push_back( current_vertex.y() );
         coords.push_back( current_vertex.z() );
 
-		// Interpolate vector from vertex of cell.
+        // Interpolate vector from vertex of cell.
         float eigenvalue = 0.0f;
-		current_vector = this->interpolate_vector( current_vertex, previous_vector, eigenvalue );
+        current_vector = this->interpolate_vector( current_vertex, previous_vector, eigenvalue );
         m_eigenvalues.push_back( eigenvalue );
 
         // Set color of vertex.
@@ -922,7 +922,7 @@ const bool HyperStreamlineThread::check_for_inside_volume( const kvs::Vector3f& 
         }
     }
 
-	return false;
+    return false;
 
 }
 
@@ -992,7 +992,7 @@ const kvs::RGBColor HyperStreamlineThread::calculate_color()
 #ifdef MISES_COLOR
     return( m_transfer_function.colorMap().at(m_mises) );
 #else
-	return( kvs::RGBColor( 255, 0, 0 ) );
+    return( kvs::RGBColor( 255, 0, 0 ) );
 #endif
 }
 
@@ -1010,16 +1010,16 @@ const kvs::Vector3f HyperStreamlineThread::interpolate_vector(
         // locate the cell that contains the vertex
         float gpos[3] = { vertex[0], vertex[1], vertex[2] };
 
-		int cellid = m_locator->findCell( gpos ); 
+        int cellid = m_locator->findCell( gpos ); 
 
 #ifdef DEBUG
-		if ( cellid < 0 || cellid > volume->connections().size() )
+        if ( cellid < 0 || cellid > volume->connections().size() )
         {
-			std::cerr << "Wrong, cellid is not right!!" << std::endl;
+            std::cerr << "Wrong, cellid is not right!!" << std::endl;
         }
 #endif
 
-		// interpolate the tensor matrix 
+        // interpolate the tensor matrix 
         int length = m_volume->cellType();
         const float *intfunc = m_locator->cell()->interpolationFunctions( m_locator->cell()->localPoint() );
         KVS_ASSERT( cellid != -1 );
@@ -1035,7 +1035,7 @@ const kvs::Vector3f HyperStreamlineThread::interpolate_vector(
                 int vi = volume->connections()[ cellid * length + i ];  //vertex index
                 const float* s = static_cast<const float*>( volume->values().pointer() );         
 
-			    stress_each_vertex = kvs::Matrix33f( 
+                stress_each_vertex = kvs::Matrix33f( 
                     s[ vi * 7 ],     s[ vi * 7 + 3 ], s[ vi * 7 + 4 ],
                     s[ vi * 7 + 3 ], s[ vi * 7 + 1 ], s[ vi * 7 + 5 ],
                     s[ vi * 7 + 4 ], s[ vi * 7 + 5 ], s[ vi * 7 + 2 ] ); 
@@ -1052,7 +1052,7 @@ const kvs::Vector3f HyperStreamlineThread::interpolate_vector(
                 int vi = volume->connections()[ cellid * length + i ];  //vertex index
                 const float* s = static_cast<const float*>( volume->values().pointer() );         
 
-			    stress_each_vertex = kvs::Matrix33f( 
+                stress_each_vertex = kvs::Matrix33f( 
                     s[ vi * 6 ],     s[ vi * 6 + 3 ], s[ vi * 6 + 4 ],
                     s[ vi * 6 + 3 ], s[ vi * 6 + 1 ], s[ vi * 6 + 5 ],
                     s[ vi * 6 + 4 ], s[ vi * 6 + 5 ], s[ vi * 6 + 2 ] ); 
@@ -1079,8 +1079,8 @@ const kvs::Vector3f HyperStreamlineThread::interpolate_vector(
 
 
         if ( kvs::Math::Abs(stress_interpolated.determinant()) < 0.0001f ) // degenerate case
-			m_degenerate = true;		
-		
+            m_degenerate = true;        
+        
 
         // singular value Decomposition to get the biggest vector
         kvs::EigenDecomposer<float> ed( stress_interpolated, kvs::EigenDecomposer<float>::Symmetric );
@@ -1143,17 +1143,17 @@ void HyperStreamlineThread::setVolume( const kvs::VolumeObjectBase* volume )
 
 void HyperStreamlineThread::setTransferFunction( const kvs::TransferFunction& transfer_function )
 {
-	m_transfer_function = transfer_function;
+    m_transfer_function = transfer_function;
 }
 
 void HyperStreamlineThread::setSeedPoint( const kvs::Vector3f seed )
 {
-	m_seed_point = seed;
+    m_seed_point = seed;
 }
 
 void HyperStreamlineThread::setLocator( const kvs::CellTree* ct, const kvs::UnstructuredVolumeObject* volume )
 {
-	m_locator = new kvs::CellLocatorBIH();
+    m_locator = new kvs::CellLocatorBIH();
     m_locator->setCellTree( const_cast<kvs::CellTree*>(ct) );
     m_locator->setDataSet( volume );
     m_locator->setMode( kvs::CellLocator::CACHEFULL );
@@ -1172,7 +1172,7 @@ void HyperStreamlineThread::setMethod( const kvs::HyperStreamline::IntegrationMe
 
 const kvs::LineObject& HyperStreamlineThread::line() const
 {
-	return m_line;
+    return m_line;
 }
 
 const std::vector<float>& HyperStreamlineThread::eigenValue() const
