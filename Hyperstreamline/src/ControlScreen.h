@@ -14,8 +14,16 @@
 #include <kvs/glut/Screen>
 
 #include "CubicPointObject.h"
+
+#define USE_KVS
+
+#ifdef USE_KVS
+#include <kvs/glew/StochasticRenderingCompositor>
+#include <kvs/glew/StochasticPointEngine>
+#else
 #include "StochasticRenderer.h"
 #include "StochasticPointRenderer.h"
+#endif
 
 namespace kvs
 {
@@ -34,8 +42,14 @@ protected:
     // Reference only.
     kvs::glut::Screen*                  m_screen;
     kvs::CubicPointObject*              m_point;
+
+#ifdef USE_KVS
+    kvs::glew::StochasticRenderingCompositor* m_renderer;
+    kvs::glew::StochasticPointEngine*         m_point_renderer;
+#else
     kvs::glew::StochasticRenderer*      m_renderer;
     kvs::glew::StochasticPointRenderer* m_point_renderer;
+#endif
 
 public:
 
@@ -47,11 +61,19 @@ public:
 
     void initialize( void );
 
+#ifdef USE_KVS
+    void attachMainScreen( 
+            kvs::glut::Screen* screen, 
+            kvs::CubicPointObject* point, 
+            kvs::glew::StochasticRenderingCompositor* renderer,
+            kvs::glew::StochasticPointEngine* point_renderer );
+#else
     void attachMainScreen( 
             kvs::glut::Screen* screen, 
             kvs::CubicPointObject* point, 
             kvs::glew::StochasticRenderer* renderer,
             kvs::glew::StochasticPointRenderer* point_renderer );
+#endif
 
 public:
 

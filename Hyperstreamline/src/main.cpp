@@ -21,6 +21,18 @@
 #include "ControlScreen.h"
 #include "CubicPointObject.h"
 #include "HyperStreamline.h"
+
+#include "PolygonToPolygon.h"
+
+#define USE_KVS
+
+#ifdef USE_KVS
+#include <kvs/glew/StochasticRenderingCompositor>
+#include <kvs/glew/StochasticLineEngine>
+#include <kvs/glew/StochasticPointEngine>
+#include <kvs/glew/StochasticPolygonEngine>
+#include <kvs/glew/StochasticTetrahedraEngine>
+#else
 #include "NullObject.h"
 #include "PolygonToPolygon.h"
 #include "StochasticLineRenderer.h"
@@ -28,8 +40,24 @@
 #include "StochasticPolygonRenderer.h"
 #include "StochasticRenderer.h"
 #include "StochasticVolumeRenderer.h"
+#endif
 
+#ifdef USE_KVS
+kvs::glew::StochasticPointEngine*         m_point_renderer        = NULL;
+kvs::glew::StochasticLineEngine*          m_line_renderer         = NULL;
+kvs::glew::StochasticPolygonEngine*       m_polygon_renderer      = NULL;
+kvs::glew::StochasticTetrahedraEngine*    m_volume_renderer       = NULL;
+kvs::glew::StochasticRenderingCompositor* m_compositor            = NULL;
+#else
 kvs::NullObject*                        null                      = NULL;
+kvs::glew::StochasticRenderer*          m_renderer                = NULL;
+kvs::glew::StochasticPointRenderer*     m_point_renderer          = NULL;
+kvs::glew::StochasticLineRenderer*      m_line_renderer           = NULL;
+kvs::glew::StochasticPolygonRenderer*   m_polygon_renderer        = NULL;
+kvs::glew::StochasticVolumeRenderer*    m_volume_renderer         = NULL;
+#endif
+
+kvs::glut::Screen*                      p_main_screen             = NULL;
 kvs::UnstructuredVolumeObject*          m_volume1                 = NULL;
 kvs::UnstructuredVolumeObject*          m_volume2                 = NULL;
 kvs::CellLocatorBIH*                    m_locator                 = NULL;
@@ -37,13 +65,6 @@ kvs::CubicPointObject*                  m_seed_point              = NULL;
 kvs::PolygonObject*                     m_polygon                 = NULL;
 kvs::HyperStreamline*                   m_streamline              = NULL;
 kvs::HyperStreamline*                   m_buffered_streamline     = NULL;
-
-kvs::glew::StochasticRenderer*          m_renderer                = NULL;
-kvs::glew::StochasticPointRenderer*     m_point_renderer          = NULL;
-kvs::glew::StochasticLineRenderer*      m_line_renderer           = NULL;
-kvs::glew::StochasticPolygonRenderer*   m_polygon_renderer        = NULL;
-kvs::glew::StochasticVolumeRenderer*    m_volume_renderer         = NULL;
-kvs::glut::Screen*                      p_main_screen             = NULL;
 
 kvs::TransferFunction                   m_tfunc;  
 std::vector<unsigned int>               m_buffer;  
@@ -91,8 +112,10 @@ public:
     }
 
 };
-
 Argument* p_arg  = NULL;
+
+#ifdef USE_KVS
+#else
 class TransferFunctionEditor : public kvs::glut::TransferFunctionEditor
 {
 private:
@@ -120,6 +143,7 @@ public:
         screen()->redraw();
     }
 };
+#endif
 
 class PB_INFO : public kvs::glut::PushButton 
 {
@@ -169,7 +193,11 @@ public:
 
         if ( flag_clear_buffer )
         {
+#ifdef USE_KVS
+            m_compositor->changeObject( m_streamline, streamline, true );
+#else
             m_renderer->changeObject( streamline, m_line_renderer, true );
+#endif
             m_streamline = streamline;
         }
         else
@@ -226,7 +254,11 @@ public:
                 m_buffered_streamline->setLineType( kvs::LineObject::Polyline );
                 m_buffered_streamline->setColorType( kvs::LineObject::VertexColor );
 
+#ifdef USE_KVS
+                m_compositor->changeObject( m_streamline, m_buffered_streamline, false );
+#else
                 m_renderer->changeObject( m_buffered_streamline, m_line_renderer, false );
+#endif
                 m_streamline = m_buffered_streamline;
         }
     }
@@ -251,8 +283,11 @@ public:
         m_seed_point->setXMin( _xmin );
         m_seed_point->setXMax( _xmax );
         m_seed_point->reset_coordinates();
-        
+
+#ifdef USE_KVS
+#else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
+#endif
 
         if ( m_seed_point->nvertices() == 1 )
             p_pb04->pressed();
@@ -278,7 +313,10 @@ public:
         m_seed_point->setYMax( _ymax );
         m_seed_point->reset_coordinates();
 
+#ifdef USE_KVS
+#else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
+#endif
 
         if ( m_seed_point->nvertices() == 1 )
             p_pb04->pressed();
@@ -304,7 +342,10 @@ public:
         m_seed_point->setZMax( _zmax );
         m_seed_point->reset_coordinates();
 
+#ifdef USE_KVS
+#else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
+#endif
 
         if ( m_seed_point->nvertices() == 1 )
             p_pb04->pressed();
@@ -327,7 +368,10 @@ public:
         m_seed_point->setResX( resx_new );
         m_seed_point->reset_coordinates();
 
+#ifdef USE_KVS
+#else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
+#endif
 
         if ( m_seed_point->nvertices() == 1 )
             p_pb04->pressed();
@@ -350,7 +394,10 @@ public:
         m_seed_point->setResY( resy_new );
         m_seed_point->reset_coordinates();
 
+#ifdef USE_KVS
+#else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
+#endif
 
         if ( m_seed_point->nvertices() == 1 )
             p_pb04->pressed();
@@ -373,7 +420,10 @@ public:
         m_seed_point->setResZ( resz_new );
         m_seed_point->reset_coordinates();
 
+#ifdef USE_KVS
+#else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
+#endif
 
         if ( m_seed_point->nvertices() == 1 )
             p_pb04->pressed();
@@ -431,7 +481,11 @@ public:
             temp_polygon->setOpacity( 0 );
             temp_polygon->setPolygonType( kvs::PolygonObject::Triangle );
 
+#ifdef USE_KVS
+            m_compositor->changeObject( m_polygon, temp_polygon, true );
+#else
             m_renderer->changeObject( temp_polygon, m_polygon_renderer, true );
+#endif
             m_polygon = temp_polygon;
 
             this->setCaption( "Show Polygon" );
@@ -458,7 +512,11 @@ public:
             temp_polygon->setOpacity( opacity_polygon );
             temp_polygon->setColor( kvs::RGBColor( 255,255,255 ) );
 
+#ifdef USE_KVS
+            m_compositor->changeObject( m_polygon, temp_polygon, true );
+#else
             m_renderer->changeObject( temp_polygon, m_polygon_renderer, true );
+#endif
             m_polygon = temp_polygon;
 
             this->setCaption( "Hide Polygon" );
@@ -496,7 +554,11 @@ public:
                 temp_volume2 = volume2;
             }  
 
+#ifdef USE_KVS
+            m_compositor->changeObject( m_volume2, temp_volume2, true );
+#else
             m_renderer->changeObject( temp_volume2, m_volume_renderer, true );
+#endif
             m_volume2 = temp_volume2;
 
             p_pb_info->setCaption( "Displacement Volume Read!" );
@@ -523,7 +585,11 @@ public:
             volume2->setNCells(1);
             volume2->setNNodes(1);
 
+#ifdef USE_KVS
+            m_compositor->changeObject( m_volume2, volume2, true );
+#else
             m_renderer->changeObject( volume2, m_volume_renderer, true );
+#endif
             m_volume2 = volume2;
 
             p_pb_info->setCaption( "Volume Hided!" );
@@ -605,7 +671,11 @@ public:
         m_seed_point->reset_coordinates();
         m_seed_point->setMinMaxObjectCoords( m_volume1->minObjectCoord(), m_volume1->maxObjectCoord() );
         m_seed_point->setMinMaxExternalCoords( m_volume1->minExternalCoord(), m_volume1->maxExternalCoord() );
+        
+#ifdef USE_KVS
+#else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
+#endif
 
         p_pb_info->setCaption( "Tensor Volume Read!" );
         std::cout << "Tensor Volume Read" << std::endl;
@@ -666,7 +736,12 @@ public:
 
         delete m_buffered_streamline;
         m_buffered_streamline = NULL;
+
+#ifdef USE_KVS
+        m_compositor->changeObject( m_streamline, streamline, false );
+#else
         m_renderer->changeObject( streamline, m_line_renderer, false );
+#endif
         m_streamline = streamline;
 
         p_pb_info->setCaption("All in a mess huh? let's do it again");
@@ -830,7 +905,11 @@ class KeyPressEvent : public kvs::KeyPressEventListener
                 if ( opacity_polygon < 255 )
                     opacity_polygon += 5;
                 m_polygon->setOpacity( opacity_polygon );
+#ifdef USE_KVS
+                m_compositor->clearEnsembleBuffer();
+#else
                 m_renderer->clearEnsembleBuffer();
+#endif
                 this->screen()->redraw();
                 break;
             }
@@ -839,7 +918,11 @@ class KeyPressEvent : public kvs::KeyPressEventListener
                 if ( opacity_polygon > 0 )
                     opacity_polygon -= 5;
                 m_polygon->setOpacity( opacity_polygon );
+#ifdef USE_KVS
+                m_compositor->clearEnsembleBuffer();
+#else
                 m_renderer->clearEnsembleBuffer();
+#endif
                 this->screen()->redraw();
                 break;
             }
@@ -848,7 +931,11 @@ class KeyPressEvent : public kvs::KeyPressEventListener
                 if ( opacity_line < 255 )
                     opacity_line += 5;
                 m_line_renderer->setOpacity( opacity_line );
+#ifdef USE_KVS
+                m_compositor->clearEnsembleBuffer();
+#else
                 m_renderer->clearEnsembleBuffer();
+#endif
                 this->screen()->redraw();
                 break;
             }
@@ -857,7 +944,11 @@ class KeyPressEvent : public kvs::KeyPressEventListener
                 if ( opacity_line > 0 )
                     opacity_line -= 5;
                 m_line_renderer->setOpacity( opacity_line );
+#ifdef USE_KVS
+                m_compositor->clearEnsembleBuffer();
+#else
                 m_renderer->clearEnsembleBuffer();
+#endif
                 this->screen()->redraw();
                 break;
             }
@@ -923,7 +1014,11 @@ class KeyPressEvent : public kvs::KeyPressEventListener
                     tfunc_counter = 0;
 
                 m_volume_renderer->setTransferFunction( m_tfunc );
+#ifdef USE_KVS
+                m_compositor->clearEnsembleBuffer();
+#else
                 m_renderer->clearEnsembleBuffer();
+#endif
                 this->screen()->redraw();
                 break;
             }
@@ -1012,7 +1107,47 @@ int main( int argc, char** argv )
     m_streamline->setColors( kvs::ValueArray<kvs::UInt8>( colors ) );
     m_streamline->setSize( 1.0f );
 
+    // main screen
+    kvs::glut::Screen main_screen( &app );
+    p_main_screen = &main_screen;
+    int interval = 30;
+    kvs::glut::Timer timer( interval );
+    TimerEvent timer_event;
+    KeyPressEvent keypress_event;
+
+    main_screen.addTimerEvent( &timer_event, &timer );
+    main_screen.addKeyPressEvent( &keypress_event );
+    main_screen.show();
+
     // renderer
+#ifdef USE_KVS
+    m_compositor = new kvs::glew::StochasticRenderingCompositor( &main_screen );
+    m_compositor->enableLODControl();
+
+    m_tfunc.adjustRange( m_volume2 );
+    m_tfunc.setColorMap( kvs::RGBFormulae::AFMHot(256) );
+
+    m_volume_renderer = new kvs::glew::StochasticTetrahedraEngine();
+    m_volume_renderer->setTransferFunction( m_tfunc );
+    m_volume_renderer->setShader( kvs::Shader::BlinnPhong() );
+    m_volume_renderer->disableShading();
+    m_volume_renderer->setEdgeSize( 2 );
+
+    m_polygon_renderer = new kvs::glew::StochasticPolygonEngine();
+    m_polygon_renderer->setShader( kvs::Shader::BlinnPhong() );
+   
+    m_point_renderer = new kvs::glew::StochasticPointEngine();
+    m_point_renderer->disableShading();
+
+    m_line_renderer = new kvs::glew::StochasticLineEngine();
+    m_line_renderer->setShader( kvs::Shader::BlinnPhong() );
+    m_line_renderer->setOpacity( opacity_line );
+
+    m_compositor->registerObject( m_volume2, m_volume_renderer );
+    m_compositor->registerObject( m_polygon, m_polygon_renderer );
+    m_compositor->registerObject( m_seed_point, m_point_renderer );
+    m_compositor->registerObject( m_streamline, m_line_renderer );
+#else
     m_renderer = new kvs::glew::StochasticRenderer( 1 );
     m_renderer->enableLODControl();
 
@@ -1038,20 +1173,12 @@ int main( int argc, char** argv )
     m_line_renderer->setOpacity( opacity_line );
     m_renderer->registerRenderer( m_line_renderer );
 
-    // main screen
-    kvs::glut::Screen main_screen( &app );
-    p_main_screen = &main_screen;
-    int interval = 30;
-    kvs::glut::Timer timer( interval );
-    TimerEvent timer_event;
-    KeyPressEvent keypress_event;
-
     null = new::kvs::NullObject( m_seed_point );
     null->setName( "null" );
-    main_screen.addTimerEvent( &timer_event, &timer );
-    main_screen.addKeyPressEvent( &keypress_event );
     main_screen.registerObject( null, m_renderer );
     main_screen.show();
+
+#endif
 
     // tfunc editor
     //TransferFunctionEditor editor( &main_screen, m_renderer, m_volume_renderer );
@@ -1060,7 +1187,11 @@ int main( int argc, char** argv )
 
     kvs::ControlScreen control_screen( &app );
 
+#ifdef USE_KVS
+    control_screen.attachMainScreen( p_main_screen, m_seed_point, m_compositor, m_point_renderer );
+#else
     control_screen.attachMainScreen( p_main_screen, m_seed_point, m_renderer, m_point_renderer );
+#endif
     control_screen.show();
 
     PaintEvent paint_event;

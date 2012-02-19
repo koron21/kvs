@@ -36,6 +36,19 @@ void ControlScreen::initialize( void )
     m_point_renderer = NULL;
 }
 
+#ifdef USE_KVS
+void ControlScreen::attachMainScreen( 
+        kvs::glut::Screen* screen, 
+        kvs::CubicPointObject* point,
+        kvs::glew::StochasticRenderingCompositor* renderer,
+        kvs::glew::StochasticPointEngine* point_renderer)
+{
+    m_screen = screen;
+    m_point  = point;
+    m_renderer = renderer;
+    m_point_renderer = point_renderer;
+}
+#else
 void ControlScreen::attachMainScreen( 
         kvs::glut::Screen* screen, 
         kvs::CubicPointObject* point,
@@ -47,7 +60,7 @@ void ControlScreen::attachMainScreen(
     m_renderer = renderer;
     m_point_renderer = point_renderer;
 }
-
+#endif
 
 void ControlScreen::mouseMoveEvent( kvs::MouseEvent* event )
 {
@@ -99,7 +112,10 @@ void ControlScreen::mouseMoveEvent( kvs::MouseEvent* event )
             }
             m_point->setCoords( coords );
         }
+#ifdef USE_KVS
+#else
         m_renderer->changeObject( m_point, m_point_renderer, false );
+#endif
     }
 
     BaseClass::eventHandler()->notify( event );
