@@ -47,9 +47,9 @@ private:
 
     CellTreeBuilder*                       m_builder; 
     mutable CellTree*                      m_celltree;
-    unsigned int                           m_cache1[32];
+    unsigned int                           m_cache1[64];
     unsigned int*                          m_cp1;
-    unsigned int                           m_cache2[16];
+    unsigned int                           m_cache2[32];
     unsigned int*                          m_cp2;
 
 };

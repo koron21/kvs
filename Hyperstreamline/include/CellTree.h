@@ -383,16 +383,16 @@ public:
     struct in_traversal_cached
     {
         const CellTree&         m_ct;
-        unsigned int            m_stack[32];
+        unsigned int            m_stack[64];
         unsigned int*           m_sp;
         const float*            m_pos;
         stack                   m_lrstack;
   
-        in_traversal_cached( const CellTree& ct, const float* pos, unsigned int hint_stack[32], 
+        in_traversal_cached( const CellTree& ct, const float* pos, unsigned int hint_stack[64], 
             unsigned int* hint_sp ):
             m_ct( ct ), m_pos( pos )
         {
-            memcpy( m_stack, hint_stack, 128 );
+            memcpy( m_stack, hint_stack, 256 );
 
             int n = hint_sp - hint_stack;     // initialize stack pointer 
             m_sp = m_stack + n;
@@ -403,7 +403,7 @@ public:
             while( true )
             {
 
-                if( m_sp == m_stack )   //if returned to the root the second time
+                if( m_sp == m_stack )   //if returned to the root
                     return 0;
 
                 // &m_ct.nodes.front() is the address of the root node
@@ -429,6 +429,8 @@ public:
                     }
                     else // if already registered in lr_stack
                     {
+                        *( m_sp + 1 ) = -1;
+                        *( m_sp + 2 ) = -1;
                         continue;
                     }
 
@@ -436,20 +438,21 @@ public:
                     {
                         m_sp++;
                         *(m_sp++) = left;
-                        *(m_sp++) = left+1;
+                        *(m_sp++) = left + 1;
                     }
                     else
                     {
                         m_sp++;
-                        *(m_sp++) = left+1;
+                        *(m_sp++) = left + 1;
                         *(m_sp++) = left;
                     }
                 }
                 else if( l )
                 {
-                    if ( *(m_sp+1) == left )
+                    if ( *( m_sp + 1 ) == left )
                     {
-                        //*(m_sp+1) = -1;
+                        *( m_sp + 1 ) = -1;
+                        *( m_sp + 2 ) = -1;
                         continue;
                     }
                     m_sp++;
@@ -457,9 +460,10 @@ public:
                 }
                 else if( r )
                 {
-                    if ( *(m_sp+1) == left+1 )
+                    if ( *( m_sp + 1 ) == left+1 )
                     {
-                        //*(m_sp+1) = -1;
+                        *( m_sp + 1 ) = -1;
+                        *( m_sp + 2 ) = -1;
                         continue;      
                     }
                     m_sp++;
