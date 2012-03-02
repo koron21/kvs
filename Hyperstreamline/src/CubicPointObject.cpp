@@ -54,4 +54,9 @@ void CubicPointObject::reset_coordinates(
     this->reset_coordinates();
 }
 
+void CubicPointObject::request_update( void (*update_streamline)() )
+{
+    update_streamline();
+}
+
 }

@@ -4,6 +4,7 @@
 #include <kvs/LineExporter>
 #include <kvs/PointRenderer>
 #include <kvs/PolygonImporter>
+#include <kvs/MouseButton>
 #include <kvs/RGBFormulae>
 #include <kvs/UnstructuredVectorToScalar>
 #include <kvs/UnstructuredVolumeImporter>
@@ -18,7 +19,7 @@
 #include <kvs/glut/TransferFunctionEditor>
 
 #include "CellLocatorBIH.h"
-#include "ControlScreen.h"
+//#include "ControlScreen.h"
 #include "CubicPointObject.h"
 #include "HyperStreamline.h"
 
@@ -159,6 +160,105 @@ public:
 PB_INFO* p_pb_info = NULL;
 
 // Update Streamline
+void update_streamline()
+{
+    if ( !flag_locator_built )
+    {
+        delete m_locator;
+        m_locator = new kvs::CellLocatorBIH();
+        m_locator->setDataSet( m_volume1 );
+        m_locator->setMode( kvs::CellLocator::CACHEHALF );
+        m_locator->setParallel();
+        m_locator->initializeCell();
+        m_locator->build();
+        flag_locator_built = true;
+    }
+
+    kvs::HyperStreamline* streamline = new kvs::HyperStreamline();
+    streamline->setGoWithNthEigenVector( line_direction );
+    streamline->setIntegrationDirection( kvs::HyperStreamline::BothDirections );
+    streamline->setLocator( m_locator->cellTree(), m_volume1 );
+    if ( !flag_enable_cache )
+        streamline->setDisableCache();
+    streamline->setIntegrationMethod( kvs::HyperStreamline::RungeKutta2nd );
+    streamline->setTransferFunction( m_tfunc );
+    streamline->setSeedPoints( m_seed_point );
+    streamline->exec( m_volume1 );
+    streamline->calculate_color();
+
+    if ( flag_clear_buffer )
+    {
+#ifdef USE_KVS
+        m_compositor->changeObject( m_streamline, streamline, true );
+#else
+        m_renderer->changeObject( streamline, m_line_renderer, true );
+#endif
+        m_streamline = streamline;
+    }
+    else
+    {
+            //const kvs::ValueArray<kvs::UInt8>& old_colors = m_streamline->colors();
+            const std::vector<float>& old_eigenvalues = m_streamline->eigenValues();
+            const kvs::ValueArray<kvs::UInt32>& old_connections = m_streamline->connections();
+            const kvs::ValueArray<kvs::Real32>& old_coords = m_streamline->coords();
+
+            //const kvs::ValueArray<kvs::UInt8>& new_colors = streamline->colors();
+            const std::vector<float>& new_eigenvalues = streamline->eigenValues();
+            const kvs::ValueArray<kvs::UInt32>& new_connections = streamline->connections();
+            const kvs::ValueArray<kvs::Real32>& new_coords = streamline->coords();
+
+            //const unsigned int size_color = old_colors.size() + new_colors.size();
+            const unsigned int size_eigen = old_eigenvalues.size() + new_eigenvalues.size();
+            const unsigned int size_conne = old_connections.size() + new_connections.size();
+            const unsigned int offs_conne = old_connections.size() > 1 ? old_connections.back() + 1 : 0;
+            const unsigned int size_coord = old_coords.size() + new_coords.size();
+
+            //kvs::ValueArray<kvs::UInt8> colors( size_color );
+            std::vector<float> eigenvalues;
+            eigenvalues.reserve( size_eigen );
+            kvs::ValueArray<kvs::UInt32> connections( size_conne );
+            kvs::ValueArray<kvs::Real32> coords( size_coord );
+
+            eigenvalues.insert( eigenvalues.end(), old_eigenvalues.begin(), old_eigenvalues.end() );
+            eigenvalues.insert( eigenvalues.end(), new_eigenvalues.begin(), new_eigenvalues.end() );
+
+            //for ( unsigned int i = 0; i < old_colors.size(); i ++ )
+            //    colors[ i ] = old_colors[ i ];
+            //for ( unsigned int i = 0; i < new_colors.size(); i ++ )
+            //    colors[ i + old_colors.size() ] = new_colors[ i ];
+
+            for ( unsigned int i = 0; i < old_connections.size(); i ++ )
+                connections[ i ] = old_connections[i];
+            for ( unsigned int i = 0; i < new_connections.size(); i ++ )
+                connections[ i + old_connections.size() ] = new_connections[i] + offs_conne;
+
+            for ( unsigned int i = 0; i < old_coords.size(); i ++ )
+                coords[ i ] = old_coords[ i ];
+            for ( unsigned int i = 0; i < new_coords.size(); i ++ )
+                coords[ i + old_coords.size() ] = new_coords[i];
+
+            delete m_buffered_streamline;
+            m_buffered_streamline = new kvs::HyperStreamline();
+
+            //m_buffered_streamline->setColors( colors );
+            m_buffered_streamline->setEigenValues( eigenvalues );
+            m_buffered_streamline->calculate_color();
+            m_buffered_streamline->setEigenValues( eigenvalues );
+            m_buffered_streamline->setConnections( connections );
+            m_buffered_streamline->setCoords( coords );
+            m_buffered_streamline->setLineType( kvs::LineObject::Polyline );
+            m_buffered_streamline->setColorType( kvs::LineObject::VertexColor );
+
+#ifdef USE_KVS
+            m_compositor->changeObject( m_streamline, m_buffered_streamline, false );
+#else
+            m_renderer->changeObject( m_buffered_streamline, m_line_renderer, false );
+#endif
+            m_streamline = m_buffered_streamline;
+    }
+
+
+}
 class PB04 : public kvs::glut::PushButton
 {
 public:
@@ -167,100 +267,7 @@ public:
 
     void pressed()
     {
-        if ( !flag_locator_built )
-        {
-            delete m_locator;
-            m_locator = new kvs::CellLocatorBIH();
-            m_locator->setDataSet( m_volume1 );
-            m_locator->setMode( kvs::CellLocator::CACHEHALF );
-            m_locator->setParallel();
-            m_locator->initializeCell();
-            m_locator->build();
-            flag_locator_built = true;
-        }
-
-        kvs::HyperStreamline* streamline = new kvs::HyperStreamline();
-        streamline->setGoWithNthEigenVector( line_direction );
-        streamline->setIntegrationDirection( kvs::HyperStreamline::BothDirections );
-        streamline->setLocator( m_locator->cellTree(), m_volume1 );
-        if ( !flag_enable_cache )
-            streamline->setDisableCache();
-        streamline->setIntegrationMethod( kvs::HyperStreamline::RungeKutta2nd );
-        streamline->setTransferFunction( m_tfunc );
-        streamline->setSeedPoints( m_seed_point );
-        streamline->exec( m_volume1 );
-        streamline->calculate_color();
-
-        if ( flag_clear_buffer )
-        {
-#ifdef USE_KVS
-            m_compositor->changeObject( m_streamline, streamline, true );
-#else
-            m_renderer->changeObject( streamline, m_line_renderer, true );
-#endif
-            m_streamline = streamline;
-        }
-        else
-        {
-                //const kvs::ValueArray<kvs::UInt8>& old_colors = m_streamline->colors();
-                const std::vector<float>& old_eigenvalues = m_streamline->eigenValues();
-                const kvs::ValueArray<kvs::UInt32>& old_connections = m_streamline->connections();
-                const kvs::ValueArray<kvs::Real32>& old_coords = m_streamline->coords();
-
-                //const kvs::ValueArray<kvs::UInt8>& new_colors = streamline->colors();
-                const std::vector<float>& new_eigenvalues = streamline->eigenValues();
-                const kvs::ValueArray<kvs::UInt32>& new_connections = streamline->connections();
-                const kvs::ValueArray<kvs::Real32>& new_coords = streamline->coords();
-
-                //const unsigned int size_color = old_colors.size() + new_colors.size();
-                const unsigned int size_eigen = old_eigenvalues.size() + new_eigenvalues.size();
-                const unsigned int size_conne = old_connections.size() + new_connections.size();
-                const unsigned int offs_conne = old_connections.size() > 1 ? old_connections.back() + 1 : 0;
-                const unsigned int size_coord = old_coords.size() + new_coords.size();
-
-                //kvs::ValueArray<kvs::UInt8> colors( size_color );
-                std::vector<float> eigenvalues;
-                eigenvalues.reserve( size_eigen );
-                kvs::ValueArray<kvs::UInt32> connections( size_conne );
-                kvs::ValueArray<kvs::Real32> coords( size_coord );
-
-                eigenvalues.insert( eigenvalues.end(), old_eigenvalues.begin(), old_eigenvalues.end() );
-                eigenvalues.insert( eigenvalues.end(), new_eigenvalues.begin(), new_eigenvalues.end() );
-
-                //for ( unsigned int i = 0; i < old_colors.size(); i ++ )
-                //    colors[ i ] = old_colors[ i ];
-                //for ( unsigned int i = 0; i < new_colors.size(); i ++ )
-                //    colors[ i + old_colors.size() ] = new_colors[ i ];
-
-                for ( unsigned int i = 0; i < old_connections.size(); i ++ )
-                    connections[ i ] = old_connections[i];
-                for ( unsigned int i = 0; i < new_connections.size(); i ++ )
-                    connections[ i + old_connections.size() ] = new_connections[i] + offs_conne;
-
-                for ( unsigned int i = 0; i < old_coords.size(); i ++ )
-                    coords[ i ] = old_coords[ i ];
-                for ( unsigned int i = 0; i < new_coords.size(); i ++ )
-                    coords[ i + old_coords.size() ] = new_coords[i];
-
-                delete m_buffered_streamline;
-                m_buffered_streamline = new kvs::HyperStreamline();
-
-                //m_buffered_streamline->setColors( colors );
-                m_buffered_streamline->setEigenValues( eigenvalues );
-                m_buffered_streamline->calculate_color();
-                m_buffered_streamline->setEigenValues( eigenvalues );
-                m_buffered_streamline->setConnections( connections );
-                m_buffered_streamline->setCoords( coords );
-                m_buffered_streamline->setLineType( kvs::LineObject::Polyline );
-                m_buffered_streamline->setColorType( kvs::LineObject::VertexColor );
-
-#ifdef USE_KVS
-                m_compositor->changeObject( m_streamline, m_buffered_streamline, false );
-#else
-                m_renderer->changeObject( m_buffered_streamline, m_line_renderer, false );
-#endif
-                m_streamline = m_buffered_streamline;
-        }
+        update_streamline();
     }
 
 };
@@ -285,12 +292,13 @@ public:
         m_seed_point->reset_coordinates();
 
 #ifdef USE_KVS
+        m_compositor->changeObject( m_seed_point, m_seed_point, false );
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
 
         if ( m_seed_point->nvertices() == 1 )
-            p_pb04->pressed();
+            update_streamline();
     }
 };
 SLD0* p_sld0 = NULL;
@@ -314,12 +322,13 @@ public:
         m_seed_point->reset_coordinates();
 
 #ifdef USE_KVS
+        m_compositor->changeObject( m_seed_point, m_seed_point, false );
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
 
         if ( m_seed_point->nvertices() == 1 )
-            p_pb04->pressed();
+            update_streamline();
     }
 };
 SLD1* p_sld1 = NULL;
@@ -343,12 +352,13 @@ public:
         m_seed_point->reset_coordinates();
 
 #ifdef USE_KVS
+        m_compositor->changeObject( m_seed_point, m_seed_point, false );
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
 
         if ( m_seed_point->nvertices() == 1 )
-            p_pb04->pressed();
+            update_streamline();
     }
 };
 SLD2* p_sld2 = NULL;
@@ -369,12 +379,13 @@ public:
         m_seed_point->reset_coordinates();
 
 #ifdef USE_KVS
+        m_compositor->changeObject( m_seed_point, m_seed_point, false );
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
 
         if ( m_seed_point->nvertices() == 1 )
-            p_pb04->pressed();
+            update_streamline();
     }
 };
 SLD3* p_sld3 = NULL;
@@ -395,12 +406,13 @@ public:
         m_seed_point->reset_coordinates();
 
 #ifdef USE_KVS
+        m_compositor->changeObject( m_seed_point, m_seed_point, false );
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
 
         if ( m_seed_point->nvertices() == 1 )
-            p_pb04->pressed();
+            update_streamline();
     }
 };
 SLD4* p_sld4 = NULL;
@@ -421,12 +433,13 @@ public:
         m_seed_point->reset_coordinates();
 
 #ifdef USE_KVS
+        m_compositor->changeObject( m_seed_point, m_seed_point, false );
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
 
         if ( m_seed_point->nvertices() == 1 )
-            p_pb04->pressed();
+            update_streamline();
     }
 };
 SLD5* p_sld5 = NULL;
@@ -440,7 +453,7 @@ public:
 
     void pressed()
     {
-        std::string default_locator( "./celltree.dat" );
+        std::string default_locator( "celltree.dat" );
         if ( p_arg->hasOption( "celltree" ) )
             m_locator->read( p_arg->optionValue<std::string>( "celltree" ) );
         else
@@ -493,7 +506,11 @@ public:
         }
         else
         {
+#ifdef WIN32
+            std::string default_polygon( "D:\\Koron\\Dropbox\\Work\\Viz\\Hyperstreamline\\data\\engine\\v6engine_external_face.kvsml" );
+#else
             std::string default_polygon( "../../data/engine/v6engine_external_face.kvsml" );
+#endif
             kvs::PolygonObject* temp_polygon = NULL;
             if ( p_arg->hasOption( "polygon" ) )
                temp_polygon = new kvs::PolygonImporter( p_arg->optionValue<std::string>("polygon") );
@@ -510,7 +527,7 @@ public:
             }
 
             temp_polygon->setOpacity( opacity_polygon );
-            temp_polygon->setColor( kvs::RGBColor( 255,255,255 ) );
+            //temp_polygon->setColor( kvs::RGBColor( 255,255,255 ) );
 
 #ifdef USE_KVS
             m_compositor->changeObject( m_polygon, temp_polygon, true );
@@ -540,7 +557,11 @@ public:
         flag_show_volume = !flag_show_volume;
         if ( flag_show_volume )
         {
+#ifdef WIN32
+            std::string default_volume2( "D:\\Koron\\Dropbox\\Work\\Viz\\Hyperstreamline\\data\\engine\\v6engine_displacement.kvsml" );
+#else
             std::string default_volume2( "../../data/engine/v6engine_displacement.kvsml" );
+#endif
             kvs::UnstructuredVolumeObject* temp_volume2 = NULL;
             if ( p_arg->hasOption( "volume2" ) )
                 temp_volume2 = new kvs::UnstructuredVolumeImporter( p_arg->optionValue<std::string>("volume2") );
@@ -608,7 +629,11 @@ public:
 
     void pressed()
     {
+#ifdef WIN32
+        std::string default_volume1( "D:\\Koron\\Dropbox\\Work\\Viz\\Hyperstreamline\\data\\engine\\v6engine_stress_and_mises.kvsml" );
+#else
         std::string default_volume1( "../../data/engine/v6engine_stress_and_mises.kvsml" );
+#endif
         if ( p_arg->hasOption( "volume1" ) )
             m_volume1 = new kvs::UnstructuredVolumeImporter( p_arg->optionValue<std::string>("volume1") );
         else
@@ -766,7 +791,7 @@ public:
             return;
         }
 
-        std::string default_locator( "./celltree.dat" );
+        std::string default_locator( "celltree.dat" );
         m_locator->write( default_locator );
 
         p_pb_info->setCaption("CellTree saved as celltree.dat");
@@ -894,6 +919,8 @@ public:
 
 class KeyPressEvent : public kvs::KeyPressEventListener
 {
+public:
+
     void update( kvs::KeyEvent* event )
     {
         switch ( event->key() )
@@ -1028,6 +1055,74 @@ class KeyPressEvent : public kvs::KeyPressEventListener
     }
 };
 
+class MouseMoveEvent : public kvs::MouseMoveEventListener
+{
+public:
+
+    MouseMoveEvent() : kvs::MouseMoveEventListener()
+    {
+    }
+
+    void update ( kvs::MouseEvent* event = 0 )
+    {
+        if ( event->x() > 20 && event->x() < 330 && event->y() > 20 && event->y() < 400 )
+        {
+            const kvs::Xform x = this->screen()->objectManager()->xform();
+
+            const float* pcoord = m_seed_point->coords().pointer();
+            const unsigned int nvertices = m_seed_point->nvertices();
+            kvs::ValueArray<float> coords( nvertices * 3 );
+
+            if ( event->button() == kvs::MouseButton::Right )
+            {
+                this->screen()->mouse()->setMode( kvs::Mouse::Translation );
+                this->screen()->mouse()->move( event->x(), event->y() );
+                kvs::Vector3f translation = this->screen()->mouse()->translation();
+                const kvs::Vector3f normalize = this->screen()->objectManager()->normalize();
+
+                translation.x() /= normalize.x() * x.scaling().x();
+                translation.y() /= normalize.y() * x.scaling().y();
+                translation.z() /= normalize.z() * x.scaling().z();
+
+                for ( unsigned int i = 0; i < nvertices; i ++ )
+                {
+                    kvs::Vector3f coord( pcoord );
+                    const kvs::Vector3f new_coord = coord + translation * x.rotation();
+                    coords[ 3 * i] = new_coord.x();
+                    coords[ 3 * i + 1] = new_coord.y();
+                    coords[ 3 * i + 2] = new_coord.z();
+                    pcoord += 3;
+                }
+                m_seed_point->setCoords( coords );
+            }
+
+            if ( event->button() == kvs::MouseButton::Left )
+            {
+                this->screen()->mouse()->setMode( kvs::Mouse::Rotation );
+                this->screen()->mouse()->move( event->x(), event->y() );
+                kvs::Matrix33f rotation = this->screen()->mouse()->rotation().toMatrix();
+
+                for ( unsigned int i = 0; i < nvertices; i ++ )
+                {
+                    kvs::Vector3f coord( pcoord );
+                    const kvs::Vector3f new_coord = coord * rotation;
+                    coords[ 3 * i] = new_coord.x();
+                    coords[ 3 * i + 1] = new_coord.y();
+                    coords[ 3 * i + 2] = new_coord.z();
+                    pcoord += 3;
+                }
+                m_seed_point->setCoords( coords );
+            }
+#ifdef USE_KVS
+            m_compositor->changeObject( m_seed_point, m_seed_point, false );
+#else
+            m_renderer->changeObject( m_seed_point, m_point_renderer, false );
+#endif
+        }
+    }
+
+};
+
 int main( int argc, char** argv )
 {
     kvs::glut::Application app( argc, argv );
@@ -1040,15 +1135,19 @@ int main( int argc, char** argv )
     std::vector<kvs::UInt8>  colors;
     std::vector<float>       values;
     std::vector<float>       eigenvalues;
-    coords.push_back( 0.0 );
-    coords.push_back( 0.0 );
-    coords.push_back( 0.0 );
-    for ( unsigned int i = 0; i < 4; i ++ )
-        connections.push_back( 0 );
-    colors.push_back( 255 );
-    colors.push_back( 255 );
-    colors.push_back( 255 );
-    values.push_back(0);
+
+    colors.push_back(255);
+    colors.push_back(255);
+    colors.push_back(255);
+    for ( unsigned int i = 0; i < 3; i++ )
+    {
+        coords.push_back(0.0);
+    }
+    for ( unsigned int i = 0; i < 2; i ++ )
+    {
+        connections.push_back(0);
+        values.push_back(0.0);
+    }
     eigenvalues.push_back(0);
 
     // Volume 2 (Displacement)
@@ -1058,10 +1157,14 @@ int main( int argc, char** argv )
     m_volume2->setCoords( kvs::ValueArray<float>( coords ) );
     m_volume2->setValues( kvs::AnyValueArray( values ) );
     m_volume2->setNCells(1);
-    m_volume2->setNNodes(1);
+    m_volume2->setNNodes(4);
 
     // polygon (Empty External)
+#ifdef WIN32
+    std::string default_polygon( "D:\\Koron\\Dropbox\\Work\\Viz\\Hyperstreamline\\data\\engine\\v6engine_external_face.kvsml" );
+#else
     std::string default_polygon( "../../data/engine/v6engine_external_face.kvsml" );
+#endif
     if ( p_arg->hasOption( "polygon" ) )
     {
        kvs::PolygonObject* import_polygon = new kvs::PolygonImporter( p_arg->optionValue<std::string>("polygon") );
@@ -1110,6 +1213,7 @@ int main( int argc, char** argv )
     // main screen
     kvs::glut::Screen main_screen( &app );
     p_main_screen = &main_screen;
+    //main_screen.background()->setColor( kvs::RGBAColor( 0, 0, 0, 1 ) );
     int interval = 30;
     kvs::glut::Timer timer( interval );
     TimerEvent timer_event;
@@ -1143,7 +1247,7 @@ int main( int argc, char** argv )
     m_line_renderer->setShader( kvs::Shader::BlinnPhong() );
     m_line_renderer->setOpacity( opacity_line );
 
-    m_compositor->registerObject( m_volume2, m_volume_renderer );
+    //m_compositor->registerObject( m_volume2, m_volume_renderer );
     m_compositor->registerObject( m_polygon, m_polygon_renderer );
     m_compositor->registerObject( m_seed_point, m_point_renderer );
     m_compositor->registerObject( m_streamline, m_line_renderer );
@@ -1185,12 +1289,18 @@ int main( int argc, char** argv )
     //editor.setVolumeObject( m_volume2 );
     //editor.show();
 
-    kvs::ControlScreen control_screen( &app );
+
+    //kvs::ControlScreen control_screen( &app );
+    MouseMoveEvent mouse_move_event;
+    kvs::glut::Screen control_screen( &app );
+    control_screen.addMouseMoveEvent( &mouse_move_event );
+    control_screen.setTitle( "kvs::ControlScreen" );
+    control_screen.setGeometry( 512, 0, 600, 560 );
 
 #ifdef USE_KVS
-    control_screen.attachMainScreen( p_main_screen, m_seed_point, m_compositor, m_point_renderer );
+    //control_screen.attachMainScreen( p_main_screen, m_seed_point, m_compositor, m_point_renderer );
 #else
-    control_screen.attachMainScreen( p_main_screen, m_seed_point, m_renderer, m_point_renderer );
+    //control_screen.attachMainScreen( p_main_screen, m_seed_point, m_renderer, m_point_renderer );
 #endif
     control_screen.show();
 

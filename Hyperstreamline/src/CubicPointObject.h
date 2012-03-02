@@ -121,6 +121,7 @@ public:
             const unsigned int resx, const unsigned int resy, const unsigned int resz, 
             const float xmin, const float xmax, const float ymin, 
             const float ymax, const float zmin, const float zmax );
+    void request_update( void (*update_streamline)() );
 
 protected:
 

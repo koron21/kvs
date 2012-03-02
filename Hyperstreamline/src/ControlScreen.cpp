@@ -113,6 +113,7 @@ void ControlScreen::mouseMoveEvent( kvs::MouseEvent* event )
             m_point->setCoords( coords );
         }
 #ifdef USE_KVS
+        m_renderer->changeObject( m_point, m_point, false );
 #else
         m_renderer->changeObject( m_point, m_point_renderer, false );
 #endif

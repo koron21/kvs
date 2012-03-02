@@ -1,4 +1,4 @@
-#=============================================================================
+#============================================================================
 # General Option 
 #=============================================================================
 
@@ -20,7 +20,7 @@ else
 CFLAGS += -O3
 DEFINITIOINS += -DNDEBUG 
 endif
-LDFLAGS = -lCellLocator -lStochasticRenderer -lkvsSupportGLUT -lglut -lkvsSupportGLEW -lGLEW -lkvsCore -lGLU -lGL -lm -lpthread 
+LDFLAGS = -lCellLocator -lkvsSupportGLUT -lglut -lkvsSupportGLEW -lGLEW -lkvsCore -lGLU -lGL -lm -lpthread 
 
 #=============================================================================
 # Project Related Files

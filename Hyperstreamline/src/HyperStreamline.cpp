@@ -95,7 +95,8 @@ void HyperStreamline::mapping( const kvs::VolumeObjectBase* volume )
     std::cout << "Extracting Hyper Streamline";
     this->extract_lines( volume );
     timer.stop();
-    std::cout << "\t" << timer.sec() << " seconds" << std::endl;
+    std::cout << "\t" << std::setw( 10 ) << std::left << std::setprecision( 5 ) 
+        << timer.sec() << " seconds\t" << "nVertices:\t" << this->nvertices() << std::endl;
 }
 
 void HyperStreamline::extract_lines(
@@ -345,11 +346,14 @@ void HyperStreamline::calculate_color( const float min_eigenvalue, const float m
 
     if ( max_eigenvalue < 0 )
     {
-        interval = - min_eigenvalue;
+        interval = min_eigenvalue;
     }
     else if ( min_eigenvalue < 0 )
     {
-        interval = max_eigenvalue - min_eigenvalue;
+        if ( max_eigenvalue + min_eigenvalue > 0 )
+            interval = max_eigenvalue;
+        else
+            interval = min_eigenvalue;
     }
     else
     {
@@ -368,7 +372,7 @@ void HyperStreamline::calculate_color( const float min_eigenvalue, const float m
         }
         else
         {
-            level = - 128.0 * m_eigenvalues[i] / interval; // m_eigenvalues[i] < 0
+            level = 128.0 * m_eigenvalues[i] / interval; // m_eigenvalues[i] < 0
         }
         colors.push_back( cmap[level].r() );
         colors.push_back( cmap[level].g() );
@@ -676,7 +680,7 @@ void HyperStreamlineThread::run()
     }
 
     m_line.setCoords( kvs::ValueArray<float>(coords) );
-    m_line.setColors( kvs::ValueArray<unsigned char>(colors) );
+    //m_line.setColors( kvs::ValueArray<unsigned char>(colors) );
     m_line.setColorType( kvs::LineObject::VertexColor );
     m_line.setLineType( kvs::LineObject::Uniline );
 
