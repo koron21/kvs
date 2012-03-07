@@ -296,9 +296,6 @@ public:
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
-
-        if ( m_seed_point->nvertices() == 1 )
-            update_streamline();
     }
 };
 SLD0* p_sld0 = NULL;
@@ -326,9 +323,6 @@ public:
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
-
-        if ( m_seed_point->nvertices() == 1 )
-            update_streamline();
     }
 };
 SLD1* p_sld1 = NULL;
@@ -356,9 +350,6 @@ public:
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
-
-        if ( m_seed_point->nvertices() == 1 )
-            update_streamline();
     }
 };
 SLD2* p_sld2 = NULL;
@@ -383,9 +374,6 @@ public:
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
-
-        if ( m_seed_point->nvertices() == 1 )
-            update_streamline();
     }
 };
 SLD3* p_sld3 = NULL;
@@ -410,9 +398,6 @@ public:
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
-
-        if ( m_seed_point->nvertices() == 1 )
-            update_streamline();
     }
 };
 SLD4* p_sld4 = NULL;
@@ -437,9 +422,6 @@ public:
 #else
         m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
-
-        if ( m_seed_point->nvertices() == 1 )
-            update_streamline();
     }
 };
 SLD5* p_sld5 = NULL;
@@ -1067,7 +1049,7 @@ public:
     {
         if ( event->x() > 20 && event->x() < 330 && event->y() > 20 && event->y() < 400 )
         {
-            const kvs::Xform x = this->screen()->objectManager()->xform();
+            const kvs::Xform x = p_main_screen->objectManager()->xform();
 
             const float* pcoord = m_seed_point->coords().pointer();
             const unsigned int nvertices = m_seed_point->nvertices();
@@ -1078,7 +1060,7 @@ public:
                 this->screen()->mouse()->setMode( kvs::Mouse::Translation );
                 this->screen()->mouse()->move( event->x(), event->y() );
                 kvs::Vector3f translation = this->screen()->mouse()->translation();
-                const kvs::Vector3f normalize = this->screen()->objectManager()->normalize();
+                const kvs::Vector3f normalize = p_main_screen->objectManager()->normalize();
 
                 translation.x() /= normalize.x() * x.scaling().x();
                 translation.y() /= normalize.y() * x.scaling().y();
@@ -1094,6 +1076,7 @@ public:
                     pcoord += 3;
                 }
                 m_seed_point->setCoords( coords );
+                
             }
 
             if ( event->button() == kvs::MouseButton::Left )
@@ -1118,9 +1101,10 @@ public:
 #else
             m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
+            if ( m_seed_point->nvertices() <= 8 )
+                update_streamline();
         }
     }
-
 };
 
 int main( int argc, char** argv )
@@ -1293,7 +1277,8 @@ int main( int argc, char** argv )
     //kvs::ControlScreen control_screen( &app );
     MouseMoveEvent mouse_move_event;
     kvs::glut::Screen control_screen( &app );
-    control_screen.addMouseMoveEvent( &mouse_move_event );
+    //control_screen.addMouseMoveEvent( &mouse_move_event );
+    control_screen.setMouseMoveEvent( &mouse_move_event );
     control_screen.setTitle( "kvs::ControlScreen" );
     control_screen.setGeometry( 512, 0, 600, 560 );
 

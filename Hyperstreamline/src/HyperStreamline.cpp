@@ -159,6 +159,7 @@ void HyperStreamline::extract_lines(
         colors.push_back( 0 );
         colors.push_back( 0 );
         colors.push_back( 0 );
+        m_eigenvalues.push_back( 1 );
 
         SuperClass::setLineType( kvs::LineObject::Polyline );
         SuperClass::setColorType( kvs::LineObject::VertexColor );
