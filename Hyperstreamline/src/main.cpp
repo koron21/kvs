@@ -585,8 +585,8 @@ public:
             volume2->setConnections( kvs::ValueArray<kvs::UInt32>( connections ) );
             volume2->setCoords( kvs::ValueArray<float>( coords ) );
             volume2->setValues( kvs::AnyValueArray( values ) );
-            volume2->setNCells(1);
-            volume2->setNNodes(1);
+            volume2->setNCells(0);
+            volume2->setNNodes(0);
 
 #ifdef USE_KVS
             m_compositor->changeObject( m_volume2, volume2, true );
@@ -1047,7 +1047,7 @@ public:
 
     void update ( kvs::MouseEvent* event = 0 )
     {
-        if ( event->x() > 20 && event->x() < 330 && event->y() > 20 && event->y() < 400 )
+        if ( event->x() > 20 && event->x() < 330 && event->y() > 20 && event->y() < 400 && m_seed_point->nvertices() > 0 )
         {
             const kvs::Xform x = p_main_screen->objectManager()->xform();
 
@@ -1101,6 +1101,17 @@ public:
 #else
             m_renderer->changeObject( m_seed_point, m_point_renderer, false );
 #endif
+            m_seed_point->updateMinMaxCoords();
+            const kvs::Vector3f min = m_seed_point->minObjectCoord();
+            const kvs::Vector3f max = m_seed_point->maxObjectCoord();
+            center = ( min + max ) / 2;
+            m_seed_point->setXMin( min.x() );
+            m_seed_point->setXMax( max.x() );
+            m_seed_point->setYMin( min.y() );
+            m_seed_point->setYMax( max.y() );
+            m_seed_point->setZMin( min.z() );
+            m_seed_point->setZMax( max.z() );
+
             if ( m_seed_point->nvertices() <= 8 )
                 update_streamline();
         }
@@ -1140,8 +1151,8 @@ int main( int argc, char** argv )
     m_volume2->setConnections( kvs::ValueArray<kvs::UInt32>( connections ) );
     m_volume2->setCoords( kvs::ValueArray<float>( coords ) );
     m_volume2->setValues( kvs::AnyValueArray( values ) );
-    m_volume2->setNCells(1);
-    m_volume2->setNNodes(4);
+    m_volume2->setNCells(0);
+    m_volume2->setNNodes(0);
 
     // polygon (Empty External)
 #ifdef WIN32
@@ -1231,7 +1242,7 @@ int main( int argc, char** argv )
     m_line_renderer->setShader( kvs::Shader::BlinnPhong() );
     m_line_renderer->setOpacity( opacity_line );
 
-    //m_compositor->registerObject( m_volume2, m_volume_renderer );
+    m_compositor->registerObject( m_volume2, m_volume_renderer );
     m_compositor->registerObject( m_polygon, m_polygon_renderer );
     m_compositor->registerObject( m_seed_point, m_point_renderer );
     m_compositor->registerObject( m_streamline, m_line_renderer );
